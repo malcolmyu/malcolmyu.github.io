@@ -10,7 +10,13 @@
 $ npm install
 ```
 
-即可。安装完 hexo 之后还需要安装主题 [alex](https://github.com/ppoffice/hexo-theme-alex)，安装方式为：
+即可。但是在使用时有时会有问题，如[这个 issue ](https://github.com/trentm/node-bunyan/issues/216)说的，因此如果在执行 hexo 命令的时候一直报一些迷之错误，只需要在安装的时候添加 `--no-optional` 参数即可：
+
+```
+$ npm install hexo --no-optional
+```
+
+安装完 hexo 之后还需要安装主题 [alex](https://github.com/ppoffice/hexo-theme-alex)，安装方式为：
 
 ```
 $ git clone git://github.com/ppoffice/alex-hexo-theme.git themes/alex
