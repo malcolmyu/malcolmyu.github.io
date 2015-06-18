@@ -19,7 +19,7 @@ $ npm install hexo --no-optional
 安装完 hexo 之后还需要安装主题 [alex](https://github.com/ppoffice/hexo-theme-alex)，安装方式为：
 
 ```
-$ git clone git://github.com/ppoffice/alex-hexo-theme.git themes/alex
+$ git clone https://github.com/ppoffice/hexo-theme-alex.git themes/alex
 ```
 
 这之后最重要的一步就是将配置项写好，由于写起来实在太麻烦，因此将配置项放到了 `./themes` 中，因此在安装完成之后需要执行下面的命令：
