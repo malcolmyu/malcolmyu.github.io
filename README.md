@@ -22,6 +22,12 @@ $ npm install hexo --no-optional
 $ git clone https://github.com/ppoffice/hexo-theme-alex.git themes/alex
 ```
 
+这里我对博客的主题进行了自定义，我的自定义主题地址为 [alex](https://github.com/malcolmyu/hexo-theme-alex)，安装方式为：
+
+```
+$ git clone https://github.com/malcolmyu/hexo-theme-alex.git themes/alex
+```
+
 这之后最重要的一步就是将配置项写好，由于写起来实在太麻烦，因此将配置项放到了 `./themes` 中，因此在安装完成之后需要执行下面的命令：
 
 ```
