@@ -1,6 +1,6 @@
 # blog
 
-为了方便数据同步所以讲博客原文也 po 到了 github 上。
+由于刚换了 Mac，为了~~炫耀一下自己的新 Mac~~方便数据同步所以将博客原文也 po 到了 github 上。
 
 ## 使用说明
 
@@ -10,10 +10,22 @@
 $ npm install
 ```
 
-即可。安装完 hexo 之后还需要安装主题 [alex](https://github.com/ppoffice/hexo-theme-alex)，安装方式为：
+即可。但是在使用时有时会有问题，如[这个 issue ](https://github.com/trentm/node-bunyan/issues/216)说的，因此如果在执行 hexo 命令的时候一直报一些迷之错误，只需要在安装的时候添加 `--no-optional` 参数即可：
 
 ```
-$ git clone git://github.com/ppoffice/alex-hexo-theme.git themes/alex
+$ npm install hexo --no-optional
+```
+
+安装完 hexo 之后还需要安装主题 [alex](https://github.com/ppoffice/hexo-theme-alex)，安装方式为：
+
+```
+$ git clone https://github.com/ppoffice/hexo-theme-alex.git themes/alex
+```
+
+这里我对博客的主题进行了自定义，我的自定义主题地址为 [alex](https://github.com/malcolmyu/hexo-theme-alex)，安装方式为：
+
+```
+$ git clone https://github.com/malcolmyu/hexo-theme-alex.git themes/alex
 ```
 
 这之后最重要的一步就是将配置项写好，由于写起来实在太麻烦，因此将配置项放到了 `./themes` 中，因此在安装完成之后需要执行下面的命令：
