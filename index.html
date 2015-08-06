@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>malcolm-blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前端技术分享 读书笔记">
+<meta property="og:type" content="website">
+<meta property="og:title" content="malcolm-blog">
+<meta property="og:url" content="http://malcolmyu.github.io/malnote/index.html">
+<meta property="og:site_name" content="malcolm-blog">
+<meta property="og:description" content="前端技术分享 读书笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="malcolm-blog">
+<meta name="twitter:description" content="前端技术分享 读书笔记">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/malnote/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">malcolm-blog</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about/index.html">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://malcolmyu.github.io/malnote"></form>
+        </div>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/ppoffice/hexo-theme-alex" title="Fork me on GitHub"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about/index.html" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://malcolmyu.github.io/malnote"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/开发工具/">开发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/技术研究/">技术研究</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/源码分析/">源码分析</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/06/">June 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/04/">April 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2014/08/">August 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/malnote/2015/06/12/Promises-A-Plus/">Promise A+ 规范</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2015/04/25/Introduction-of-Jsdoc/">JSDoc 配置使用概览</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2015/04/19/Avalon-Event-Bus/">avalon 事件总线与依赖调度系统</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2015/04/19/Collaborating-Syncing/">协作同步</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2014/08/30/JavaScript-Promise-In-Wicked-Detail/">JavaScript Promise 探微</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/Javascript/">Javascript</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/avalon/">avalon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/jsdoc/">jsdoc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/翻译/">翻译</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/malnote/tags/Git/" style="font-size: 10px;">Git</a> <a href="/malnote/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/malnote/tags/Promise/" style="font-size: 15px;">Promise</a> <a href="/malnote/tags/avalon/" style="font-size: 10px;">avalon</a> <a href="/malnote/tags/jsdoc/" style="font-size: 10px;">jsdoc</a> <a href="/malnote/tags/翻译/" style="font-size: 15px;">翻译</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://hexo.io">Hexo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+        <section id="main">
+  
+    <article id="post-Promises-A-Plus" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/malnote/2015/06/12/Promises-A-Plus/" class="article-date">
+  <time datetime="2015-06-11T16:00:00.000Z" itemprop="datePublished">2015-06-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/malnote/categories/技术研究/">技术研究</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/malnote/2015/06/12/Promises-A-Plus/">Promise A+ 规范</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>英文原文：<a href="https://promisesaplus.com/">Promise/A+</a><br>图灵译文：<a href="http://www.ituring.com.cn/article/66566">【翻译】Promises/A+规范</a></p>
+<p><strong>译者序：</strong>一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。</p>
+        
+          <p class="article-more-link">
+            <a href="/malnote/2015/06/12/Promises-A-Plus/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://malcolmyu.github.io/malnote/2015/06/12/Promises-A-Plus/" data-id="cid0cdlk40007221ru1uado2d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/翻译/">翻译</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Introduction-of-Jsdoc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/malnote/2015/04/25/Introduction-of-Jsdoc/" class="article-date">
+  <time datetime="2015-04-24T16:00:00.000Z" itemprop="datePublished">2015-04-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/malnote/categories/开发工具/">开发工具</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/malnote/2015/04/25/Introduction-of-Jsdoc/">JSDoc 配置使用概览</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>尽管一个好的项目文档能让项目增光添彩，但文档的作用始终是锦上添花而非雪中送炭，对于开发者来说，费尽心神的整理项目文档似乎也并非是一件令人愉快的事情。在使用题中所述的工具——jsdoc和编写本文的同时，笔者也是几度懊恼：这东西在项目中真的有用吗？是不是有点浪费时间？但随着项目体量的增大和开发人员的增多，使用并自动化维护一份好的文档所带来的优势也是逐渐显现。笔者也决心写一篇科普小文，说一说文档工具的使用注意要点。</p>
+        
+          <p class="article-more-link">
+            <a href="/malnote/2015/04/25/Introduction-of-Jsdoc/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://malcolmyu.github.io/malnote/2015/04/25/Introduction-of-Jsdoc/" data-id="cid0cdlkb000k221rr9th88hf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/jsdoc/">jsdoc</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Avalon-Event-Bus" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/malnote/2015/04/19/Avalon-Event-Bus/" class="article-date">
+  <time datetime="2015-04-18T16:00:00.000Z" itemprop="datePublished">2015-04-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/malnote/categories/源码分析/">源码分析</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/malnote/2015/04/19/Avalon-Event-Bus/">avalon 事件总线与依赖调度系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在工作中经常使用到<a href="http://www.cnblogs.com/rubylouvre/">司徒</a>的 <a href="https://github.com/RubyLouvre/avalon">avalon</a> ，由于坑点太多，有时需要经常查阅其源码实现。而 avalon 由于方兴未艾，网上对其进行源码解析的文章并不多，查了半天也就只有这篇 <a href="http://www.cnblogs.com/sskyy/p/3679572.html">MVVM 大比拼</a>，以及这篇 <a href="http://www.cnblogs.com/aaronjs/archive/2013/06/16/3138631.html">avalon 源码分析</a>。个人认为这两篇文章写得都并不算好，其一是成文较早，研究的源码还是 1.2.5 版本，而目前的新版本已经到了 1.4+，比之前不知道高到哪里去。其二是大比拼一文作者阅码无数，心中早已无码，写分析只观其大要，似乎在和原作者谈笑风生；而后者的分析仿佛又只是对源码的粗略通读，也没怎么经过实践，有些图样图森破。因此自己决定安下心来写点源码分析。</p>
+        
+          <p class="article-more-link">
+            <a href="/malnote/2015/04/19/Avalon-Event-Bus/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://malcolmyu.github.io/malnote/2015/04/19/Avalon-Event-Bus/" data-id="cid0cdlja0000221r9b3ht640" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/avalon/">avalon</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Collaborating-Syncing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/malnote/2015/04/19/Collaborating-Syncing/" class="article-date">
+  <time datetime="2015-04-18T16:00:00.000Z" itemprop="datePublished">2015-04-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/malnote/categories/技术研究/">技术研究</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/malnote/2015/04/19/Collaborating-Syncing/">协作同步</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协作的方式是开发者的工作副本与中央仓库互相发送变更记录。</p>
+        
+          <p class="article-more-link">
+            <a href="/malnote/2015/04/19/Collaborating-Syncing/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://malcolmyu.github.io/malnote/2015/04/19/Collaborating-Syncing/" data-id="cid0cdlke000p221rz5f8xkl0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Git/">Git</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaScript-Promise-In-Wicked-Detail" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/malnote/2014/08/30/JavaScript-Promise-In-Wicked-Detail/" class="article-date">
+  <time datetime="2014-08-29T16:00:00.000Z" itemprop="datePublished">2014-08-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/malnote/categories/技术研究/">技术研究</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/malnote/2014/08/30/JavaScript-Promise-In-Wicked-Detail/">JavaScript Promise 探微</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原文链接：<a href="http://www.mattgreer.org/articles/promises-in-wicked-detail/">JavaScript Promises … In Wicked Detail</a></p>
+<p>我在 JavaScript 中使用 Promise 已经有一段时间了，目前我已经能高效的使用这一开始让我晕头转向的东西。但真要细说起来，我发现还是不能完全理解它的实现原理，这也正是本文写作的目的所在。如果诸位读者也处在一知半解的状态，那请读完这篇文章，相信你也会像我一样对 Promise 有更好的理解。</p>
+        
+          <p class="article-more-link">
+            <a href="/malnote/2014/08/30/JavaScript-Promise-In-Wicked-Detail/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://malcolmyu.github.io/malnote/2014/08/30/JavaScript-Promise-In-Wicked-Detail/" data-id="cid0cdlk7000f221r2qhsoxn5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/翻译/">翻译</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">malcolm-blog</a>
+      &copy; 2015 malcolm yu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/malnote/js/jquery.min.js" type="text/javascript"></script>
+<script src="/malnote/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/malnote/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/malnote/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/malnote/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

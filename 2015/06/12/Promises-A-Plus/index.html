@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Promise A+ 规范 | malcolm-blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="英文原文：Promise/A+图灵译文：【翻译】Promises/A+规范
+译者序：一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Promise A+ 规范">
+<meta property="og:url" content="http://malcolmyu.github.io/malnote/2015/06/12/Promises-A-Plus/index.html">
+<meta property="og:site_name" content="malcolm-blog">
+<meta property="og:description" content="英文原文：Promise/A+图灵译文：【翻译】Promises/A+规范
+译者序：一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。">
+<meta property="og:updated_time" content="2015-08-06T15:07:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Promise A+ 规范">
+<meta name="twitter:description" content="英文原文：Promise/A+图灵译文：【翻译】Promises/A+规范
+译者序：一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/malnote/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">malcolm-blog</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about/index.html">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://malcolmyu.github.io/malnote"></form>
+        </div>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/ppoffice/hexo-theme-alex" title="Fork me on GitHub"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about/index.html" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://malcolmyu.github.io/malnote"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/开发工具/">开发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/技术研究/">技术研究</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/源码分析/">源码分析</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/06/">June 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/04/">April 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2014/08/">August 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/malnote/2015/06/12/Promises-A-Plus/">Promise A+ 规范</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2015/04/25/Introduction-of-Jsdoc/">JSDoc 配置使用概览</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2015/04/19/Avalon-Event-Bus/">avalon 事件总线与依赖调度系统</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2015/04/19/Collaborating-Syncing/">协作同步</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2014/08/30/JavaScript-Promise-In-Wicked-Detail/">JavaScript Promise 探微</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/Javascript/">Javascript</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/avalon/">avalon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/jsdoc/">jsdoc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/翻译/">翻译</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/malnote/tags/Git/" style="font-size: 10px;">Git</a> <a href="/malnote/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/malnote/tags/Promise/" style="font-size: 15px;">Promise</a> <a href="/malnote/tags/avalon/" style="font-size: 10px;">avalon</a> <a href="/malnote/tags/jsdoc/" style="font-size: 10px;">jsdoc</a> <a href="/malnote/tags/翻译/" style="font-size: 15px;">翻译</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://hexo.io">Hexo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+        <section id="main"><article id="post-Promises-A-Plus" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/malnote/2015/06/12/Promises-A-Plus/" class="article-date">
+  <time datetime="2015-06-11T16:00:00.000Z" itemprop="datePublished">2015-06-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/malnote/categories/技术研究/">技术研究</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Promise A+ 规范
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#术语"><span class="toc-number">1.</span> <span class="toc-text">术语</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise"><span class="toc-number">1.1.</span> <span class="toc-text">Promise</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#thenable"><span class="toc-number">1.2.</span> <span class="toc-text">thenable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#值（value）"><span class="toc-number">1.3.</span> <span class="toc-text">值（value）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常（exception）"><span class="toc-number">1.4.</span> <span class="toc-text">异常（exception）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#据因（reason）"><span class="toc-number">1.5.</span> <span class="toc-text">据因（reason）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#要求"><span class="toc-number">2.</span> <span class="toc-text">要求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise_的状态"><span class="toc-number">2.1.</span> <span class="toc-text">Promise 的状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#等待态（Pending）"><span class="toc-number">2.1.1.</span> <span class="toc-text">等待态（Pending）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行态（Fulfilled）"><span class="toc-number">2.1.2.</span> <span class="toc-text">执行态（Fulfilled）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拒绝态（Rejected）"><span class="toc-number">2.1.3.</span> <span class="toc-text">拒绝态（Rejected）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Then_方法"><span class="toc-number">2.2.</span> <span class="toc-text">Then 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参数可选"><span class="toc-number">2.2.1.</span> <span class="toc-text">参数可选</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onFulfilled_特性"><span class="toc-number">2.2.2.</span> <span class="toc-text">onFulfilled 特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onRejected_特性"><span class="toc-number">2.2.3.</span> <span class="toc-text">onRejected 特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调用时机"><span class="toc-number">2.2.4.</span> <span class="toc-text">调用时机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调用要求"><span class="toc-number">2.2.5.</span> <span class="toc-text">调用要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多次调用"><span class="toc-number">2.2.6.</span> <span class="toc-text">多次调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回"><span class="toc-number">2.2.7.</span> <span class="toc-text">返回</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise_解决过程"><span class="toc-number">2.3.</span> <span class="toc-text">Promise 解决过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#x_与_promise_相等"><span class="toc-number">2.3.1.</span> <span class="toc-text">x 与 promise 相等</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#x_为_Promise"><span class="toc-number">2.3.2.</span> <span class="toc-text">x 为 Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#x_为对象或函数"><span class="toc-number">2.3.3.</span> <span class="toc-text">x 为对象或函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注释"><span class="toc-number">3.</span> <span class="toc-text">注释</span></a></li></ol>
+        
+        <p>英文原文：<a href="https://promisesaplus.com/" target="_blank" rel="external">Promise/A+</a><br>图灵译文：<a href="http://www.ituring.com.cn/article/66566" target="_blank" rel="external">【翻译】Promises/A+规范</a></p>
+<p><strong>译者序：</strong>一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。</p>
+<a id="more"></a>
+<p><strong>一个开放、健全且通用的 JavaScript Promise 标准。由开发者制定，供开发者参考。</strong></p>
+<hr>
+<p><strong>译文术语</strong></p>
+<ul>
+<li><strong>解决（fulfill）</strong>：指一个 promise 成功时进行的一系列操作，如状态的改变、回调的执行。虽然规范中用 <code>fulfill</code> 来表示解决，但在后世的 promise 实现多以 <code>resolve</code> 来指代之。</li>
+<li><strong>拒绝（reject）</strong>：指一个 promise 失败时进行的一系列操作。</li>
+<li><strong>终值（eventual value）</strong>：所谓终值，指的是 promise 被<strong>解决</strong>时传递给解决回调的值，由于 promise 有<strong>一次性</strong>的特征，因此当这个值被传递时，标志着 promise 等待态的结束，故称之终值，有时也直接简称为值（value）。</li>
+<li><strong>据因（reason）</strong>：也就是拒绝原因，指在 promise 被<strong>拒绝</strong>时传递给拒绝回调的值。</li>
+</ul>
+<hr>
+<p>Promise 表示一个异步操作的最终结果，与之进行交互的方式主要是 <code>then</code> 方法，该方法注册了两个回调函数，用于接收 promise 的终值或本 promise 不能执行的原因。</p>
+<p>本规范详细列出了 <code>then</code> 方法的执行过程，所有遵循 Promises/A+ 规范实现的 promise 均可以本标准作为参照基础来实施 <code>then</code> 方法。因而本规范是十分稳定的。尽管 Promise/A+ 组织有时可能会修订本规范，但主要是为了处理一些特殊的边界情况，且这些改动都是微小且向下兼容的。如果我们要进行大规模不兼容的更新，我们一定会在事先进行谨慎地考虑、详尽的探讨和严格的测试。</p>
+<p>从历史上说，本规范实际上是把之前 <a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">Promise/A 规范</a> 中的建议明确成为了行为标准：我们一方面扩展了原有规范约定俗成的行为，一方面删减了原规范的一些特例情况和有问题的部分。</p>
+<p>最后，核心的 Promises/A+ 规范不设计如何创建、解决和拒绝 promise，而是专注于提供一个通用的 <code>then</code> 方法。上述对于 promises 的操作方法将来在其他规范中可能会提及。</p>
+<h1 id="术语">术语</h1><hr>
+<h2 id="Promise">Promise</h2><p>promise 是一个拥有 <code>then</code> 方法的对象或函数，其行为符合本规范；</p>
+<h2 id="thenable">thenable</h2><p>是一个定义了 <code>then</code> 方法的对象或函数，文中译作“拥有 <code>then</code> 方法”；</p>
+<h2 id="值（value）">值（value）</h2><p>指任何 JavaScript 的合法值（包括 <code>undefined</code> , thenable 和 promise）；</p>
+<h2 id="异常（exception）">异常（exception）</h2><p>是使用 <code>throw</code> 语句抛出的一个值。</p>
+<h2 id="据因（reason）">据因（reason）</h2><p>表示一个 promise 的拒绝原因。</p>
+<h1 id="要求">要求</h1><hr>
+<h2 id="Promise_的状态">Promise 的状态</h2><p>一个 Promise 的当前状态必须为以下三种状态中的一种：<strong>等待态（Pending）</strong>、<strong>执行态（Fulfilled）</strong>和<strong>拒绝态（Rejected）</strong>。</p>
+<h3 id="等待态（Pending）">等待态（Pending）</h3><p>处于等待态时，promise 需满足以下条件：</p>
+<ul>
+<li>可以迁移至执行态或拒绝态</li>
+</ul>
+<h3 id="执行态（Fulfilled）">执行态（Fulfilled）</h3><p>处于执行态时，promise 需满足以下条件：</p>
+<ul>
+<li>不能迁移至其他任何状态</li>
+<li>必须拥有一个<strong>不可变</strong>的终值</li>
+</ul>
+<h3 id="拒绝态（Rejected）">拒绝态（Rejected）</h3><p>处于拒绝态时，promise 需满足以下条件：</p>
+<ul>
+<li>不能迁移至其他任何状态</li>
+<li>必须拥有一个<strong>不可变</strong>的据因</li>
+</ul>
+<p>这里的不可变指的是恒等（即可用 <code>===</code> 判断相等），而不是意味着更深层次的不可变（<strong>译者注：</strong>盖指当 value 或 reason 不是基本值时，只要求其引用地址相等，但属性值可被更改）。</p>
+<h2 id="Then_方法"><strong>Then 方法</strong></h2><p>一个 promise 必须提供一个 <code>then</code> 方法以访问其当前值、终值和据因。</p>
+<p>promise 的 <code>then</code> 方法接受两个参数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise.then(onFulfilled, onRejected)</span><br></pre></td></tr></table></figure>
+<h3 id="参数可选">参数可选</h3><p><code>onFulfilled</code> 和 <code>onRejected</code> 都是可选参数。</p>
+<ul>
+<li>如果 <code>onFulfilled</code> 不是函数，其必须被忽略</li>
+<li>如果 <code>onRejected</code> 不是函数，其必须被忽略</li>
+</ul>
+<h3 id="onFulfilled_特性"><code>onFulfilled</code> 特性</h3><p>如果 <code>onFulfilled</code> 是函数：</p>
+<ul>
+<li>当 <code>promise</code> 执行结束后其必须被调用，其第一个参数为 <code>promise</code> 的终值</li>
+<li>在 <code>promise</code> 执行结束前其不可被调用</li>
+<li>其调用次数不可超过一次</li>
+</ul>
+<h3 id="onRejected_特性"><code>onRejected</code> 特性</h3><p>如果 <code>onRejected</code> 是函数：</p>
+<ul>
+<li>当 <code>promise</code> 被拒绝执行后其必须被调用，其第一个参数为 <code>promise</code> 的据因</li>
+<li>在 <code>promise</code> 被拒绝执行前其不可被调用</li>
+<li>其调用次数不可超过一次</li>
+</ul>
+<h3 id="调用时机">调用时机</h3><p><code>onFulfilled</code> 和 <code>onRejected</code> 只有在<a href="http://es5.github.io/#x10.3" target="_blank" rel="external">执行环境</a>堆栈仅包含<strong>平台代码</strong>时才可被调用 <sup><a href="#note-1">注1</a></sup></p>
+<h3 id="调用要求">调用要求</h3><p><code>onFulfilled</code> 和 <code>onRejected</code> 必须被作为函数调用（即没有 <code>this</code> 值）<sup><a href="#note-2">注2</a></sup></p>
+<h3 id="多次调用">多次调用</h3><p><code>then</code> 方法可以被同一个 <code>promise</code> 调用多次</p>
+<ul>
+<li>当 <code>promise</code> 成功执行时，所有 <code>onFulfilled</code> 需按照其注册顺序依次回调</li>
+<li>当 <code>promise</code> 被拒绝执行时，所有的 <code>onRejected</code> 需按照其注册顺序依次回调</li>
+</ul>
+<h3 id="返回">返回</h3><p><code>then</code> 方法必须返回一个 <code>promise</code> 对象 <sup><a href="#note-3">注3</a></sup></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise2 = promise1.then(onFulfilled, onRejected);</span><br></pre></td></tr></table></figure>    
+<ul>
+<li>如果 <code>onFulfilled</code> 或者 <code>onRejected</code> 返回一个值 <code>x</code> ，则运行下面的 <strong>Promise 解决过程</strong>：<code>[[Resolve]](promise2, x)</code></li>
+<li>如果 <code>onFulfilled</code> 或者 <code>onRejected</code> 抛出一个异常 <code>e</code> ，则 <code>promise2</code> 必须拒绝执行，并返回拒因 <code>e</code></li>
+<li>如果 <code>onFulfilled</code> 不是函数且 <code>promise1</code> 成功执行， <code>promise2</code> 必须成功执行并返回相同的值</li>
+<li>如果 <code>onRejected</code> 不是函数且 <code>promise1</code> 拒绝执行， <code>promise2</code> 必须拒绝执行并返回相同的据因</li>
+</ul>
+<p><strong>译者注：</strong>理解上面的“返回”部分非常重要，即：<strong>不论 <code>promise1</code> 被 reject 还是被 resolve 时 <code>promise2</code> 都会被 resolve，只有出现异常时才会被 rejected</strong>。</p>
+<h2 id="Promise_解决过程"><strong>Promise 解决过程</strong></h2><p><strong>Promise 解决过程</strong>是一个抽象的操作，其需输入一个 <code>promise</code> 和一个值，我们表示为 <code>[[Resolve]](promise, x)</code>，如果 <code>x</code> 有 <code>then</code> 方法且看上去像一个 Promise ，解决程序即尝试使 <code>promise</code> 接受 <code>x</code> 的状态；否则其用 <code>x</code> 的值来执行 <code>promise</code> 。</p>
+<p>这种 <em>thenable</em> 的特性使得 Promise 的实现更具有通用性：只要其暴露出一个遵循 Promise/A+ 协议的 <code>then</code> 方法即可；这同时也使遵循 Promise/A+ 规范的实现可以与那些不太规范但可用的实现能良好共存。</p>
+<p>运行 <code>[[Resolve]](promise, x)</code> 需遵循以下步骤：</p>
+<h3 id="x_与_promise_相等"><code>x</code> 与 <code>promise</code> 相等</h3><p>如果 <code>promise</code> 和 <code>x</code> 指向同一对象，以 <code>TypeError</code> 为据因拒绝执行 <code>promise</code></p>
+<h3 id="x_为_Promise"><code>x</code> 为 Promise</h3><p>如果 <code>x</code> 为 Promise ，则使 <code>promise</code> 接受 <code>x</code> 的状态 <sup><a href="#note-4">注4</a></sup>：</p>
+<ul>
+<li>如果 <code>x</code> 处于等待态， <code>promise</code> 需保持为等待态直至 <code>x</code> 被执行或拒绝</li>
+<li>如果 <code>x</code> 处于执行态，用相同的值执行 <code>promise</code></li>
+<li>如果 <code>x</code> 处于拒绝态，用相同的据因拒绝 <code>promise</code></li>
+</ul>
+<h3 id="x_为对象或函数"><code>x</code> 为对象或函数</h3><p>如果 <code>x</code> 为对象或者函数：</p>
+<ul>
+<li>把 <code>x.then</code> 赋值给 <code>then</code> <sup><a href="#note-5">注5</a></sup></li>
+<li>如果取 <code>x.then</code> 的值时抛出错误 <code>e</code> ，则以 <code>e</code> 为据因拒绝 <code>promise</code></li>
+<li>如果 <code>then</code> 是函数，将 <code>x</code> 作为函数的作用域 <code>this</code> 调用之。传递两个回调函数作为参数，第一个参数叫做 <code>resolvePromise</code> ，第二个参数叫做 <code>rejectPromise</code>:<ul>
+<li>如果 <code>resolvePromise</code> 以值 <code>y</code> 为参数被调用，则运行 <code>[[Resolve]](promise, y)</code></li>
+<li>如果 <code>rejectPromise</code> 以据因 <code>r</code> 为参数被调用，则以据因 <code>r</code> 拒绝 <code>promise</code></li>
+<li>如果 <code>resolvePromise</code> 和 <code>rejectPromise</code> 均被调用，或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用</li>
+<li>如果调用 <code>then</code> 方法抛出了异常 <code>e</code>：<ul>
+<li>如果 <code>resolvePromise</code> 或 <code>rejectPromise</code> 已经被调用，则忽略之</li>
+<li>否则以 <code>e</code> 为据因拒绝 <code>promise</code></li>
+</ul>
+</li>
+<li>如果 <code>then</code> 不是函数，以 <code>x</code> 为参数执行 <code>promise</code></li>
+</ul>
+</li>
+<li>如果 <code>x</code> 不为对象或者函数，以 <code>x</code> 为参数执行 <code>promise</code></li>
+</ul>
+<p>如果一个 promise 被一个循环的 <em>thenable</em> 链中的对象解决，而 <code>[[Resolve]](promise, thenable)</code> 的递归性质又使得其被再次调用，根据上述的算法将会陷入无限递归之中。算法虽不强制要求，但也鼓励施者检测这样的递归是否存在，若检测到存在则以一个可识别的 <code>TypeError</code> 为据因来拒绝 <code>promise</code> <sup><a href="#note-6">注6</a></sup>。</p>
+<h1 id="注释">注释</h1><hr>
+<ul>
+<li><p><b id="note-1">注1</b> 这里的<strong>平台代码</strong>指的是引擎、环境以及 promise 的实施代码。实践中要确保 <code>onFulfilled</code> 和 <code>onRejected</code> 方法异步执行，且应该在 <code>then</code> 方法被调用的那一轮事件循环之后的新执行栈中执行。这个事件队列可以采用“宏任务（macro-task）”机制或者“微任务（micro-task）”机制来实现。由于 promise 的实施代码本身就是平台代码（<strong>译者注：</strong>即都是 JavaScript），故代码自身在处理在处理程序时可能已经包含一个任务调度队列。</p>
+<p>  <strong>译者注：</strong>这里提及了 macrotask 和 microtask 两个概念，这表示异步任务的两种分类。在挂起任务时，JS 引擎会将所有任务按照类别分到这两个队列中，首先在 macrotask 的队列（这个队列也被叫做 task queue）中取出第一个任务，执行完毕后取出 microtask 队列中的所有任务顺序执行；之后再取 macrotask 任务，周而复始，直至两个队列的任务都取完。</p>
+<p>  两个类别的具体分类如下：</p>
+<ul>
+<li><strong>macro-task:</strong> script（整体代码）, <code>setTimeout</code>, <code>setInterval</code>, <code>setImmediate</code>, I/O, UI rendering</li>
+<li><p><strong>micro-task:</strong> <code>process.nextTick</code>, <code>Promises</code>（这里指浏览器实现的原生 Promise）, <code>Object.observe</code>, <code>MutationObserver</code></p>
+<p>详见 <a href="http://stackoverflow.com/questions/25915634/difference-between-microtask-and-macrotask-within-an-event-loop-context" target="_blank" rel="external">stackoverflow 解答</a> 或 <a href="http://wengeezhang.com/?p=11" target="_blank" rel="external">这篇博客</a></p>
+</li>
+</ul>
+</li>
+<li><p><b id="note-2">注2</b> 也就是说在<strong>严格模式（strict）</strong>中，函数 <code>this</code> 的值为 <code>undefined</code> ；在非严格模式中其为全局对象。</p>
+</li>
+<li><p><b id="note-3">注3</b> 代码实现在满足所有要求的情况下可以允许 <code>promise2 === promise1</code> 。每个实现都要文档说明其是否允许以及在何种条件下允许 <code>promise2 === promise1</code> 。</p>
+</li>
+<li><p><b id="note-4">注4</b> 总体来说，如果 <code>x</code> 符合当前实现，我们才认为它是真正的 <em>promise</em> 。这一规则允许那些特例实现接受符合已知要求的 Promises 状态。</p>
+</li>
+<li><p><b id="note-5">注5</b> 这步我们先是存储了一个指向 <code>x.then</code> 的引用，然后测试并调用该引用，以避免多次访问 <code>x.then</code> 属性。这种预防措施确保了该属性的一致性，因为其值可能在检索调用时被改变。</p>
+</li>
+<li><p><b id="note-6">注6</b> 实现不应该对 <em>thenable</em> 链的深度设限，并假定超出本限制的递归就是无限循环。只有真正的循环递归才应能导致 <code>TypeError</code> 异常；如果一条无限长的链上 <em>thenable</em> 均不相同，那么递归下去永远是正确的行为。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://malcolmyu.github.io/malnote/2015/06/12/Promises-A-Plus/" data-id="cid0cdlk40007221ru1uado2d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/翻译/">翻译</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/malnote/2015/04/25/Introduction-of-Jsdoc/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JSDoc 配置使用概览</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">malcolm-blog</a>
+      &copy; 2015 malcolm yu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/malnote/js/jquery.min.js" type="text/javascript"></script>
+<script src="/malnote/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/malnote/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/malnote/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/malnote/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
