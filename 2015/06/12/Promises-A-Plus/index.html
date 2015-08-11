@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="malcolm-blog">
 <meta property="og:description" content="英文原文：Promise/A+图灵译文：【翻译】Promises/A+规范
 译者序：一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。">
-<meta property="og:updated_time" content="2015-08-06T15:07:52.000Z">
+<meta property="og:updated_time" content="2015-08-11T04:55:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Promise A+ 规范">
 <meta name="twitter:description" content="英文原文：Promise/A+图灵译文：【翻译】Promises/A+规范
@@ -80,7 +80,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/开发工具/">开发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/技术研究/">技术研究</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/源码分析/">源码分析</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/Git-魔导之路/">Git 魔导之路</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/开发工具/">开发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/技术研究/">技术研究</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/源码分析/">源码分析</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -89,7 +89,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/06/">June 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/04/">April 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2014/08/">August 2014</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/06/">June 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2014/08/">August 2014</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -101,6 +101,10 @@
       <ul>
         
           <li>
+            <a href="/malnote/2015/08/01/Collaborating-Syncing/">协作同步</a>
+          </li>
+        
+          <li>
             <a href="/malnote/2015/06/12/Promises-A-Plus/">Promise A+ 规范</a>
           </li>
         
@@ -110,10 +114,6 @@
         
           <li>
             <a href="/malnote/2015/04/19/Avalon-Event-Bus/">avalon 事件总线与依赖调度系统</a>
-          </li>
-        
-          <li>
-            <a href="/malnote/2015/04/19/Collaborating-Syncing/">协作同步</a>
           </li>
         
           <li>
@@ -257,7 +257,7 @@
 <li>当 <code>promise</code> 被拒绝执行时，所有的 <code>onRejected</code> 需按照其注册顺序依次回调</li>
 </ul>
 <h3 id="返回">返回</h3><p><code>then</code> 方法必须返回一个 <code>promise</code> 对象 <sup><a href="#note-3">注3</a></sup></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise2 = promise1.then(onFulfilled, onRejected);</span><br></pre></td></tr></table></figure>    
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise2 = promise1.then(onFulfilled, onRejected);</span><br></pre></td></tr></table></figure>
 <ul>
 <li>如果 <code>onFulfilled</code> 或者 <code>onRejected</code> 返回一个值 <code>x</code> ，则运行下面的 <strong>Promise 解决过程</strong>：<code>[[Resolve]](promise2, x)</code></li>
 <li>如果 <code>onFulfilled</code> 或者 <code>onRejected</code> 抛出一个异常 <code>e</code> ，则 <code>promise2</code> 必须拒绝执行，并返回拒因 <code>e</code></li>
@@ -321,7 +321,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://malcolmyu.github.io/malnote/2015/06/12/Promises-A-Plus/" data-id="cid0cdlk40007221ru1uado2d" class="article-share-link">Share</a>
+      <a data-url="http://malcolmyu.github.io/malnote/2015/06/12/Promises-A-Plus/" data-id="cid4la8o000073m1rernjy65e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/翻译/">翻译</a></li></ul>
@@ -331,6 +331,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/malnote/2015/08/01/Collaborating-Syncing/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          协作同步
+        
+      </div>
+    </a>
   
   
     <a href="/malnote/2015/04/25/Introduction-of-Jsdoc/" id="article-nav-older" class="article-nav-link-wrap">
@@ -343,6 +352,25 @@
   
 </article>
 
+
+<section id="comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="post-Promises-A-Plus" data-title="Promise A+ 规范" data-url="http://malcolmyu.github.io/malnote/2015/06/12/Promises-A-Plus/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:'malcolmyu'};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+</section>
 </section>
       </div>
       <footer id="footer">

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>协作同步 | malcolm-blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协作的方式是开发者的工作副本与中央仓库互相发送变更记录。这与 Git 的协作模式有所不同，Git 中每个开发者都拥有仓库的副本，以及完整的本地历史和分支结构。用户通常只需要提供一系列的提交而不是单个的变更记录。Git 允许我们在仓库之间共享整个分支，而不是单单的从工作副本提交一个变更记录到中央仓库去。
+下面介绍的命令可以帮助我们管理与其他仓库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="协作同步">
+<meta property="og:url" content="http://malcolmyu.github.io/malnote/2015/08/01/Collaborating-Syncing/index.html">
+<meta property="og:site_name" content="malcolm-blog">
+<meta property="og:description" content="SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协作的方式是开发者的工作副本与中央仓库互相发送变更记录。这与 Git 的协作模式有所不同，Git 中每个开发者都拥有仓库的副本，以及完整的本地历史和分支结构。用户通常只需要提供一系列的提交而不是单个的变更记录。Git 允许我们在仓库之间共享整个分支，而不是单单的从工作副本提交一个变更记录到中央仓库去。
+下面介绍的命令可以帮助我们管理与其他仓库">
+<meta property="og:image" content="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-synchero.svg">
+<meta property="og:image" content="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync01.svg">
+<meta property="og:image" content="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync02.svg">
+<meta property="og:image" content="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync03.svg">
+<meta property="og:updated_time" content="2015-08-11T05:04:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="协作同步">
+<meta name="twitter:description" content="SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协作的方式是开发者的工作副本与中央仓库互相发送变更记录。这与 Git 的协作模式有所不同，Git 中每个开发者都拥有仓库的副本，以及完整的本地历史和分支结构。用户通常只需要提供一系列的提交而不是单个的变更记录。Git 允许我们在仓库之间共享整个分支，而不是单单的从工作副本提交一个变更记录到中央仓库去。
+下面介绍的命令可以帮助我们管理与其他仓库">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/malnote/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">malcolm-blog</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about/index.html">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://malcolmyu.github.io/malnote"></form>
+        </div>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/ppoffice/hexo-theme-alex" title="Fork me on GitHub"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about/index.html" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://malcolmyu.github.io/malnote"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/Git-魔导之路/">Git 魔导之路</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/开发工具/">开发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/技术研究/">技术研究</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/malnote/categories/源码分析/">源码分析</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/06/">June 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/malnote/archives/2014/08/">August 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/malnote/2015/08/01/Collaborating-Syncing/">协作同步</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2015/06/12/Promises-A-Plus/">Promise A+ 规范</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2015/04/25/Introduction-of-Jsdoc/">JSDoc 配置使用概览</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2015/04/19/Avalon-Event-Bus/">avalon 事件总线与依赖调度系统</a>
+          </li>
+        
+          <li>
+            <a href="/malnote/2014/08/30/JavaScript-Promise-In-Wicked-Detail/">JavaScript Promise 探微</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/Javascript/">Javascript</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/avalon/">avalon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/jsdoc/">jsdoc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/malnote/tags/翻译/">翻译</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/malnote/tags/Git/" style="font-size: 10px;">Git</a> <a href="/malnote/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/malnote/tags/Promise/" style="font-size: 15px;">Promise</a> <a href="/malnote/tags/avalon/" style="font-size: 10px;">avalon</a> <a href="/malnote/tags/jsdoc/" style="font-size: 10px;">jsdoc</a> <a href="/malnote/tags/翻译/" style="font-size: 15px;">翻译</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://hexo.io">Hexo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+        <section id="main"><article id="post-Collaborating-Syncing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/malnote/2015/08/01/Collaborating-Syncing/" class="article-date">
+  <time datetime="2015-07-31T16:00:00.000Z" itemprop="datePublished">2015-08-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/malnote/categories/Git-魔导之路/">Git 魔导之路</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      协作同步
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#git_remote"><span class="toc-number">1.</span> <span class="toc-text">git remote</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">1.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#详述"><span class="toc-number">1.2.</span> <span class="toc-text">详述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#origin_远端"><span class="toc-number">1.2.1.</span> <span class="toc-text">origin 远端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#仓库_URLs"><span class="toc-number">1.2.2.</span> <span class="toc-text">仓库 URLs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例"><span class="toc-number">1.2.3.</span> <span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git_fetch"><span class="toc-number">2.</span> <span class="toc-text">git fetch</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-1"><span class="toc-number">2.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#详述-1"><span class="toc-number">2.2.</span> <span class="toc-text">详述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#远端分支"><span class="toc-number">2.2.1.</span> <span class="toc-text">远端分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例-1"><span class="toc-number">2.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git_pull"><span class="toc-number">3.</span> <span class="toc-text">git pull</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-2"><span class="toc-number">3.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#详述-2"><span class="toc-number">3.2.</span> <span class="toc-text">详述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#拉取和衍合"><span class="toc-number">3.2.1.</span> <span class="toc-text">拉取和衍合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例-2"><span class="toc-number">3.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git_push"><span class="toc-number">4.</span> <span class="toc-text">git push</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-3"><span class="toc-number">4.1.</span> <span class="toc-text">使用</span></a></li></ol></li></ol>
+        
+        <p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-synchero.svg" alt="同步"></p>
+<p>SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协作的方式是开发者的工作副本与中央仓库互相发送变更记录。这与 Git 的协作模式有所不同，Git 中每个开发者都拥有仓库的副本，以及完整的本地历史和分支结构。用户通常只需要提供一系列的提交而不是单个的变更记录。Git 允许我们在仓库之间共享整个分支，而不是单单的从工作副本提交一个变更记录到中央仓库去。</p>
+<p>下面介绍的命令可以帮助我们管理与其他仓库的连接：我们可以使用“推送”分支的方式将本地历史发布到其他仓库，也可以使用“拉取”分支的方式将别人贡献的代码获取到本地。</p>
+<a id="more"></a>
+<h1 id="git_remote">git remote</h1><p><code>git remote</code> 命令让我们可以创建、查看和删除与其他仓库的链接。远端链接不是直接连到别的仓库，它更像是一个书签一样的快捷方式：它并没有提供与其他仓库的实时连接，而是提供了一个方便好记的别名以指代那些不那么方便的 URL。</p>
+<p>比如下图就展示了从我们本地仓库链接到中央仓库和其他开发者仓库的两个链接。我们可以不用 URLs 全称来表示，而只用给其他的 Git 命令传递诸如 origin 和 john 这样的缩写就行。</p>
+<p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync01.svg" alt="git remote 示例"></p>
+<h2 id="使用">使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote</span><br></pre></td></tr></table></figure>
+<p>展示你与其他仓库之间的全部远端链接（仅有别名）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+<p>与上条命令相同，不过带上了每个链接的 URL。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add &lt;name&gt; &lt;url&gt;</span><br></pre></td></tr></table></figure>
+<p>创建一个连接到新远端仓库的链接。添加链接之后，我们就可以在其他的 Git 命令中方便地使用 <code>&lt;name&gt;</code> 作为指代 url 的简写。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote rm &lt;name&gt;</span><br></pre></td></tr></table></figure>
+<p>删除名为 <code>&lt;name&gt;</code> 的远端链接。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote rename &lt;old-name&gt; &lt;new-name&gt;</span><br></pre></td></tr></table></figure>
+<p>将一个名为 <code>&lt;old-name&gt;</code> 的链接重命名为 <code>&lt;new-name&gt;</code></p>
+<h2 id="详述">详述</h2><p>Git 的设计初衷是给每一位开发者一个完整而独立的开发环境，这就意味着    信息不能自动的在库间传递。相反，开发者需要手动的将上游提交拉取到本地，或者手动的将本地提交推送会中央仓库。<code>git remote</code> 命令仅仅就是一个给那些带有“共享”性质的 Git 命令（<strong>译者注：</strong>如本文后面讲解的 <code>push</code> <code>pull</code> 命令等）传递 URL 的一个便捷方式。</p>
+<h3 id="origin_远端">origin 远端</h3><p>当你使用 <code>git clone</code> 命令克隆一个仓库时，Git 会自动创建一个叫做 origin 的远程链接指向被克隆的仓库。这对开发者来说十分有益：当我们在本地创建一个中央仓库的副本时，可以便捷的推动本地提交或拉取远端修改。这也是大多数基于 Git 的项目管中央仓库叫“origin”的原因。</p>
+<h3 id="仓库_URLs">仓库 URLs</h3><p>Git 提供了许多方式以作为远端仓库的引用。两个最常用的方式就是通过 HTTP 协议和 SSH 协议。HTTP 是对仓库进行匿名且只有只读权限的访问的一条便捷方式，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://host/path/to/repo.git</span><br></pre></td></tr></table></figure>
+<p>但是通常情况下给一个 HTTP 地址推送提交是不太可能的（我们应该也不会允许匿名用户推送提交）。我们应该使用 SSH 协议以获取读写权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh://user@host/path/to/repo.git</span><br></pre></td></tr></table></figure>
+<p>我们在主机上需要有一个可用的 SSH 账号，除此之外，Git 也支持带有权限校验的访问（SSH 自带的）。</p>
+<h3 id="示例">示例</h3><p>除了 origin 以外，连接同事的仓库也是十分方便的。例如你的好基友 John 维护着一个地址是 <code>dev.example.com/john.git</code> 公用仓库，你就可以这样添加一个链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add john http://dev.example.com/john.git</span><br></pre></td></tr></table></figure>
+<p>通过这种到个人开发者仓库的连接方式，使中央仓库之外的协作成为可能。这对于小团队开发大项目来说十分有用。</p>
+<h1 id="git_fetch">git fetch</h1><p><code>git fetch</code> 命令从远端仓库将提交导入到本地。导入的提交已然存储在远端分支而非我们工作的本地分支。这让我们在将远端提交整合到本地之前可以有机会审核一下代码。</p>
+<h2 id="使用-1">使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch &lt;remote&gt;</span><br></pre></td></tr></table></figure>
+<p>拉取该仓库的全部分支，这一操作也会把所有必要的提交和文件都下载下来。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br></pre></td></tr></table></figure>
+<p>和上一命令类似，但仅拉取特定的分支。</p>
+<h2 id="详述-1">详述</h2><p>当我们想查看其他人的工作时，可以采用 fetch 操作。既然 fetch 的参数代表着一个远端分支，那这一操作就对本地开发工作完全没有影响。fetch 为我们提供了一种不整合、先审核的安全的审核提交的方式。这有点像 svn update，它让我们看到中央仓库的历史情况，却不强制我们实际将更改并入本地仓库。</p>
+<h3 id="远端分支">远端分支</h3><p>远端分支和本地分支很像，只不过远端包含了来自其他人仓库的提交。我们可以像查看本地分支一样查看远端分支，但是这会使我们的工程进入“分离头指针”的状态（正如检出到一个旧有提交的状态一样），我们可以将其当做一个只读的分支。想要查看远端分支，我们只需要给 <code>git branch</code> 命令加上一个 <code>-r</code> 参数。远端的分支会以远端的别名作为前缀，因此我们不会把它们和本地分支弄混。下面这个例子就展示了我们在获取 origin 的远端时可能看到的分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git branch -r</span><br><span class="line"><span class="comment"># origin/master</span></span><br><span class="line"><span class="comment"># origin/develop</span></span><br><span class="line"><span class="comment"># origin/some-feature</span></span><br></pre></td></tr></table></figure>
+<p>然后我们可以通过 <code>git checkout</code> 和 <code>git log</code> 的命令来检视这些分支。如果我们觉得一个远端分支的更改靠谱，就可以使用 <code>git merge</code> 命令将它整合到一个本地分支。与 SVN 不同的是，同步远端分支到本地的操作是 fetch 和 merge 两个过程。但 Git 却可以方便的使用 <code>git pull</code> 命令来完成这两个过程。</p>
+<h2 id="示例-1">示例</h2><p>这一示例展示了同步中央仓库的 <code>master</code> 分支到本地仓库这一典型工作流程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin</span><br></pre></td></tr></table></figure>
+<p>这一步会展示已下载的分支们：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a1e8fb5..<span class="number">45</span>e66a4 master -&gt; origin/master</span><br><span class="line">a1e8fb5..<span class="number">9</span>e8ab1c develop -&gt; origin/develop</span><br><span class="line">* [new branch] some-feature -&gt; origin/some-feature</span><br></pre></td></tr></table></figure>
+<p>从新的远端分支获取的提交们在下表中以方块显示，而之前在本地的提交以圆圈显示。如图所示， <code>git fetch</code> 使我们访问到另一个仓库的全部分支结构。</p>
+<p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync02.svg" alt="git fetch 获取远端分支结构">    </p>
+<p>想查看上游的 master 分支添加了哪些提交，我们可以使用 <code>git log</code> 命令，并添加 <code>origin/master</code> 的过滤器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline master..origin/master</span><br></pre></td></tr></table></figure>
+<p>使用如下的命令可以将我们认可的分支合并到我们本地的 <code>master</code> 分支上：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git <span class="built_in">log</span> origin/master</span><br></pre></td></tr></table></figure>
+<p>之后我们便可以使用 <code>git merge</code> 命令合并 <code>origin/master</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge origin/master</span><br></pre></td></tr></table></figure>
+<p>现在 origin/master 和本地的 master 分支都指向了同一提交，我们已经完成了与上游开发内容的同步。</p>
+<h1 id="git_pull">git pull</h1><p>将上游更改合并到本地仓库在基于 Git 的协作工作流中是一个常见的操作。我们已经知道如何用 <code>git fetch</code> 和 <code>git merge</code> 来完成这一操作，但是 <code>git pull</code> 将这两部操作整合为一个命令。    </p>
+<h2 id="使用-2">使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull &lt;remote&gt;</span><br></pre></td></tr></table></figure>
+<p>这一命令表示获取制定的当前分支的远端副本并将其立即合并到本地副本中。这一命令与先 <code>git fetch &lt;remote&gt;</code> 然后 <code>git merge origin/&lt;current-branch&gt;</code> 效用相同。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull --rebase &lt;remote&gt;</span><br></pre></td></tr></table></figure>
+<p>和上一命令相同，不过不是使用 <code>git merge</code> 来整合远端分支，而是使用 <code>git rebase</code>。    </p>
+<h2 id="详述-2">详述</h2><p>我们可以把 <code>git pull</code> 理解成 <code>svn update</code> 的 Git 版本。这是一个将上游更改同步到本地仓库的快捷方式。下面的图解释了 pull 过程的每一步骤。</p>
+<p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync03.svg" alt="git pull 过程"></p>
+<p>本来我们以为我们本地的仓库处于已同步状态，但是呢通过 <code>git fetch</code> 我们发现 origin 上的 master 在我们上次检查之后又有新的提交。于是 <code>git merge</code> 命令直接将远端 master 上的新内容整合到了本地。</p>
+<h3 id="拉取和衍合">拉取和衍合</h3><p><code>--rebase</code> 参数可以用组织不必要提交的方式来保证线性提交历史。相比较合并，许多开发者更喜欢衍合一些，因为衍合的意思就像：“我想要将我的更改放在其他人的更改之上”。由于这个原因，在 <code>git pull</code> 时使用 <code>--rebase</code> 参数比不带衍合参数更像 <code>svn update</code> 一些。</p>
+<p>实际上，使用 <code>--rebase</code> 参数拉取实在是太常用了，因此都有一个专用的配置项来配置它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global branch.autosetuprebase always</span><br></pre></td></tr></table></figure>
+<p>运行了上面的命令之后，所有的 <code>git pull</code> 命令就会自动通过 <code>git rebase</code> 而非 <code>git merge</code> 来进行分支整合。</p>
+<h2 id="示例-2">示例</h2><p>下例展示了如何从中央仓库的 master 分支上同步代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git pull --rebase origin</span><br></pre></td></tr></table></figure>
+<p>这就便捷的将我们本地的更改放在了其他人提交的代码的顶部。</p>
+<h1 id="git_push">git push</h1><p>推送就是我们将本地仓库的提交传送到远端仓库的方法。它是 <code>git fetch</code> 的反面：获取将提交引入本地分支，推送将提交导出到远端分支。推送本身可能会导致重写提交，因此我们在使用时还是要多加注意。这些内容下面会进行详细的讨论。</p>
+<h2 id="使用-3">使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://malcolmyu.github.io/malnote/2015/08/01/Collaborating-Syncing/" data-id="cid4la8of000p3m1rwkc5gdg5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/Git/">Git</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/malnote/2015/06/12/Promises-A-Plus/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Promise A+ 规范</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="post-Collaborating-Syncing" data-title="协作同步" data-url="http://malcolmyu.github.io/malnote/2015/08/01/Collaborating-Syncing/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:'malcolmyu'};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+</section>
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">malcolm-blog</a>
+      &copy; 2015 malcolm yu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/malnote/js/jquery.min.js" type="text/javascript"></script>
+<script src="/malnote/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/malnote/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/malnote/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/malnote/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

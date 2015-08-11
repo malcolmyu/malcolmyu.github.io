@@ -1186,6 +1186,7 @@ a.article-title:hover {
   padding: 0.3em 0.5em 0.1em;
 }
 .article-entry pre code {
+  color: #999;
   background: none;
   text-shadow: none;
   padding: 0;
