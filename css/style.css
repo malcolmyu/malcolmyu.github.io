@@ -1158,12 +1158,14 @@ a.article-title:hover {
 }
 .article-entry pre,
 .article-entry .highlight {
-  background: #2d2d2d;
+  background: #253238;
   margin: 0 0 28px 0;
   padding: 15px 20px;
   border-style: solid;
   border-color: #ddd;
   border-width: 1px 0;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
   overflow: auto;
   color: #ccc;
   line-height: 22px;
@@ -1175,7 +1177,7 @@ a.article-title:hover {
 }
 .article-entry pre,
 .article-entry code {
-  font-family: Consolas, Monaco, Menlo, Consolas, monospace;
+  font-family: Monaco, "Lucida Console", monospace;
 }
 .article-entry code {
   color: #2c3e50;
@@ -1183,7 +1185,7 @@ a.article-title:hover {
   -webkit-border-radius: 0.3em;
   border-radius: 0.3em;
   text-shadow: 0 1px #fff;
-  padding: 0.3em 0.5em 0.1em;
+  padding: 0.1em 0.5em;
 }
 .article-entry pre code {
   color: #999;
@@ -1233,12 +1235,12 @@ a.article-title:hover {
   border-style: solid;
   border-color: #ddd;
   border-width: 1px 0;
-  background: #2d2d2d;
+  background: #253238;
   padding: 15px 0px 15px 0;
 }
 .article-entry .gist .gist-file {
   border: none;
-  font-family: Consolas, Monaco, Menlo, Consolas, monospace;
+  font-family: Monaco, "Lucida Console", monospace;
   margin: 0;
 }
 .article-entry .gist .gist-file .gist-data {
@@ -1259,7 +1261,7 @@ a.article-title:hover {
   border: none;
 }
 .article-entry .gist .gist-file .gist-meta {
-  background: #2d2d2d;
+  background: #253238;
   color: #999;
   font: 0.85em "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-shadow: 0 0;
