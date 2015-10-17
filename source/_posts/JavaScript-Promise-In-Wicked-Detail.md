@@ -21,19 +21,19 @@ toc: true
 
 让我们从最简单的例子开始实现我们的 Promise 实例，我想将这样的写法：
 
-{% codeblock lang:javascript %}
-    doSomething(function(value) {
-      console.log('Got a value:' + value);
-    });
-{% endcodeblock %}
+```javascript
+doSomething(function(value) {
+  console.log('Got a value:' + value);
+});
+```
 
 实现为这样的写法：
 
-{% codeblock lang:javascript %}
-    doSomething().then(function(value) {
-      console.log('Got a value:' + value);
-    });
-{% endcodeblock %}
+```javascript
+doSomething().then(function(value) {
+  console.log('Got a value:' + value);
+});
+```
 
 为了实现这个效果，我们只需要将 `donSomething()` 函数从这样的形式：
 
