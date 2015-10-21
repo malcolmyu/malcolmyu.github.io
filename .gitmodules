@@ -1,0 +1,3 @@
+[submodule "themes/alex"]
+    path = themes/alex
+    url = https://github.com/malcolmyu/hexo-theme-alex.git
