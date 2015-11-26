@@ -186,7 +186,7 @@ promise 的 `then` 方法接受两个参数：
 # 注释
 ---
 
-- <b id="note-1">注1</b> 这里的**平台代码**指的是引擎、环境以及 promise 的实施代码。实践中要确保 `onFulfilled` 和 `onRejected` 方法异步执行，且应该在 `then` 方法被调用的那一轮事件循环之后的新执行栈中执行。这个事件队列可以采用“宏任务（macro-task）”机制或者“微任务（micro-task）”机制来实现。由于 promise 的实施代码本身就是平台代码（**译者注：** 即都是 JavaScript），故代码自身在处理在处理程序时可能已经包含一个任务调度队列。
+- <b id="note-1">注1</b> 这里的**平台代码**指的是引擎、环境以及 promise 的实施代码。实践中要确保 `onFulfilled` 和 `onRejected` 方法异步执行，且应该在 `then` 方法被调用的那一轮事件循环之后的新执行栈中执行。这个事件队列可以采用“宏任务（macro-task）”机制或者“微任务（micro-task）”机制来实现。由于 promise 的实施代码本身就是平台代码（**译者注：** 即都是 JavaScript），故代码自身在处理在处理程序时可能已经包含一个任务调度队列或[『跳板』](https://en.wikipedia.org/wiki/Trampoline_(computing))。
 
 	**译者注：** 这里提及了 macrotask 和 microtask 两个概念，这表示异步任务的两种分类。在挂起任务时，JS 引擎会将所有任务按照类别分到这两个队列中，首先在 macrotask 的队列（这个队列也被叫做 task queue）中取出第一个任务，执行完毕后取出 microtask 队列中的所有任务顺序执行；之后再取 macrotask 任务，周而复始，直至两个队列的任务都取完。
 
@@ -213,3 +213,5 @@ promise 的 `then` 方法接受两个参数：
 [4]: #note-4
 [5]: #note-5
 [6]: #note-6
+
+
