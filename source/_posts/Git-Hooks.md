@@ -1,6 +1,6 @@
 title: Git 钩子
 date: 2015-10-16
-categories: [Git 魔导之路]
+categories: [Git魔导之路]
 tags: [Git]
 toc: true
 

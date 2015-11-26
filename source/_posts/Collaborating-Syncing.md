@@ -1,6 +1,6 @@
 title: 协作同步
 date: 2015-08-01
-categories: [Git 魔导之路]
+categories: [Git魔导之路]
 tags: [Git]
 toc: true
 
