@@ -1,6 +1,6 @@
 title: Promise A+ 规范
 date: 2015-06-12
-categories: [技术研究]
+categories: 技术研究
 tags: [翻译, Javascript, Promise]
 toc: true
 

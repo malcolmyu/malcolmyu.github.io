@@ -1,6 +1,6 @@
 title: JSDoc 配置使用概览
 date: 2015-04-25
-categories: [开发工具]
+categories: 开发工具
 tags: [jsdoc]
 toc: true
 
@@ -271,3 +271,4 @@ _参考链接_
 
 - [jsdoc - Github](https://github.com/jsdoc3/jsdoc)： jsdoc npm module 的 Github 地址
 - [jsdoc 官网](http://usejsdoc.org/index.html) ：jsdoc 官方文档
+

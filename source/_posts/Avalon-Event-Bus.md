@@ -1,6 +1,6 @@
 title: avalon 事件总线与依赖调度系统
 date: 2015-04-19
-categories: [源码分析]
+categories: 源码分析
 tags: [avalon, Javascript]
 
 ---
@@ -151,3 +151,4 @@ demo.a = 3;         // 输出3
 {% endcodeblock %}
 
 由于依赖调度与事件总线是两个不同的系统，因此 `$fire` 只能触发事件总线中挂载在 a 上的回调，而无法触发访问器；而由于访问器中在 set 时对两个系统都进行了触发，因此可以即同步视图，又能触发事件回调，所以可以使用 `$watch` 来监听属性值的变化。
+

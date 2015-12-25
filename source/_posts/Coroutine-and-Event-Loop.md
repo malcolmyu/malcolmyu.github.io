@@ -1,6 +1,6 @@
 title: 协程与事件循环
 date: 2015-11-18
-categories: [技术研究]
+categories: 技术研究
 tags: [协程, yield, event loop]
 toc: true
 

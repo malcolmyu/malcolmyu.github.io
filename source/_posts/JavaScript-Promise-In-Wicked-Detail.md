@@ -1,6 +1,6 @@
 title: JavaScript Promise 探微
 date: 2014-08-30
-categories: [技术研究]
+categories: 技术研究
 tags: [翻译, Javascript, Promise]
 toc: true
 
@@ -671,3 +671,5 @@ Promise 可以通过 `resolve()` 方法的孪生兄弟 —— `reject()` 方法�
  - [Q  的基本设计原理](https://github.com/kriskowal/q/blob/v1/design/README.js) 形式上和本文差不多的一篇文章，但细节上更加深入。作者就是 Q 之父 Kris Kowal。
  - [有关 done() 大法好不好的争论](https://github.com/domenic/promises-unwrapping/issues/19)
  - [扁平化的链式 Promise](http://solutionoptimist.com/2013/12/27/javascript-promise-chains-2/) 作者是 Thomas Burleson，一篇给力的文章探讨 promise 的进阶用法。如果本文主要讲了什么是 promise，那这篇文章就更多的围绕为什么这样实现来展开。
+
+
