@@ -15,6 +15,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="协程与事件循环">
 <meta name="twitter:description" content="最近研究了一下 es6 的生成器函数，以及传说中的 co。虽然网上关于协程、co 源码分析的文章数不胜数，但是将其与先前异步实现的事件队列结合起来说明的文章却很难寻觅。之前只知道协程是实现异步的一种方式，那其和之前的各种异步实现究竟有什么本质区别呢？本文将根据协程机制简要探讨一下引入协程之后的新的事件循环模型。由于笔者基础知识不够扎实，所以会先讲述一大堆协程产生的背景和原理，再进行模型变化的讲解。">
+<meta name="twitter:creator" content="@https://twitter.com/minghaoyu">
   
   
     <link rel="icon" href="/malnote/favicon.ico">
@@ -32,7 +33,7 @@
     <div id="wrap">
       <header id="header">
   <div id="header-outer" class="outer">
-    <a href="/" class="logo">malcolm-blog</a>
+    <a href="/malnote" class="logo">malcolm-blog</a>
     <div id="header-inner" class="inner">
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
@@ -238,7 +239,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://malcolmyu.github.io/malnote/2015/11/18/Coroutine-and-Event-Loop/" data-id="ciil3fa44000y7h1ri9tmlnzn" class="article-share-link">Share</a>
+      <a data-url="http://malcolmyu.github.io/malnote/2015/11/18/Coroutine-and-Event-Loop/" data-id="ciio29xp4000ymi1rpxmgl04o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/event-loop/">event loop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/yield/">yield</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/malnote/tags/协程/">协程</a></li></ul>
