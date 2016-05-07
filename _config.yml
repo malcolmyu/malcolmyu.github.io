@@ -72,8 +72,8 @@ theme: alex
 # language
 language: zh-Hans
 
-# 多说
-duoshuo_shortname: malcolmyu
+# disques
+disqus_shortname: malcolmyu
 
 # Deployment  站点部署到github要配置这里, 非常重要
 ## Docs: http://hexo.io/docs/deployment.html
