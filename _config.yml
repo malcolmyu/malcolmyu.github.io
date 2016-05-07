@@ -69,9 +69,6 @@ pagination_dir: page
 ## Themes: http://hexo.io/themes/
 theme: alex
 
-# language
-language: zh-Hans
-
 # disques
 disqus_shortname: malcolmyu
 
