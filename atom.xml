@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>malcolm-blog</title>
   <subtitle>魔法师学徒</subtitle>
-  <link href="/malnote/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
-  <link href="http://malcolmyu.github.io/malnote/"/>
+  <link href="http://malcolmyu.github.io/"/>
   <updated>2016-05-29T06:45:47.000Z</updated>
-  <id>http://malcolmyu.github.io/malnote/</id>
+  <id>http://malcolmyu.github.io/</id>
   
   <author>
     <name>malcolm yu</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Redux 从无到有</title>
-    <link href="http://malcolmyu.github.io/malnote/2016/04/16/Redux-Zero-to-One/"/>
-    <id>http://malcolmyu.github.io/malnote/2016/04/16/Redux-Zero-to-One/</id>
+    <link href="http://malcolmyu.github.io/2016/04/16/Redux-Zero-to-One/"/>
+    <id>http://malcolmyu.github.io/2016/04/16/Redux-Zero-to-One/</id>
     <published>2016-04-15T16:00:00.000Z</published>
     <updated>2016-05-29T06:45:47.000Z</updated>
     
@@ -135,19 +135,19 @@
     
     </summary>
     
-      <category term="技术研究" scheme="http://malcolmyu.github.io/malnote/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"/>
+      <category term="技术研究" scheme="http://malcolmyu.github.io/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"/>
     
     
-      <category term="Javascript" scheme="http://malcolmyu.github.io/malnote/tags/Javascript/"/>
+      <category term="Javascript" scheme="http://malcolmyu.github.io/tags/Javascript/"/>
     
-      <category term="Redux" scheme="http://malcolmyu.github.io/malnote/tags/Redux/"/>
+      <category term="Redux" scheme="http://malcolmyu.github.io/tags/Redux/"/>
     
   </entry>
   
   <entry>
     <title>读《叫魂：1768年中国妖术大恐慌》</title>
-    <link href="http://malcolmyu.github.io/malnote/2016/04/02/Reaction-to-Soulstealers/"/>
-    <id>http://malcolmyu.github.io/malnote/2016/04/02/Reaction-to-Soulstealers/</id>
+    <link href="http://malcolmyu.github.io/2016/04/02/Reaction-to-Soulstealers/"/>
+    <id>http://malcolmyu.github.io/2016/04/02/Reaction-to-Soulstealers/</id>
     <published>2016-04-01T16:00:00.000Z</published>
     <updated>2016-04-02T12:18:19.000Z</updated>
     
@@ -187,17 +187,17 @@
     
     </summary>
     
-      <category term="读书笔记" scheme="http://malcolmyu.github.io/malnote/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="http://malcolmyu.github.io/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="叫魂" scheme="http://malcolmyu.github.io/malnote/tags/%E5%8F%AB%E9%AD%82/"/>
+      <category term="叫魂" scheme="http://malcolmyu.github.io/tags/%E5%8F%AB%E9%AD%82/"/>
     
   </entry>
   
   <entry>
     <title>读《人类简史》</title>
-    <link href="http://malcolmyu.github.io/malnote/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/"/>
-    <id>http://malcolmyu.github.io/malnote/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/</id>
+    <link href="http://malcolmyu.github.io/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/"/>
+    <id>http://malcolmyu.github.io/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/</id>
     <published>2016-01-11T16:00:00.000Z</published>
     <updated>2016-02-06T16:50:14.000Z</updated>
     
@@ -227,17 +227,17 @@
     
     </summary>
     
-      <category term="读书笔记" scheme="http://malcolmyu.github.io/malnote/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="http://malcolmyu.github.io/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="人类简史" scheme="http://malcolmyu.github.io/malnote/tags/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2/"/>
+      <category term="人类简史" scheme="http://malcolmyu.github.io/tags/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2/"/>
     
   </entry>
   
   <entry>
     <title>协程与事件循环</title>
-    <link href="http://malcolmyu.github.io/malnote/2015/11/18/Coroutine-and-Event-Loop/"/>
-    <id>http://malcolmyu.github.io/malnote/2015/11/18/Coroutine-and-Event-Loop/</id>
+    <link href="http://malcolmyu.github.io/2015/11/18/Coroutine-and-Event-Loop/"/>
+    <id>http://malcolmyu.github.io/2015/11/18/Coroutine-and-Event-Loop/</id>
     <published>2015-11-17T16:00:00.000Z</published>
     <updated>2015-11-27T07:32:13.000Z</updated>
     
@@ -301,21 +301,21 @@
     
     </summary>
     
-      <category term="技术研究" scheme="http://malcolmyu.github.io/malnote/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"/>
+      <category term="技术研究" scheme="http://malcolmyu.github.io/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"/>
     
     
-      <category term="event loop" scheme="http://malcolmyu.github.io/malnote/tags/event-loop/"/>
+      <category term="event loop" scheme="http://malcolmyu.github.io/tags/event-loop/"/>
     
-      <category term="yield" scheme="http://malcolmyu.github.io/malnote/tags/yield/"/>
+      <category term="yield" scheme="http://malcolmyu.github.io/tags/yield/"/>
     
-      <category term="协程" scheme="http://malcolmyu.github.io/malnote/tags/%E5%8D%8F%E7%A8%8B/"/>
+      <category term="协程" scheme="http://malcolmyu.github.io/tags/%E5%8D%8F%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title>Git 钩子</title>
-    <link href="http://malcolmyu.github.io/malnote/2015/10/16/Git-Hooks/"/>
-    <id>http://malcolmyu.github.io/malnote/2015/10/16/Git-Hooks/</id>
+    <link href="http://malcolmyu.github.io/2015/10/16/Git-Hooks/"/>
+    <id>http://malcolmyu.github.io/2015/10/16/Git-Hooks/</id>
     <published>2015-10-15T16:00:00.000Z</published>
     <updated>2015-11-27T07:32:04.000Z</updated>
     
@@ -466,17 +466,17 @@ The pre-rebase hook refused &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt
     
     </summary>
     
-      <category term="Git魔导之路" scheme="http://malcolmyu.github.io/malnote/categories/Git%E9%AD%94%E5%AF%BC%E4%B9%8B%E8%B7%AF/"/>
+      <category term="Git魔导之路" scheme="http://malcolmyu.github.io/categories/Git%E9%AD%94%E5%AF%BC%E4%B9%8B%E8%B7%AF/"/>
     
     
-      <category term="Git" scheme="http://malcolmyu.github.io/malnote/tags/Git/"/>
+      <category term="Git" scheme="http://malcolmyu.github.io/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>使用分支</title>
-    <link href="http://malcolmyu.github.io/malnote/2015/10/05/Using-Branches/"/>
-    <id>http://malcolmyu.github.io/malnote/2015/10/05/Using-Branches/</id>
+    <link href="http://malcolmyu.github.io/2015/10/05/Using-Branches/"/>
+    <id>http://malcolmyu.github.io/2015/10/05/Using-Branches/</id>
     <published>2015-10-04T16:00:00.000Z</published>
     <updated>2015-10-11T10:26:10.000Z</updated>
     
@@ -537,17 +537,17 @@ If you are sure you want &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; &
     
     </summary>
     
-      <category term="Git 魔导之路" scheme="http://malcolmyu.github.io/malnote/categories/Git-%E9%AD%94%E5%AF%BC%E4%B9%8B%E8%B7%AF/"/>
+      <category term="Git 魔导之路" scheme="http://malcolmyu.github.io/categories/Git-%E9%AD%94%E5%AF%BC%E4%B9%8B%E8%B7%AF/"/>
     
     
-      <category term="Git" scheme="http://malcolmyu.github.io/malnote/tags/Git/"/>
+      <category term="Git" scheme="http://malcolmyu.github.io/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>协作同步</title>
-    <link href="http://malcolmyu.github.io/malnote/2015/08/01/Collaborating-Syncing/"/>
-    <id>http://malcolmyu.github.io/malnote/2015/08/01/Collaborating-Syncing/</id>
+    <link href="http://malcolmyu.github.io/2015/08/01/Collaborating-Syncing/"/>
+    <id>http://malcolmyu.github.io/2015/08/01/Collaborating-Syncing/</id>
     <published>2015-07-31T16:00:00.000Z</published>
     <updated>2015-11-27T07:32:00.000Z</updated>
     
@@ -666,17 +666,17 @@ git&lt;/span&gt; push origin &lt;span class=&quot;literal&quot;&gt;master&lt;/sp
     
     </summary>
     
-      <category term="Git魔导之路" scheme="http://malcolmyu.github.io/malnote/categories/Git%E9%AD%94%E5%AF%BC%E4%B9%8B%E8%B7%AF/"/>
+      <category term="Git魔导之路" scheme="http://malcolmyu.github.io/categories/Git%E9%AD%94%E5%AF%BC%E4%B9%8B%E8%B7%AF/"/>
     
     
-      <category term="Git" scheme="http://malcolmyu.github.io/malnote/tags/Git/"/>
+      <category term="Git" scheme="http://malcolmyu.github.io/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>Promise A+ 规范</title>
-    <link href="http://malcolmyu.github.io/malnote/2015/06/12/Promises-A-Plus/"/>
-    <id>http://malcolmyu.github.io/malnote/2015/06/12/Promises-A-Plus/</id>
+    <link href="http://malcolmyu.github.io/2015/06/12/Promises-A-Plus/"/>
+    <id>http://malcolmyu.github.io/2015/06/12/Promises-A-Plus/</id>
     <published>2015-06-11T16:00:00.000Z</published>
     <updated>2016-05-08T08:43:01.000Z</updated>
     
@@ -817,21 +817,21 @@ git&lt;/span&gt; push origin &lt;span class=&quot;literal&quot;&gt;master&lt;/sp
     
     </summary>
     
-      <category term="技术研究" scheme="http://malcolmyu.github.io/malnote/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"/>
+      <category term="技术研究" scheme="http://malcolmyu.github.io/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"/>
     
     
-      <category term="Javascript" scheme="http://malcolmyu.github.io/malnote/tags/Javascript/"/>
+      <category term="Javascript" scheme="http://malcolmyu.github.io/tags/Javascript/"/>
     
-      <category term="Promise" scheme="http://malcolmyu.github.io/malnote/tags/Promise/"/>
+      <category term="Promise" scheme="http://malcolmyu.github.io/tags/Promise/"/>
     
-      <category term="翻译" scheme="http://malcolmyu.github.io/malnote/tags/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://malcolmyu.github.io/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
   <entry>
     <title>JSDoc 配置使用概览</title>
-    <link href="http://malcolmyu.github.io/malnote/2015/04/25/Introduction-of-Jsdoc/"/>
-    <id>http://malcolmyu.github.io/malnote/2015/04/25/Introduction-of-Jsdoc/</id>
+    <link href="http://malcolmyu.github.io/2015/04/25/Introduction-of-Jsdoc/"/>
+    <id>http://malcolmyu.github.io/2015/04/25/Introduction-of-Jsdoc/</id>
     <published>2015-04-24T16:00:00.000Z</published>
     <updated>2015-11-27T07:31:43.000Z</updated>
     
@@ -1041,17 +1041,17 @@ git&lt;/span&gt; push origin &lt;span class=&quot;literal&quot;&gt;master&lt;/sp
     
     </summary>
     
-      <category term="开发工具" scheme="http://malcolmyu.github.io/malnote/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
+      <category term="开发工具" scheme="http://malcolmyu.github.io/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
     
     
-      <category term="jsdoc" scheme="http://malcolmyu.github.io/malnote/tags/jsdoc/"/>
+      <category term="jsdoc" scheme="http://malcolmyu.github.io/tags/jsdoc/"/>
     
   </entry>
   
   <entry>
     <title>avalon 事件总线与依赖调度系统</title>
-    <link href="http://malcolmyu.github.io/malnote/2015/04/19/Avalon-Event-Bus/"/>
-    <id>http://malcolmyu.github.io/malnote/2015/04/19/Avalon-Event-Bus/</id>
+    <link href="http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/"/>
+    <id>http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/</id>
     <published>2015-04-18T16:00:00.000Z</published>
     <updated>2015-11-27T07:31:47.000Z</updated>
     
@@ -1090,19 +1090,19 @@ git&lt;/span&gt; push origin &lt;span class=&quot;literal&quot;&gt;master&lt;/sp
     
     </summary>
     
-      <category term="源码分析" scheme="http://malcolmyu.github.io/malnote/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+      <category term="源码分析" scheme="http://malcolmyu.github.io/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
     
-      <category term="Javascript" scheme="http://malcolmyu.github.io/malnote/tags/Javascript/"/>
+      <category term="Javascript" scheme="http://malcolmyu.github.io/tags/Javascript/"/>
     
-      <category term="avalon" scheme="http://malcolmyu.github.io/malnote/tags/avalon/"/>
+      <category term="avalon" scheme="http://malcolmyu.github.io/tags/avalon/"/>
     
   </entry>
   
   <entry>
     <title>JavaScript Promise 探微</title>
-    <link href="http://malcolmyu.github.io/malnote/2014/08/30/JavaScript-Promise-In-Wicked-Detail/"/>
-    <id>http://malcolmyu.github.io/malnote/2014/08/30/JavaScript-Promise-In-Wicked-Detail/</id>
+    <link href="http://malcolmyu.github.io/2014/08/30/JavaScript-Promise-In-Wicked-Detail/"/>
+    <id>http://malcolmyu.github.io/2014/08/30/JavaScript-Promise-In-Wicked-Detail/</id>
     <published>2014-08-29T16:00:00.000Z</published>
     <updated>2015-11-30T02:39:27.000Z</updated>
     
@@ -1243,14 +1243,14 @@ git&lt;/span&gt; push origin &lt;span class=&quot;literal&quot;&gt;master&lt;/sp
     
     </summary>
     
-      <category term="技术研究" scheme="http://malcolmyu.github.io/malnote/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"/>
+      <category term="技术研究" scheme="http://malcolmyu.github.io/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/"/>
     
     
-      <category term="Javascript" scheme="http://malcolmyu.github.io/malnote/tags/Javascript/"/>
+      <category term="Javascript" scheme="http://malcolmyu.github.io/tags/Javascript/"/>
     
-      <category term="Promise" scheme="http://malcolmyu.github.io/malnote/tags/Promise/"/>
+      <category term="Promise" scheme="http://malcolmyu.github.io/tags/Promise/"/>
     
-      <category term="翻译" scheme="http://malcolmyu.github.io/malnote/tags/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://malcolmyu.github.io/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
