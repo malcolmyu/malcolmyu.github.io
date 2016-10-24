@@ -6,20 +6,17 @@ toc: true
 
 ---
 
-![redux 图示](http://7xinjg.com1.z0.glb.clouddn.com/redux-and-angularjs-redux-arch.jpg)
-
 redux 自诞生之日就被冠以『学习曲线陡峭』之名，让学习者望而却步。然而由于工作需要，最近还是硬着头皮把 redux 的这一套研究了一番，发现传说中陡峭的学习曲线好像也没有那么夸张，我们甚至可以从零开始实现一个基础版本的 redux。
 
 <!--more-->
 
-# 基础版本
+## 基础版本
 
 设想一下，我们每天沉浸在复杂项目繁琐的开发之中，每天都在处理页面上的各种数据流动。比如我们做一个成绩单项目，可以在页面中发送 ajax 请求，然后用请求之后的数据渲染页面上的分数；亦或我们的页面使用了双向绑定，在用户输入发生变化的时候，页面分数就会自动发生改变。由于数据的来源多种多样，我们觉得数据的管理有必要单独抽取出来进行统一处理。
 
 于是我们果断手工撸了以下代码：
 
-<p data-height="266" data-theme-id="0" data-slug-hash="ONZbeK" data-default-tab="result" data-user="malcolmyu" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/malcolmyu/pen/ONZbeK/">Base Redux</a> by Malcolm (<a href="http://codepen.io/malcolmyu">@malcolmyu</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+<a class="jsbin-embed" href="http://jsbin.com/difoza/embed?js,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.12"></script>
 
 上面就是 redux 的基本实现，~~好了本次的讲解结束了，谢谢大家~~ 在这个例子中，我们进行了以下尝试：
 
@@ -28,7 +25,7 @@ redux 自诞生之日就被冠以『学习曲线陡峭』之名，让学习者�
 
 事实上，上面两点就是 flux 体系带给我们的；而 redux 作为 flux 的一种实现，尽管略显不同，但他还是很好的体现了 flux 体系的本质。
 
-# 构建 store
+## 构建 store
 
 然而上面的例子还是依赖于 react，我们需要将手工实现的粗糙的 redux 模块独立出来，使用 flux 里的发布/订阅概念来完成这一行为。也就是说，我们要构建出一个独立的 store。它拥有保存状态、订阅事件、发布事件等一系列功能，脱离了 react 体系也能独立工作。
 
@@ -67,17 +64,15 @@ function publish(action) {
 
 然后我们对上面的例子使用 `createStore` 方法进行一个升级：
 
-<p data-height="266" data-theme-id="0" data-slug-hash="JXvrKE" data-default-tab="result" data-user="malcolmyu" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/malcolmyu/pen/JXvrKE/">createStore</a> by Malcolm (<a href="http://codepen.io/malcolmyu">@malcolmyu</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+<a class="jsbin-embed" href="http://jsbin.com/lalube/embed?js,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.12"></script>
 
 如此神奇，感觉离 redux 更近了一步呢！
 
-# 复杂数据结构
+## 复杂数据结构
 
 然而上面的例子仅仅是一个简单的数据结构，不足以体现出 redux 的伟大之处。假如我们增加一个 action，然后给 state 增加一个叫 `students` 的数据表示学生人数，这时候应该怎么处理呢？
 
-<p data-height="266" data-theme-id="0" data-slug-hash="EKLwvN" data-default-tab="result" data-user="malcolmyu" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/malcolmyu/pen/EKLwvN/">Many Actions</a> by Malcolm (<a href="http://codepen.io/malcolmyu">@malcolmyu</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+<a class="jsbin-embed" href="http://jsbin.com/qetani/embed?js,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.12"></script>
 
 聪明如你可能很快就会想到，我们给 `action` 加一个 `type` 字段来处理嘛！肥肠好，但是设想一下，如果我们的 store 非常复杂，那用户的 `dispatcher` 和 `state` 岂不是成了一大坨？如果有两个 action 具体行为差不多，但是有细微的不同，那 `dispatcher` 怎么复用呢？这个时候我们就遇到了 flux 体系结构的第一个问题：**复杂的 store 难以管理，可复用性差**。
 
@@ -128,8 +123,7 @@ function combineReducer(reducers) {
 
 我们把这个函数添加到之前的例子上，然后增加一个 reducer，使得这个例子变得复杂：
 
-<p data-height="266" data-theme-id="0" data-slug-hash="VadBdq" data-default-tab="result" data-user="malcolmyu" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/malcolmyu/pen/VadBdq/">combineReducer</a> by Malcolm (<a href="http://codepen.io/malcolmyu">@malcolmyu</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+<a class="jsbin-embed" href="http://jsbin.com/nuvaxax/embed?js,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.12"></script>
 
 碉堡了，我们的国产 `redux` 已经有递归 `reducer` 了！还有什么能难倒我们？这时产品走了过来：『旁友，我们这儿有个变更，请把文科、理科分数改成异步获取的。嗯，我不管怎么实现，今天能搞定吗？』
 
@@ -152,9 +146,9 @@ showScienceScore() {
 
 是的，这样确实可以搞定，可是岂不是意味着两个分数就得写两个 promise，100 个异步请求岂不是得写 100 个 promise？之前我们或许确实是这样搞的，那主要是因为我们后续的操作并不统一；但在 `redux` 里完全不同，我们进行状态更改的手段都是 `dispatch` 函数，进行数据处理的都是 `reducer`，所以我们可以直接对 `dispatch` 进行修改以达到异步目的！而这个修改手段就是所谓的**中间件**。
 
-# 使用中间件
+## 使用中间件
 
-## 什么是中间件
+### 什么是中间件
 
 中间件实际上就是之前一种 Monkey Patch 的写法，比如我们想给一个作为属性的函数加上打印日志的功能，又不想改变函数名称，可以这么搞：
 
@@ -208,7 +202,7 @@ function patchLog(store) {
 store.dispatch = patchLog(store);
 ```
 
-## next 登场
+### next 登场
 
 然而上文的 `let dispatch = store.dispatch` 感觉还是不够友好，使用者每次还得记着把 `dispatch` 拿出来存一下，不然就变成无限循环调用了。既然都函数式编程了，果断再搞一层，用传参数的方式把 `dispatch` 传进来，尽然都中间件了，就叫它 `next` 吧：
 
@@ -247,7 +241,7 @@ store.dispatch = patchTimer(store)(store.dispatch);
 1. `store` 又不止 `dispatch` 一个属性，传了它以后还可以用 `getState` 看看当前存了什么状态；
 2. 提供了一种**阻断中间件的方式**：这个很重要，现在不着急说，下文我会表态的。
 
-## 问题
+### 问题
 
 但是这么整解决不了两个问题：
 
@@ -307,12 +301,11 @@ function applyMiddleware(...middlewares) {
 
 我们接着来实现一个异步中间件，并把两个分数改成异步的：
 
-<p data-height="266" data-theme-id="0" data-slug-hash="pyQwLB" data-default-tab="result" data-user="malcolmyu" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/malcolmyu/pen/pyQwLB/">applyMiddleware</a> by Malcolm (<a href="http://codepen.io/malcolmyu">@malcolmyu</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+<a class="jsbin-embed" href="http://jsbin.com/licabam/embed?js,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.12"></script>
 
 额妹子嘤！我们加入了中间件之后，完全没有改动除了 action 和创建 store 以外的任何代码，就完成了各种异步操作，而完全不用在业务里写各种蛋疼的逻辑了。把特殊逻辑交给可插拔式的中间件，而不必改动业务代码，这种是中间件的强大之处。
 
-# 函数式编程的碎碎念
+## 函数式编程的碎碎念
 
 看下上面代码，有一个地方还是不太爽，那就是这一行：
 
@@ -338,7 +331,7 @@ this.store = applyMiddleware(promiseMiddleware)(createStore(reducer, this.state)
 
 我们来考虑考虑，在 ES6 里，这个函数应该怎么写：
 
-1. 首先我们应该吧传入的一坨函数改造成数组，这个 ES6 里面的 [rest 参数](http://es6.ruanyifeng.com/#docs/function#rest参数)已经帮我们很好的搞定了；
+1. 首先我们应该把传入的一坨函数改造成数组，这个 ES6 里面的 [rest 参数](http://es6.ruanyifeng.com/#docs/function#rest参数)已经帮我们很好的搞定了；
 2. 其次我们需要**逆序**执行函数，这一点就用到了上文说过的 `reduceRight`。
 
 我们来实现一下：
@@ -373,9 +366,72 @@ function applyMiddleware(...middlewares) {
 }
 ```
 
-# 与 react 的连接
+最终我们把代码搞成了这个样子：
 
-# reselect 与 immutable
+<a class="jsbin-embed" href="http://jsbin.com/difoza/embed?js,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.12"></script>
+
+好啦！扯了这么多，redux 的内容终于说完了。如果你能坚持看到这里，说明朋友你还是对 redux 很感兴趣~~，或者是觉得我写的太屎准备搜集证据批判我一番的~~。不管怎么说，你一定都会有一个很大的疑问：为啥你这儿还有 `setState` 啊？这个问题吼啊，这一套的奥秘实际上在 `react-redux` 里。也就是说 `redux` 本身实际上只是进行了数据流管理的操作，真正和 react 结合的地方还大有文章。
+
+## 与 react 的连接
+
+其实聪明的读者可能已经看到怎么做了，要想不写 `setState`，那直接写 `props` 就好了嘛！分分钟改动代码如下（为了演示这个，将例子拆成多个组件的形式）：
+
+<a class="jsbin-embed" href="http://jsbin.com/wenile/embed?js,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.12"></script>
+
+可是这样的问题就在于，组件中的 store 用的都是唯一的全局变量，我们在进行自动化测试和服务端渲染的时候就比较蛋疼了，毕竟每一次请求服务端渲染，都需要生成一个新的 store 的实例。那我们把最外侧组件的 store 通过 props 传下去呢？比如这样：
+
+```js
+React.render(
+    <Transcript store={store}/>,
+    document.getElementById('app')
+);
+```
+
+但是 `props` 不是子孙传递的，所以要实现这个效果势必只能每个子组件继续往下传递：
+
+<a class="jsbin-embed" href="http://jsbin.com/wenile/embed?js,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.12"></script>
+
+这太可怕了，除非每写一个 `store={ store }` 都能续一秒，不然写这么简直要命。这时机智如你可能已经想到，不是有 [context](https://facebook.github.io/react/docs/context.html) 嘛！然而事实是，写 context 还要写一堆 `contextTypes`，没有比 props 高到哪里去啊，可以参加丹爷的这个[视频](https://egghead.io/lessons/javascript-redux-passing-the-store-down-with-provider-from-react-redux)。但是不要担心，尽管现在还不是很优雅，但是我们最终会把它搞得好看的。
+
+### Provider
+
+既然我们需要使用 context，我们就必须需要一个 `Provider`，这个组件接受一个 store 作为 props，然后把这个 store 放置在 context 中。这个组件还是比较好写的：
+
+```js
+const {Component, PropTypes} = React;
+
+class Provider extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.store = props.store;
+  }
+  
+  getChildContext() {
+    return { store: this.store }
+  }
+  
+  render() {
+    // 实际的 Provider 这里是 Child.only
+    // 为了方便起见我们直接使用 div 包裹数据
+    return <div>{this.props.children}</div>;
+  }
+}
+
+// 注意，提供 context 的组件需要写 childContextTypes
+Provider.childContextTypes = {
+  store: PropTypes.object
+}
+```
+
+### 热加载
+
+那我们怎么使子组件更好的接收 context 呢？这个话题我们先放一下，先看看我们之前是怎么让组件更新的——也就是 `store.subscribe` 是怎么操作的：我们实际上使用的是 `this.forceUpdate()` 这样一个内置 api，使得每一次 `dispatch` 的时候强制刷新所有组件。这样无疑效率低下啊……我页面的一个角落更新了，然后整个页面都重载了，虽然咱有 diff-dom，但也不能这么玩儿吧。那传说中 redux 的『热加载』到底是个什么东西呢？
+
+这时候我们来思考一下，虽然每次 `dispatch` 的时候，确实会更新局部的 store，然后其实每个组件依赖的，也只是部分的 store。那如果我们每次更新的时候，发现 store 的某个位置变动了，然后只更新依赖这部分属性的组件不修好了吗！
+
+那究竟怎么处理呢？我们还是请丹爷来『机械降神』一下：**在每个组件外面都包裹一层**。
+
+是的，我们把这个工作分摊给每个组件，然后在组件的外面包一层：它即处理 context 的部分，也处理 store 组件内部更新逻辑，还处理组件依赖的 store 的部分，一举三得。我们将这个组件称作 `connect` 组件，它接受一个参数 `mapStateToProps`，将状态树上所属的子状态节点对应到包裹组件的 props 上去。
 
 
 

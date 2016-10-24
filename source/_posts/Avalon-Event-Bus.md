@@ -10,7 +10,7 @@ tags: [avalon, Javascript]
 
 本文源起自同事的一个疑问，“*可否使用事件中的 `$fire` 来改变一个普通双绑属性的值？*”这样问也是有它的理由：因为在视图模型中，可以用 `$watch` 来监听属性的变化；而在事件总线中，可以用 `$fire` 来触发 `$watch` 的回调，那似乎用 `$fire` 来改变双绑属性的值也变得可以接受。但实际测试中，发现这样操作是不起作用的。如：
 
-{% codeblock lang:javascript %}
+```javascript
 var demo = avalon.define({
     $id: 'demo',
     a: 1
@@ -18,11 +18,11 @@ var demo = avalon.define({
 
 demo.$fire('a', 2);
 // nothing output
-{% endcodeblock %}
+```
 
 这是为什么呢？起初我认为事件总线与依赖调度实际上是绑在一起的，也就是说双绑属性上的事件——如值改变后通知视图——也是通过事件总线来实现的；后来想到 avalon 师承 knockout，而事件是 angular 中才有的概念，可能是后来单独实现的也说不定。带着这样的疑问，我翻开了源码：
 
-{% codeblock lang:javascript %}
+```javascript
 var EventBus = {
     $watch: function (type, callback) {
         if (typeof callback === "function") {
@@ -52,7 +52,7 @@ var EventBus = {
         }
     }
 }
-{% endcodeblock %}
+```
 
 我们可以看到，在源码中出现最多的东西就是这个 `$events` 。上面两段代码的主要意思就是说，在 `$watch` 的时候，查看一下当前层级的 `$event` 中是否有对应名称的事件队列，在确保 `$watch` 参数是函数的前提下将回调添加到事件队列中；而 `$fire` 的时候需要遍历 `$event` 对应的事件队列，取出是函数的部分执行它。
 
@@ -60,7 +60,7 @@ var EventBus = {
 
 继续翻到依赖调度系统的代码：
 
-{% codeblock lang:javascript %}
+```javascript
 function registerSubscriber(data) {
     Registry[expose] = data
     // 暴光此函数,方便collectSubscribers收集
@@ -91,7 +91,7 @@ function notifySubscribers(list) {
         }
     }
 }
-{% endcodeblock %}
+```
 
 过一遍依赖调度的代码我们会发现它的三个主要的功能：
 
@@ -105,7 +105,7 @@ function notifySubscribers(list) {
 
 对上面两个重要的方法进行再一次简化，得到如下的代码：
 
-{% codeblock lang:javascript %}
+```javascript
 function registerSubscriber(data) {
     Registry[expose] = data
     data.evaluator.apply(0, data.args)
@@ -114,7 +114,7 @@ function collectSubscribers(list) {
     var data = Registry[expose]
     avalon.Array.ensure(list, data)
 }
-{% endcodeblock %}
+```
 
 在 `registerSubscriber` 中，执行了一步求值函数。这时候就会触发访问器的 get 方法，继而触发 `collectSubscribers`；而后者的参数就是对应的 `$events`，在这里将刚才曝光的 `data` 添加到 `$events` 队列中。这里的 `data` 不是回调函数，而是扫描绑定生成的数据，包含 DOM 节点、求值函数、vm等等。
 
@@ -122,7 +122,7 @@ function collectSubscribers(list) {
 
 观察一下访问器的代码，证实了我们这一观点：
 
-{% codeblock lang:javascript %}
+```javascript
 // 这里只探究简单属性，故而对其进行了简化
 if (arguments.length) { // 有参数表示 set
     if (!isEqual(oldValue, newValue)) {
@@ -134,11 +134,11 @@ if (arguments.length) { // 有参数表示 set
     collectSubscribers($events[name]) // 收集视图函数
     return accessor.svmodel || oldValue
 }
-{% endcodeblock %}
+```
 
 在访问器中，需要分别进行同步视图与触发 `$watch` 回调的操作，分别处理了两个系统的事务。回到之前同事的问题：
 
-{% codeblock lang:javascript %}
+```javascript
 var demo = avalon.define({
     $id: 'demo',
     a: 1
@@ -148,7 +148,7 @@ demo.$watch('a', function(a) {
 });
 demo.$fire('a', 2); // 输出2
 demo.a = 3;         // 输出3
-{% endcodeblock %}
+```
 
 由于依赖调度与事件总线是两个不同的系统，因此 `$fire` 只能触发事件总线中挂载在 a 上的回调，而无法触发访问器；而由于访问器中在 set 时对两个系统都进行了触发，因此可以即同步视图，又能触发事件回调，所以可以使用 `$watch` 来监听属性值的变化。
 

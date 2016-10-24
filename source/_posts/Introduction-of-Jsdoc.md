@@ -9,23 +9,23 @@ toc: true
 
 <!--more-->
 
-# JSDoc 命令行使用方法
+## JSDoc 命令行使用方法
 
 通过命令行来生成 JSDoc 有两种适合前端的方式：一种是通过 npm 来安装 jsdoc 来生成文档，需要学习相关的命令行参数与配置文件的编写；另一种是使用 grunt 来生成 jsdoc，这种方法配置起来比较简单，等于将各种配置参数写在了 Gruntfile.js 的配置项里，然后可以自定义各种操作命令，十分灵活。下面就分别就这两种方法介绍一下。
 
-## 通过 npm 生成
+### 通过 npm 生成
 
 通过 npm 的生成方式主要包含安装、配置和生成三步。安装的方式如下所示：
 
-{% codeblock lang:bash %}
-    npm install jsdoc -g
-{% endcodeblock %}  
+```bash
+npm install jsdoc -g
+```
 
 然后去指定文件（如 `test.js`）的路径下运行
 
-{% codeblock lang:bash %}
-    jsdoc test.js
-{% endcodeblock %}      
+```bash
+jsdoc test.js
+```
 
 文档即可被生成在根目录下的 out 文件夹中。
 
@@ -44,15 +44,15 @@ toc: true
 
 举个例子，比如我们要将 `./src` 路径下的所有 js 文件生成文档，然后存放在 `./docs` 文件夹中，操作如下：
 
-{% codeblock lang:bash %}
-    jsdoc src -r -d docs
-{% endcodeblock %}  
+```bash
+jsdoc src -r -d docs
+```
 
 但是这样感觉还是不方便，如何对特定文件进行文档解析呢？如果有一些文件不想进行文档解析如何从中间剔除呢？而且每次都要输入如此复杂的命令行参数也十分不方便。要解决这些问题，就需要用到配置文件 `conf.json` 了。
 
 对于配置文件的详细解释可以参见[官方文档](http://usejsdoc.org/about-configuring-jsdoc.html)的说明，这里也是举一个简单的例子：
 
-{% codeblock lang:json %}
+```json
 {
     "tags": {
         "allowUnknownTags": true
@@ -67,7 +67,7 @@ toc: true
         "recurse": true
     }
 }
-{% endcodeblock %}
+```
 
 - `tags.allowUnknownTags` 表示允许使用为定义的 tag 标签，不然使用未知标签会报错；
 - `source.include` 表示需要进行文档解析的文件（夹）路径；
@@ -78,50 +78,50 @@ toc: true
 
 这里的 `opts` 里面的内容与上表中命令行参数配置的内容一致，即也可以在此处配置各种参数，详情官网文档中有叙述。将上文保存为一个 json 格式的文件，然后使用 `-c` 参数引入，就可以按照设定好的规则直接批量生成文档了。
 
-{% codeblock lang:bash %}
-    jsdoc -c conf.json
-{% endcodeblock %}
+```bash
+jsdoc -c conf.json
+```
 
-## 通过 grunt 生成
+### 通过 grunt 生成
 
 在项目中如果使用了 grunt 工具，也可以将 jsdoc 集成到 grunt 中去。这种方式十分的简便，在其 [github 地址](https://github.com/krampstudio/grunt-jsdoc)上也有详尽的介绍，具体流程与其他的 grunt 模块差别不大，使用如下命令进行安装：
 
-{% codeblock lang:bash %}
+```bash
     npm install grunt-jsdoc --save-dev
-{% endcodeblock %}
+```
 
 然后在 `Gruntfile.js` 文件中进行配置，就可以在命令行中使用了：
 
-{% codeblock lang:js %}
-    grunt.initConfig({
-        jsdoc: {
-            dist: {
-                // 必填项，需要生成文档的路径数组，也可以将 README.md 文件加入其中
-                src: ['src/*.js', 'test/*.js'],
-                // 可选项，jsdoc bin 文件路径，一般不写，会自己在 node_modules 中寻找
-                jsdoc: '',
-                options: {
-                    // 必填项，生成文件的路径
-                    destination: './docs/',
-                    // 可选项，conf 文件的路径
-                    configure: 'conf.json',
-                    // 可选项，模板路径
-                    template: ''
-                }
+```js
+grunt.initConfig({
+    jsdoc: {
+        dist: {
+            // 必填项，需要生成文档的路径数组，也可以将 README.md 文件加入其中
+            src: ['src/*.js', 'test/*.js'],
+            // 可选项，jsdoc bin 文件路径，一般不写，会自己在 node_modules 中寻找
+            jsdoc: '',
+            options: {
+                // 必填项，生成文件的路径
+                destination: './docs/',
+                // 可选项，conf 文件的路径
+                configure: 'conf.json',
+                // 可选项，模板路径
+                template: ''
             }
         }
-    });
-    grunt.task.loadNpmTasks('grunt-jsdoc');
-    grunt.task.registerTask('doc', ['jsdoc']);
-{% endcodeblock %}
+    }
+});
+grunt.task.loadNpmTasks('grunt-jsdoc');
+grunt.task.registerTask('doc', ['jsdoc']);
+```
 
-{% codeblock lang:bash %}
-    grunt doc
-{% endcodeblock %}
+```bash
+grunt doc
+```
 
 需要注意的是，配置项中的 `options` 内容与 `conf.json` 中 `opts` 的内容也一致。
 
-# JSDoc 注释规范
+## JSDoc 注释规范
 
 上面的一堆其实都是虚的，最主要的还是在代码中按照 JSDoc 要求的注释规范详尽的写清楚注释。JSDoc 的注释有一条很重要的规范就是：
 
@@ -131,11 +131,11 @@ toc: true
 
 使用 `/**` 开始注释之后，就需要研究一下注释的标签（Tags），JSDoc 提供了几十种标签，满足我们各种稀奇古怪的需求。我们先从单个文件的注释说起，对 JSDoc 的注释规范进行说明。
 
-## 单个文件注释
+### 单个文件注释
 
 提到单个文件注释，首先要说到 JSDoc 里面的一个概念，换做**块级标签（Block Tag）**与**行内标签（Block Tag）**，整的这么玄乎，无非就是说有些标签是用 `@` 打头起一行，叫做块级；有些标签是用 `{}` 包裹放在行内，最常见的就是 `@type` 和 `@link` 标签，可以放在行内对变量进行类型说明与解释。如：
 
-{% codeblock lang:js %}
+```js
     /**
      * 大哥大嫂过年好
      * @param {string} parent - 你是我的爷
@@ -144,7 +144,7 @@ toc: true
     function happyNewYear(parent, child) {
         // ...
     }
-{% endcodeblock %}
+```
 
 以下是单文件注释中常用的标签：
 
@@ -165,11 +165,11 @@ toc: true
 
 但是在项目中，我们可能拥有一堆又一堆的单个文件都需要添加注释，总不能把这些方法啊变量啊的注释都丢到一个文档页面中吧。不用担心，JSDoc 提供了一种模块化注释的方式帮我们解决这一问题。
 
-## 模块化注释
+### 模块化注释
 
 JSDoc 中对模块的表示共有三种方法，分别为**类（`@class`）**、**模块（`@module`）**和**命名空间（`@namespace`）**。使用上面三个标签进行标注的话，其从属的属性都可以使用长名进行引用。`@module` 顾名思义是用来标注一个 JS 模块的，一般用这个模块再被 `require` 的时候的写法作为名字标注。比如这样一个模块：
 
-{% codeblock lang:js %}
+```js
     /**
      * 表单校验模块
      * @module lib/validator
@@ -182,11 +182,11 @@ JSDoc 中对模块的表示共有三种方法，分别为**类（`@class`）**�
 
     // 另一个文件在使用时需要这样用
     require('lib/validator');
-{% endcodeblock %}
+```
 
 正如上文所写，对于一个模块需要 `exports` 的方法可以直接写双星注释，会被 JSDoc 所自动识别。但有些情况下为了我们可能会先给一个本地对象挂一堆方法然后把这个对象直接 `exports`。为了标明它们的从属关系，我们就可以用到 `@alias` 别名标签。如下例：
 
-{% codeblock lang:js %}
+```js
     /**
      * 表单校验模块
      * @module lib/validator
@@ -198,7 +198,7 @@ JSDoc 中对模块的表示共有三种方法，分别为**类（`@class`）**�
     var valid = function() {};
 
     exports.valid = valid;
-{% endcodeblock %}
+```
 
 注意到上文中别名标签的值，这里用到一个叫做**命名路径（namepaths）**的概念。这个概念表示使用 `#` `.` `~` 三种符号表示两个模块之间的从属关系，其分别为：
 
@@ -208,7 +208,7 @@ JSDoc 中对模块的表示共有三种方法，分别为**类（`@class`）**�
 
 下面这个例子分别解释了上面三种属性：
 
-{% codeblock lang:js %}
+```js
     /** @constructor */
     function Person() {
         this.instanceSay = function() {
@@ -226,11 +226,11 @@ JSDoc 中对模块的表示共有三种方法，分别为**类（`@class`）**�
     // Person#instanceSay
     // Person.staticSay
     // Person~innerSay
-{% endcodeblock %}
+```
 
 上面用命名路径生成的诸如 `Person#instanceSay.hello~hi` 这样的引用名称就叫做**长名（longname）**。其中如果是 `@module` 模块的话，需要添加 `module:` 前缀，用于与命名空间相区分。而命名空间的作用就是给其子属性开启一个可以被挂载的空间，可以在文档中被单独标记。子属性可以使用 `@memberof` 对父属性进行挂载。比如我们挂载到全局变量上的属性，并不遵循模块化的风格，对其进行标记就可以使用命名空间的方式，如：
 
-{% codeblock lang:js %}
+```js
     /**
      * 某个文件中的祖先空间
      * @namespace ancestor
@@ -253,7 +253,7 @@ JSDoc 中对模块的表示共有三种方法，分别为**类（`@class`）**�
      */
     var child = {};
     window.ancestor.parent.child = child;
-{% endcodeblock %}
+```
 
 需要注意的是，这种模块化的标签似乎 JSDoc 都会对其进行作用域的识别，因此在注释的时候一定要注意作用域的问题。比如对一个文件整个注释为 `@module`，其内部的 `@namespace` 可能就会失效，无法在文档上良好的反应。以下是模块化注释的常用标签：
 

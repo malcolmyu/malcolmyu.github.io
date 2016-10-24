@@ -12,8 +12,8 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://malcolmyu.github.io/malnote/
-root: /malnote/
+url: http://malcolmyu.github.io/
+root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -67,7 +67,15 @@ pagination_dir: page
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
-theme: alex
+theme: apollo
+
+# 在归档页面显示所有文章
+# 需要上面安装的 hexo-generator-archive 插件支持
+archive_generator:
+  per_page: 0
+  yearly: false
+  monthly: false
+  daily: false
 
 # disques
 disqus_shortname: malcolmyu
@@ -76,5 +84,5 @@ disqus_shortname: malcolmyu
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/malcolmyu/malnote.git
-  branch: gh-pages
+  repository: https://github.com/malcolmyu/malcolmyu.github.io.git
+  branch: master
