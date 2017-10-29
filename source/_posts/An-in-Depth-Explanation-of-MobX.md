@@ -26,7 +26,7 @@ toc: true
 总之，这里有一个使用了 MobX 和 React 的小例子，展示了上面全部的四种概念：
 
 
-```typescript
+```jsx
 class Person {
   @observable firstName = "Michel";
   @observable lastName = "Weststrate";
