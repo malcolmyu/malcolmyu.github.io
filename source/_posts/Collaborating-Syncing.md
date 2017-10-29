@@ -6,7 +6,7 @@ toc: true
 
 ---
 
-![同步](./Collaborating-Syncing/git-coll-synchero.svg)
+![同步](./git-coll-synchero.svg)
 
 SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协作的方式是开发者的工作副本与中央仓库互相发送变更记录。这与 Git 的协作模式有所不同，Git 中每个开发者都拥有仓库的副本，以及完整的本地历史和分支结构。用户通常只需要提供一系列的提交而不是单个的变更记录。Git 允许我们在仓库之间共享整个分支，而不是单单的从工作副本提交一个变更记录到中央仓库去。
 
@@ -20,7 +20,7 @@ SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协�
 
 比如下图就展示了从我们本地仓库链接到中央仓库和其他开发者仓库的两个链接。我们可以不用 URLs 全称来表示，而只用给其他的 Git 命令传递诸如 origin 和 john 这样的缩写就行。
 
-![git remote 示例](./Collaborating-Syncing/git-coll-sync01.svg)
+![git remote 示例](./git-coll-sync01.svg)
 
 ### 使用
 
@@ -137,7 +137,7 @@ a1e8fb5..9e8ab1c develop -> origin/develop
 
 从新的远端分支获取的提交们在下表中以方块显示，而之前在本地的提交以圆圈显示。如图所示， `git fetch` 使我们访问到另一个仓库的全部分支结构。
 
-![git fetch 获取远端分支结构](./Collaborating-Syncing/git-coll-sync02.svg)	
+![git fetch 获取远端分支结构](./git-coll-sync02.svg)	
 
 想查看上游的 master 分支添加了哪些提交，我们可以使用 `git log` 命令，并添加 `origin/master` 的过滤器。
 
@@ -182,7 +182,7 @@ git pull --rebase <remote>
 
 我们可以把 `git pull` 理解成 `svn update` 的 Git 版本。这是一个将上游更改同步到本地仓库的快捷方式。下面的图解释了 pull 过程的每一步骤。
 
-![git pull 过程](./Collaborating-Syncing/git-coll-sync03.svg)
+![git pull 过程](./git-coll-sync03.svg)
 
 本来我们以为我们本地的仓库处于已同步状态，但是呢通过 `git fetch` 我们发现 origin 上的 master 在我们上次检查之后又有新的提交。于是 `git merge` 命令直接将远端 master 上的新内容整合到了本地。
 
@@ -243,7 +243,7 @@ git push <remote> --tags
 
 `git push` 命令最常见的使用场景就是将本地的更改推送到中央仓库中。当我们已经积攒了一些本地提交并准备将其与团队中的其他同事分享这些提交时，我们可以先使用交互式的衍合修整我们的提交，然后将它们推送到中央仓库。
 
-![推送提交图解](./Collaborating-Syncing/git-coll-sync04.svg)
+![推送提交图解](./git-coll-sync04.svg)
 
 上图展示了当我们运行 `git push origin master` 时本地 `master` 分支和中央仓库的 `master` 分支之间发生了什么。注意 `git push` 命令在本质上与在远端仓库运行 `git merge master` 所产生的效果一致。
 
