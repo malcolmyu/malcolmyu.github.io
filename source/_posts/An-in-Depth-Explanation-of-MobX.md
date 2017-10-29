@@ -40,7 +40,11 @@ class Person {
 const michel = new Person();
 
 // 响应：当用户信息改变时进行打印
-autorun(() => console.log(person.nickName ? person.nickName : person.fullName));
+autorun(() => {
+  console.log(
+    person.nickName ? person.nickName : person.fullName
+  )
+});
 
 // React 组件作为一个观测状态的例子
 const ProfileView = observer(props => {
