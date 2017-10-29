@@ -1,4 +1,4 @@
-title: [翻译] 终极响应式编程：深入探究 MobX
+title: 【翻译】终极响应式编程：深入探究 MobX
 date: 2017-10-14
 categories: 技术研究
 tags: [Javascript, MobX, Reactive]
@@ -25,9 +25,8 @@ toc: true
 
 总之，这里有一个使用了 MobX 和 React 的小例子，展示了上面全部的四种概念：
 
-<figure>
 
-```jsx
+```typescript
 class Person {
   @observable firstName = "Michel";
   @observable lastName = "Weststrate";
@@ -58,29 +57,24 @@ React.render(<ProfileView person={michel} />), document.body);
 ```
 
   <figcaption>代码 1：可观测状态、计算值、可响应的 Reactjs 组件和一些行为</figcaption>
-</figure>
 
 [在线运行该实例](https://jsfiddle.net/mweststrate/049r6jox/)
 
 我们可以根据上面的代码绘制一个依赖树，直观看来如下所示：
 
-<figure>
-
 ![图 1](https://ww1.sinaimg.cn/large/7921624bly1fkr30bdyhsj20ev09tmxw.jpg)
 
   <figcaption>图 1：ProfileView 组件的依赖树，FullName 处在响应模式，主动观察 firstName 和  lastName</figcaption>
-</figure>
+
 
 这个应用的**状态**会被蓝色的可观测属性**捕获**，绿色的**计算值** fullName 可从状态里通过观测 firstName 和 lastName 自动被**衍生（derived）**。类似地，ProfileView 的渲染可以从 nickName 和 fullName 中衍生。ProfileVIew 将会响应状态的变化并产生一个副作用：更新 React 组件树。
 
 MobX 最低程度地定义依赖树。例如，一旦被渲染的人拥有一个 nickName，渲染将不再受到 fullName、firstName 或 lastName 输出值的影响（见代码 1）。所有这些值的观测关系可被清除，MobX 会响应地自动简化依赖树：
 
-<figure>
 
 ![图2](https://ww1.sinaimg.cn/large/7921624bly1fkr32eyusuj20ev09twf4.jpg)
 
   <figcaption>图 2：在用户拥有 nickname 时 ProfileView 组件依赖树。与图 1 相反，fullName 现在处于惰性模式（lazy mode）且不观测 firstName 和 lastName</figcaption>
-</figure>
 
 MobX 将始终尝试减少产生一致状态所需要的计算数。在本文的余下内容，我将介绍几个用于实现这一目标的几个策略。但在深入了解计算值和响应与状态保持同步的黑魔法之前，让我们先描述下 MobX 背后的原理：
 
@@ -94,12 +88,10 @@ MobX 将始终尝试减少产生一致状态所需要的计算数。在本文的
 
 > 换句话说，当人为管理订阅时，你的应用最终会出现不一致性。
 
-<figure>
 
 ![图 3](https://ww1.sinaimg.cn/large/7921624bly1fkr32s9ev8j20lt0c041v.jpg)
 
   <figcaption>图 3：Twitter 页面在更新个人信息时产生的不一致性。推文中的小图片展示了一个过时的用户名和头像</figcaption>
-</figure>
 
 上面的图片是一个展示 Twitter UI 不一致的很好的例子，我在 [Reactive 2015 talk](https://www.youtube.com/watch?v=FEwLwiizlk0) 中解释过，只有两种情况可能会导致这一点：要么是推文的模块没有订阅对应用户信息的改变，要么是数据正常且推文的作者甚至不与当前登录的用户关联，尽管事实上两者都尝试描述同一人的相同属性。
 
@@ -125,23 +117,19 @@ MobX 背后的第二个重要思想就是，对于任何复杂度超过 TodoMVC 
 
 响应与计算值都被 MobX 用同样的方式运行。当重新计算触发时，回调函数会被推入**衍生栈**（当前正在运行衍生的函数栈）。只要重计算运行中，所有被访问的可观察对象将会把自己注册为衍生栈最顶部函数的依赖。如果计算值的值被衍生函数需要，且计算值已处在响应状态，那么这个值可以简单的被当做是最后一个值。否则它将把自身推入衍生栈，切换到响应模式并也开始计算。
 
-<figure>
 
 ![图 4](https://ww1.sinaimg.cn/large/7921624bly1fkr331rwojj20ht0bxt9t.jpg)
 
   <figcaption>图 4：在执行 ProfileView 的响应期间，一些可观查状态和计算值正在被观察。计算值可能会重新计算，这形成了图 1 中展示的依赖树。</figcaption>
-</figure>
 
 计算完成后，我们会获得执行时访问的可观察列表。在 ProfileView 的例子里，这个列表仅包含 nickName 属性，或 nickName 和 fullName 属性。这一列表将会与前一个可观察列表进行比对。任何被移除的项将会被取消观察（计算值在这时候可能会从响应状态回退到惰性模式），任何添加的可观察这将会被观察知道下一次计算。例如 firstName 在将来发生改变，MobX 会知道 fullName 需要重新计算。这反过来将导致 ProfileView 被重新计算。下一个图标详细说明了这一过程。
 
 #### 传播（Propagating）状态变化
 
-<figure>
 
 ![图 5](https://ww1.sinaimg.cn/large/7921624bly1fkr33sytcdj20c307a3yy.jpg)
 
   <figcaption>图 5：在依赖树中修改值 1 产生的影响。虚线边框表示观察者将被标记为过时（stale）。数字表示计算的顺序。</figcaption>
-</figure>
 
 衍生将对状态变化自动做出响应。所有的响应都**同步发生**，且更重要的是**十分稳定**（glitch-free）。当可观察值被修改时，执行如下算法：
 
@@ -158,7 +146,6 @@ MobX 背后的第二个重要思想就是，对于任何复杂度超过 TodoMVC 
 
 大家经常对 MobX 的同步运行感到吃惊（这一点像 RxJs 而不像 knockout）。这样有两个很大的有点：首先这样一直观察过期的衍生变得基本不可能，因此一个衍生值在影响他的值发生变化时可以被立即使用；其次折让堆栈追从和调试变得更容易，因为它避免了 Promise/async 库中常见的的无效堆栈。
 
-<figure>
 
 ```typescript
 transaction(() => {
@@ -168,7 +155,6 @@ transaction(() => {
 ```
 
 <figcaption>代码 2：一个事务的例子，这确保了没人可以直接观察类似 "Mich Weststate" 的值（见代码 1）</figcaption>
-</figure>
 
 然而，同步执行也引入了对事务的需要。如果立即连续应用一些变化，更好的做法是在所有改变被应用之后对所有衍生重新求值。将所有行为包裹在**事务**（transcation）中可以实现这一点。事务简单的退出所有就绪通知知道事务块完成。注意事务仍然同步的运行和更新。
 
