@@ -6,14 +6,14 @@ toc: true
 
 ---
 
-![Git 钩子](http://7xinjg.com1.z0.glb.clouddn.com/git-tips-hookhero.svg)
+![Git 钩子](./Git-Hooks/git-tips-hookhero.svg)
 
 Git 钩子是在一个 Git 仓库中，在每一次特定事件触发时自动运行的脚本。它允许我们自定义 Git 的内部行为，并在开发的生命周期的关键时间点触发自定义行为。
 
 <!--more-->
 
 <p><image
-	src="http://7xinjg.com1.z0.glb.clouddn.com/git-tips-hook01.svg"
+	src="./Git-Hooks/git-tips-hook01.svg"
 	alt="通过链接到版本控制的脚本维护钩子"
 	width="80%"/></p>
 
@@ -84,7 +84,7 @@ with open(commit_msg_filepath, 'w') as f:
 维护一个开发团队的钩子可是有点棘手，因为 `.git/hooks` 目录不会随着项目的其他部分复制的，也不会被版本控制。对上面俩问题的最简单的解决方案就是把钩子存在实际的项目目录中（`.git` 目录之外），这就可以让我们像任何其他版本控制文件一样来编辑钩子。为了安装钩子，我们可以创造一个链接将其链接到 `.git/hooks`；或者是当有更新的时候，简单的将其复制粘贴到 `.git/hooks` 目录中。
 
 <p><image
-	src="http://7xinjg.com1.z0.glb.clouddn.com/git-tips-hook02.svg"
+	src="./Git-Hooks/git-tips-hook02.svg"
 	alt="在提交创建的过程执行钩子"
 	width="80%"/></p>
 
