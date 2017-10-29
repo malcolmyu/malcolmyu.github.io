@@ -6,6 +6,8 @@ toc: true
 
 ---
 
+![redux](https://ws1.sinaimg.cn/large/006cGJIjly1fizao8avctj308k04tmxq.jpg)
+
 Redux 算是 React 全家桶里最饱受争议的一个框架，就算是天天变 API 的 [React-Router](https://github.com/ReactTraining/react-router)，也因为占据了意识形态的最高点 —— 便捷优雅的声明式路由、异步路由控制与加载，导致尽管骂声不断，却没有一个人说不用。反观 Redux，用不惯的说它夹杂了太多的私心，找遍业务线所有的代码，也找不到一个逻辑用到这么复杂的函数式；用的惯的也嫌它使用太复杂，凭空多出几个文件夹、丑陋的 `switch`、一遍一遍的常量声明，真是端起键盘开发，放下鼠标骂娘。与 React-Router 横行社区不同，Redux 从来不缺竞争者，前有 Reflux，后有 [Mobx](https://github.com/mobxjs/mobx)；但似乎也没见有一个竞争者真正撼动 redux 的地位：完美适配服务端渲染，完善的调试工具与社区支持，都让 Redux 成为 React 学习者首选的数据流框架。
 
 今天就来简单聊聊这个可能是这两年最火的数据流框架：[Redux](https://github.com/reactjs/redux)。
@@ -18,7 +20,7 @@ Redux 算是 React 全家桶里最饱受争议的一个框架，就算是天天�
 
 没用过 Redux 的开发者打开它的文档，扑面而来就是难懂的概念，什么 `compose`、`applyMiddleware`、`reducer` 之类，引得大家都尴尬了起来，关了网页翻身又刷知乎去了。实际上我个人认为，把这些繁杂的概念丢到 Redux 的首页介绍上简直就是一个败笔，这些东西实际上都是在后来的开发过程中，高度抽象的业务逻辑，根本没有必要直接介绍给用户。
 
-那 Redux 到底是个啥咧？我们抛去这些复杂的概念不看，先看看我们开发中最常用到的，也是最核心的概念：[store](http://cn.redux.js.org/docs/basics/Store.html)。这个 store 顾名思义，就是一个数据存储的结构，我们可以自己先自己脑补一下，实现一个数据存储需要写什么功能呢？大概不外乎就是『获取数据』、『存储数据』，但是 Redux 的 store 显然不是这么简单，因为在修改数据之余，我们还需要监听数据变化，以便进行一些其他的操作：比如跟着修改组件监听的 `props`；而这个数据监听的行为，实际上是由使用者定义的，因此还需要接入一套事件管理的机制：『订阅事件』、『取消订阅』、『事件发布』。
+那 Redux 到底是个啥咧？我们抛去这些复杂的概念不看，先看看我们开发中最常用到的，也是最核心的概念：[store](https://cn.redux.js.org/docs/basics/Store.html)。这个 store 顾名思义，就是一个数据存储的结构，我们可以自己先自己脑补一下，实现一个数据存储需要写什么功能呢？大概不外乎就是『获取数据』、『存储数据』，但是 Redux 的 store 显然不是这么简单，因为在修改数据之余，我们还需要监听数据变化，以便进行一些其他的操作：比如跟着修改组件监听的 `props`；而这个数据监听的行为，实际上是由使用者定义的，因此还需要接入一套事件管理的机制：『订阅事件』、『取消订阅』、『事件发布』。
 
 简单来说，Redux 的 store 就是**数据管理与事件订阅的组合**，实际上，这个基本的内核也并非 Redux 的原创，而是 Facebook 最早提出来的 [Flux](https://facebook.github.io/flux/) 的概念。翻一下它的[源码](https://github.com/reactjs/redux/blob/master/src/createStore.js#L247)，可以明显的看到它对外提供了三个方法：`dispatch`，`subscribe` 和 `getState`，翻译一下就是『调度』、『订阅』和『状态获取』。这个 `getState` 就不多说了，就是获取一份 store 的当前数据，我们重点聊一聊 `dispatch` 和 `subscribe`。
 
@@ -68,7 +70,7 @@ function subscribe(listener) {
 
 总共又是干了两件事，第一是把回调注册到 `nextListeners` 中，供 `dispatch` 时调用；第二是返回一个清理注册函数的函数，便于用户进行注册函数的清理。这里要注意的，就是第二步清理函数。react 初心者应该都会遇到下面的这行错误提示：
 
-![setState 错误](http://ww1.sinaimg.cn/large/7921624bgw1fb55pktexgj21kw01qdhl.jpg)
+![setState 错误](https://ww1.sinaimg.cn/large/7921624bgw1fb55pktexgj21kw01qdhl.jpg)
 
 导致这个错误的原因，就是异步调用 `setState`，结果执行的时候，由于异步的关系，代码所在的组件都被销毁了。当你使用 redux 时，你会发现基本不会出现这样的提示，那就是因为 redux **在组件销毁的时候调用了清理函数**，因此所有能导致状态发生变化的操作都会在组件移除时被清理。
 
@@ -78,7 +80,7 @@ function subscribe(listener) {
 
 如要实现下面这个简单的功能：
 
-![简单的例子](http://ww1.sinaimg.cn/large/7921624bgw1fb5blrrg9vg204101pwed.gif)
+![简单的例子](https://ww1.sinaimg.cn/large/7921624bgw1fb5blrrg9vg204101pwed.gif)
 
 就需要编写这样一个 reducer：
 
@@ -134,9 +136,9 @@ arr.reduce((prev, next) => ({ ...next, child: prev }), {});
 // { c: 3, child: { b: 2, child: { a: 1, child: {} } } }
 ```
 
-那么，redux 的 reducer 也起到了类似的作用（尽管它的源码没有一行用到 `reduce` 函数😂），它可以将我们编写的调度器 reducer 集合起来，最终集合成一个调度器树。这样做的意义在于，在保证了**唯一状态树的前提**之下，我们在编码时还能只关注状态调度的某一细节。那么集合 reducer 的方法呢，就叫做 [`combineReducers`](http://redux.js.org/docs/api/combineReducers.html)。
+那么，redux 的 reducer 也起到了类似的作用（尽管它的源码没有一行用到 `reduce` 函数😂），它可以将我们编写的调度器 reducer 集合起来，最终集合成一个调度器树。这样做的意义在于，在保证了**唯一状态树的前提**之下，我们在编码时还能只关注状态调度的某一细节。那么集合 reducer 的方法呢，就叫做 [`combineReducers`](https://redux.js.org/docs/api/combineReducers.html)。
 
-![combineReducer](http://7xinjg.com1.z0.glb.clouddn.com/combined-redux.png)
+![combineReducer](https://7xinjg.com1.z0.glb.clouddn.com/combined-redux.png)
 
 这里我们就不对具体的 API 进行讲解了，综合来说，reducer 带给 redux 最大的特性就在于：**编码时关心单个 reducer，但最终生成统一调度器，调度生成单一的状态树**。
 
@@ -158,7 +160,7 @@ Redux 有一个单独的概念，叫做 compose，这其实是函数式编程里
 
 我们来考虑考虑，在 ES6 里，这个函数应该怎么写：
 
-1. 首先我们应该把传入的一坨函数改造成数组，这个 ES6 里面的 [rest 参数](http://es6.ruanyifeng.com/#docs/function#rest参数)已经帮我们很好的搞定了；
+1. 首先我们应该把传入的一坨函数改造成数组，这个 ES6 里面的 [rest 参数](https://es6.ruanyifeng.com/#docs/function#rest参数)已经帮我们很好的搞定了；
 2. 其次我们需要**逆序**执行函数，这就可以用到 `reduceRight`。
 
 我们来实现一下：

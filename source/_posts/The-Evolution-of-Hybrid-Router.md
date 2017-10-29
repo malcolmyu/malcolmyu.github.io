@@ -14,7 +14,7 @@ toc: true
 
 我们来看一下这样一个页面，它是我们 YMFE Conf 的邀请函：
 
-![邀请函](http://ww3.sinaimg.cn/large/7921624bjw1fbagpi7541g20aa0ickbe.gif)
+![邀请函](https://ww3.sinaimg.cn/large/7921624bjw1fbagpi7541g20aa0ickbe.gif)
 
 这个页面效果非常的炫，但是有一个显著的问题，『慢』。看到这个图片，我的脑海中就浮现出三个大字：**SPA**。相比大家对此都深有感触，一方面，在当时 SPA 代表着 h5 应用的尖端水准，它利用 h5 的 history-api，让前端能自由的控制浏览器历史，从而脱离后端，自主掌控路由；另一方面，由于一个页面要加载全部的静态资源，页面渲染完成之前漫长的 loading 动画成为了用户对 SPA 应用最深刻的印象。
 
@@ -24,7 +24,7 @@ toc: true
 
 Hy 1.0 架构体系如下：
 
-![Hy 1.0](http://7xnghq.com1.z0.glb.clouddn.com/1.0.png)
+![Hy 1.0](https://7xnghq.com1.z0.glb.clouddn.com/1.0.png)
 
 然而，随着安卓手机性能的提升，现在很多浏览器都会进行页面缓存，实现页面切换的动画，所以单页和多页给用户的体验差不多；在 iOS 上，SPA 的动画与原生的手势回退动画会产生冲突；更重要的是，在 hybrid 环境下，我们采用的是多 webview 的解决方案，这一方案本身就是多页的 —— 这是在 hy 1.0 里始终无法逾越的一个问题：每次打开一个新 webview，实际我们只显示众多页面中的一个页面，但实际展示却要**加载全部的资源**，这实际是很不合理的。
 
@@ -42,7 +42,7 @@ Hy 1.0 架构体系如下：
 
 我们先来看一下，js 资源异步加载的原理，将代码分割为首屏渲染需要的逻辑 A，与其他页面所需的静态资源逻辑 B，在入口页面引入 A，然后在 A 内向页面插入带有 async 属性的 script 标签，引入静态资源 B。
 
-![异步引入资源](http://7xnghq.com1.z0.glb.clouddn.com/async-load.png)
+![异步引入资源](https://7xnghq.com1.z0.glb.clouddn.com/async-load.png)
 
 但是我们的 js 文件通常不是单独工作的，每个文件之间可能复杂的互相依赖的模块关系，因此在将文件拆分之后，还需要使用一种类似 jsonp 的方式，让被拆分的文件调用一个挂载在 window 上的函数，获取入口文件的模块依赖，并将自己的模块注入到全局模块中。
 
@@ -106,7 +106,7 @@ const List = require.async('./list');
 
 新架构体系如下：
 
-![Hy 2.0](http://7xnghq.com1.z0.glb.clouddn.com/2.0.png)
+![Hy 2.0](https://7xnghq.com1.z0.glb.clouddn.com/2.0.png)
 
 通过这套新架构，我们 app 的首屏渲染性能得到了显著的提高，最主要的是，我们编写的 app 能够自由的在单页、多页和 hybrid 场景下进行切换，这样就涵盖了业务在不同场景下、适应不同情况的需求。
 

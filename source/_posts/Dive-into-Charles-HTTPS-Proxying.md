@@ -1,10 +1,12 @@
-title: 深究 Charles 配置 HTTPS 代理的乱码问题
+title: 细说 Charles 配置 HTTPS 代理的乱码问题
 date: 2017-02-26
 categories: 计算机网络
 tags: [HTTPS,SSL,TLS,Charles]
 toc: true
 
 ---
+
+![https](https://ww1.sinaimg.cn/large/7921624bly1fkri8xxqxaj20de06y0sp.jpg)
 
 最近因工作需要，要用 Charles 来监听 HTTPS 的请求，然而好不容易按照网上的文章配置完成之后，却发现监听的内容居然是一坨乱码。随后进行了一个 SSL 代理配置，和手机证书的安装，才终于获取到了明文。虽然之前有了解 HTTPS 是使用大素数收到进行加密，也知道有一次非对称加密和对称加密，但是经过这次的配置发现对它的根本原理还不是很了解，于是专门研究了一下，才搞明白它的原委。
 
@@ -25,11 +27,11 @@ toc: true
 
 之后便会看到下面的选框：
 
-![设置 SSL 代理](http://7xinjg.com1.z0.glb.clouddn.com/ssl-proxying.jpeg)
+![设置SSL代理](https://7xinjg.com1.z0.glb.clouddn.com/ssl-proxying.jpeg)
 
 点击 Add，编辑 Loction，按照如下填写：
 
-![设置 Location](http://7xinjg.com1.z0.glb.clouddn.com/edit-location.jpeg)
+![编辑Location](https://7xinjg.com1.z0.glb.clouddn.com/edit-location.jpeg)
 
 一路点 OK，这第一步就这样成了。
 
@@ -43,7 +45,7 @@ toc: true
 
 选择 Charles 的证书，并信任此证书：
 
-![信任证书](http://7xinjg.com1.z0.glb.clouddn.com/trust-certificate.jpeg)
+![信任证书](https://7xinjg.com1.z0.glb.clouddn.com/trust-certificate.jpeg)
 
 #### 手机端证书安装
 
@@ -53,11 +55,11 @@ toc: true
 
 之后会弹出这样一个对话框：
 
-![安装证书](http://7xinjg.com1.z0.glb.clouddn.com/install-certificate.jpeg)
+![安装证书](https://7xinjg.com1.z0.glb.clouddn.com/install-certificate.jpeg)
 
-按照上面的要求，在手机上配置好端口为 8888 的代理之后，访问 http://chls.pro/ssl 就可以下载证书并安装了。
+按照上面的要求，在手机上配置好端口为 8888 的代理之后，访问 https://chls.pro/ssl 就可以下载证书并安装了。
 
-实际上做完这两部，就可以在你的 PC 和移动设备上愉快的进行 HTTPS 的代理，并获取明文内容了（具体如何解决问题，也可以参考[这篇文章](http://itangqi.me/2016/05/30/tips-for-using-charles/)）；尽管到这一步就已经达到了实际使用的效果，但我还是产生了这样的疑问：为何进行 HTTPS 代理的配置需要配置 SSL，以及在客户端安装证书呢？之前截获的内容又为什么是乱码呢？
+实际上做完这两部，就可以在你的 PC 和移动设备上愉快的进行 HTTPS 的代理，并获取明文内容了（具体如何解决问题，也可以参考[这篇文章](https://itangqi.me/2016/05/30/tips-for-using-charles/)）；尽管到这一步就已经达到了实际使用的效果，但我还是产生了这样的疑问：为何进行 HTTPS 代理的配置需要配置 SSL，以及在客户端安装证书呢？之前截获的内容又为什么是乱码呢？
 
 ## 乱码的缘由 —— SSL 加密
 
@@ -91,7 +93,7 @@ Charles 的[官网上](https://www.charlesproxy.com/documentation/proxying/ssl-p
 
 那么上文所说的**根证书**与**动态签发证书**，指的是什么意思呢？这里就说到了证书的信任链体系，这是一个树状的结构，全球有为数不多的根证书颁发机构，授权二级证书颁发机构进行证书颁发；而只要用户信任了根证书，就会对其下属二级机构颁发的所有证书都予以信任。
 
-![证书颁发体系](http://7xinjg.com1.z0.glb.clouddn.com/certificate.jpeg)
+![证书颁发体系](https://7xinjg.com1.z0.glb.clouddn.com/certificate.jpeg)
 
 上图可以看到 VeriSign 就是根证书颁发机构，而知乎的证书是由其二级证书颁发机构颁发的。由于操作系统里内置了对 VeriSign 的授信，因此知乎的地址栏才能有一把绿色的小锁。
 
@@ -115,8 +117,8 @@ Charles 的[官网上](https://www.charlesproxy.com/documentation/proxying/ssl-p
 
 参考文献
 
-1. [支付宝偷偷添加根证书 - 知乎](http://zhihu.com/question/22306245/answer/21002652 )
-2. [图解 SSL/TLS](http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html)
-3. [SSL/TLS 协议运行机制的概述](http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html)
-4. [细说 CA 和证书](http://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/)
+1. [支付宝偷偷添加根证书 - 知乎](https://zhihu.com/question/22306245/answer/21002652 )
+2. [图解 SSL/TLS](https://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html)
+3. [SSL/TLS 协议运行机制的概述](https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html)
+4. [细说 CA 和证书](https://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/)
 
