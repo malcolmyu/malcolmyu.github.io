@@ -84,16 +84,16 @@ disqus_shortname: malcolmyu
 
 # Deployment  站点部署到github要配置这里, 非常重要
 ## Docs: http://hexo.io/docs/deployment.html
-# deploy:
-#   type: git
-#   repository: git@github.com:malcolmyu/malcolmyu.github.io.git
-#   branch: master
-
 deploy:
-  type: rsync
-  host: 114.215.44.135
-  user: root
-  root: /root/blog
+  type: git
+  repository: git@github.com:malcolmyu/malcolmyu.github.io.git
+  branch: master
+
+# deploy:
+#   type: rsync
+#   host: 114.215.44.135
+#   user: root
+#   root: /root/blog
 
 # 生成 search.xml
 search:
