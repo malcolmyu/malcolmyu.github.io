@@ -6,7 +6,9 @@ toc: true
 
 ---
 
-因为要做组内分享，最近看了一下[《垃圾回收算法与实现》](https://book.douban.com/subject/26821357/)，发现其实垃圾回收的算法基调基本上世纪 60 年代就已经提出来了，后世的框架只是在给这些框架做组合和修补的工作。抛掉老生常谈的分代假设、不谈，V8 官博今年新发了一篇[博文](https://v8.dev/blog/trash-talk#incremental)介绍 V8 GC 新进展，讲到[增量回收](https://v8.js.cn/blog/concurrent-marking/)的话题。本以为增量 GC 是什么新鲜东西，实际上早在 1975 年的一篇[论文](https://www.cs.utexas.edu/users/EWD/transcriptions/EWD05xx/EWD520.html)中，大宗师 Dijkstra 就已经提出了这个问题的解决方案——[三色标记算法](https://en.wikipedia.org/wiki/Tracing_garbage_collection#Tri-color_marking)。
+因为要做组内分享，最近看了一下[《垃圾回收算法与实现》](https://book.douban.com/subject/26821357/)，发现其实垃圾回收的算法基调基本上世纪 60 年代就已经提出来了，后世的框架只是在给这些框架做组合和修补的工作。抛掉老生常谈的分代假设不谈，V8 官博今年新发了一篇[博文](https://v8.dev/blog/trash-talk#incremental)介绍 V8 GC 新进展，讲到[增量回收](https://v8.js.cn/blog/concurrent-marking/)的话题。本以为增量 GC 是什么新鲜东西，实际上早在 1975 年的一篇[论文](https://www.cs.utexas.edu/users/EWD/transcriptions/EWD05xx/EWD520.html)中，大宗师 Dijkstra 就已经提出了这个问题的解决方案——[三色标记算法](https://en.wikipedia.org/wiki/Tracing_garbage_collection#Tri-color_marking)。
+
+<!--more-->
 
 令我疑惑的是，分代假设、清道夫算法跟传统的 Mark-Sweep 算法，都是符合逻辑容易理解的；但到了三色标记这儿，好多资料都是语焉不详的：大家都尽力在描述这个算法的实现（其实也并不复杂），有的也给出了动图（后来发现是抄的维基百科），但并没有博文真正解答这个问题：为什么不能直接用双色标记，而要用三色标记？
 
