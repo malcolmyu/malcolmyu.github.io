@@ -6,7 +6,7 @@ toc: true
 
 ---
 
-![https](https://ww1.sinaimg.cn/large/7921624bly1fkri8xxqxaj20de06y0sp.jpg)
+{% asset_img HTTPS_icon.jpg https %}
 
 最近因工作需要，要用 Charles 来监听 HTTPS 的请求，然而好不容易按照网上的文章配置完成之后，却发现监听的内容居然是一坨乱码。随后进行了一个 SSL 代理配置，和手机证书的安装，才终于获取到了明文。虽然之前有了解 HTTPS 是使用大素数收到进行加密，也知道有一次非对称加密和对称加密，但是经过这次的配置发现对它的根本原理还不是很了解，于是专门研究了一下，才搞明白它的原委。
 

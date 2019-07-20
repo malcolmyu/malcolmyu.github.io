@@ -6,7 +6,7 @@ toc: true
 
 ---
 
-![redux](https://ws1.sinaimg.cn/large/006cGJIjly1fizgyli3cwj30cc03czkg.jpg)
+{% asset_img title.png redux %}
 
 [上文](/2016/12/03/Chat-about-Redux-1/)里，我们剥茧抽丝，聊了聊 Redux 里面的各种烦人概念，以及这些概念是怎么来的；本文我们着重聊一聊，让 Redux 大行其道的『中间件』。
 

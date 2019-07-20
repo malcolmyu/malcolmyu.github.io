@@ -20,6 +20,7 @@
     "hexo-generator-search": "^1.0.3",
     "hexo-generator-sitemap": "^1.1.2",
     "hexo-generator-tag": "^0.1.0",
+    "hexo-reference": "^1.0.4",
     "hexo-renderer-ejs": "^0.1.0",
     "hexo-renderer-jade": "^0.3.0",
     "hexo-renderer-less": "^0.2.0",

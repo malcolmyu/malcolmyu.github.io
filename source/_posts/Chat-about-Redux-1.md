@@ -6,7 +6,7 @@ toc: true
 
 ---
 
-![redux](https://ws1.sinaimg.cn/large/006cGJIjly1fizao8avctj308k04tmxq.jpg)
+{% asset_img title.png redux %}
 
 Redux 算是 React 全家桶里最饱受争议的一个框架，就算是天天变 API 的 [React-Router](https://github.com/ReactTraining/react-router)，也因为占据了意识形态的最高点 —— 便捷优雅的声明式路由、异步路由控制与加载，导致尽管骂声不断，却没有一个人说不用。反观 Redux，用不惯的说它夹杂了太多的私心，找遍业务线所有的代码，也找不到一个逻辑用到这么复杂的函数式；用的惯的也嫌它使用太复杂，凭空多出几个文件夹、丑陋的 `switch`、一遍一遍的常量声明，真是端起键盘开发，放下鼠标骂娘。与 React-Router 横行社区不同，Redux 从来不缺竞争者，前有 Reflux，后有 [Mobx](https://github.com/mobxjs/mobx)；但似乎也没见有一个竞争者真正撼动 redux 的地位：完美适配服务端渲染，完善的调试工具与社区支持，都让 Redux 成为 React 学习者首选的数据流框架。
 

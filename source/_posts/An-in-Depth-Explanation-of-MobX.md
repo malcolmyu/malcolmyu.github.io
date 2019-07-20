@@ -6,7 +6,7 @@ toc: true
 
 ---
 
-![mobx](https://ww1.sinaimg.cn/large/7921624bly1fkrhh14yuqj20hs07c74k.jpg)
+{% asset_img title.jpg mobx %}
 
 鉴于广大人民群众的要求（并为了到时候能给我的孙子吹个 NB），我写了这篇 MobX 的内部工作原理。许多朋友震惊于 MobX 的性能和一致性，但请各位放心，这里没有什么黑科技！
 
@@ -66,7 +66,7 @@ React.render(<ProfileView person={michel} />), document.body);
 
 我们可以根据上面的代码绘制一个依赖树，直观看来如下所示：
 
-![图 1](https://ww1.sinaimg.cn/large/7921624bly1fkr30bdyhsj20ev09tmxw.jpg)
+![图 1](figure1.png)
 
   <figcaption>图 1：ProfileView 组件的依赖树，FullName 处在响应模式，主动观察 firstName 和  lastName</figcaption>
 
@@ -76,7 +76,7 @@ React.render(<ProfileView person={michel} />), document.body);
 MobX 最低程度地定义依赖树。例如，一旦被渲染的人拥有一个 nickName，渲染将不再受到 fullName、firstName 或 lastName 输出值的影响（见代码 1）。所有这些值的观测关系可被清除，MobX 会响应地自动简化依赖树：
 
 
-![图2](https://ww1.sinaimg.cn/large/7921624bly1fkr32eyusuj20ev09twf4.jpg)
+![图2](figure2.png)
 
   <figcaption>图 2：在用户拥有 nickname 时 ProfileView 组件依赖树。与图 1 相反，fullName 现在处于惰性模式（lazy mode）且不观测 firstName 和 lastName</figcaption>
 
@@ -93,7 +93,7 @@ MobX 将始终尝试减少产生一致状态所需要的计算数。在本文的
 > 换句话说，当人为管理订阅时，你的应用最终会出现不一致性。
 
 
-![图 3](https://ww1.sinaimg.cn/large/7921624bly1fkr32s9ev8j20lt0c041v.jpg)
+![图 3](figure3.png)
 
   <figcaption>图 3：Twitter 页面在更新个人信息时产生的不一致性。推文中的小图片展示了一个过时的用户名和头像</figcaption>
 
@@ -122,7 +122,7 @@ MobX 背后的第二个重要思想就是，对于任何复杂度超过 TodoMVC 
 响应与计算值都被 MobX 用同样的方式运行。当重新计算触发时，回调函数会被推入**衍生栈**（当前正在运行衍生的函数栈）。只要重计算运行中，所有被访问的可观察对象将会把自己注册为衍生栈最顶部函数的依赖。如果计算值的值被衍生函数需要，且计算值已处在响应状态，那么这个值可以简单的被当做是最后一个值。否则它将把自身推入衍生栈，切换到响应模式并也开始计算。
 
 
-![图 4](https://ww1.sinaimg.cn/large/7921624bly1fkr331rwojj20ht0bxt9t.jpg)
+![图 4](figure4.png)
 
   <figcaption>图 4：在执行 ProfileView 的响应期间，一些可观查状态和计算值正在被观察。计算值可能会重新计算，这形成了图 1 中展示的依赖树。</figcaption>
 
@@ -131,7 +131,7 @@ MobX 背后的第二个重要思想就是，对于任何复杂度超过 TodoMVC 
 #### 传播（Propagating）状态变化
 
 
-![图 5](https://ww1.sinaimg.cn/large/7921624bly1fkr33sytcdj20c307a3yy.jpg)
+![图 5](figure5.png)
 
   <figcaption>图 5：在依赖树中修改值 1 产生的影响。虚线边框表示观察者将被标记为过时（stale）。数字表示计算的顺序。</figcaption>
 

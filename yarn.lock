@@ -45,6 +45,14 @@ acorn@^2.1.0, acorn@^2.4.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-2.7.0.tgz#ab6e7d9d886aaca8b085bc3312b79a198433f0e7"
 
+align-text@^0.1.1, align-text@^0.1.3:
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/align-text/-/align-text-0.1.4.tgz#0cd90a561093f35d0a99256c22b7069433fad117"
+  dependencies:
+    kind-of "^3.0.2"
+    longest "^1.0.1"
+    repeat-string "^1.5.2"
+
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
@@ -263,6 +271,13 @@ caseless@~0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.11.0.tgz#715b96ea9841593cc33067923f5ec60ebda4f7d7"
 
+center-align@^0.1.1:
+  version "0.1.3"
+  resolved "https://registry.npmjs.org/center-align/-/center-align-0.1.3.tgz#aa0d32629b6ee972200411cbd4461c907bc2b7ad"
+  dependencies:
+    align-text "^0.1.3"
+    lazy-cache "^1.0.3"
+
 chalk@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-0.5.1.tgz#663b3a648b68b55d04690d49167aa837858f2174"
@@ -320,6 +335,14 @@ clean-css@^3.1.9:
   dependencies:
     commander "2.8.x"
     source-map "0.4.x"
+
+cliui@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/cliui/-/cliui-2.1.0.tgz#4b475760ff80264c762c3a1719032e91c7fea0d1"
+  dependencies:
+    center-align "^0.1.1"
+    right-align "^0.1.1"
+    wordwrap "0.0.2"
 
 cliui@^3.0.3:
   version "3.2.0"
@@ -913,6 +936,13 @@ hexo-deployer-git@0.0.4:
     moment "^2.8.4"
     swig "^1.4.2"
 
+hexo-deployer-rsync@^0.1.2:
+  version "0.1.3"
+  resolved "https://registry.npmjs.org/hexo-deployer-rsync/-/hexo-deployer-rsync-0.1.3.tgz#4707c5a47371cb05b47539aac17e09b67060a832"
+  dependencies:
+    chalk "^1.1.3"
+    hexo-util "^0.6.0"
+
 hexo-front-matter@^0.2.2:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/hexo-front-matter/-/hexo-front-matter-0.2.3.tgz#c7ca8ef420ea36bd85e8408a2e8c9bf49efa605e"
@@ -997,6 +1027,13 @@ hexo-pagination@0.0.2:
   dependencies:
     utils-merge "^1.0.0"
 
+hexo-reference@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/hexo-reference/-/hexo-reference-1.0.4.tgz#5198601ed445904f51764c9dfb77f5e99540ec32"
+  dependencies:
+    hexo-util "^0.6.3"
+    markdown-it "^8.4.2"
+
 hexo-renderer-ejs@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/hexo-renderer-ejs/-/hexo-renderer-ejs-0.1.1.tgz#415d2fa33d99507526a5d0a371e36806789b172c"
@@ -1016,9 +1053,9 @@ hexo-renderer-less@^0.2.0:
   dependencies:
     less "^2.5.1"
 
-hexo-renderer-marked@^0.2.4:
+hexo-renderer-marked@^0.2.11:
   version "0.2.11"
-  resolved "https://registry.yarnpkg.com/hexo-renderer-marked/-/hexo-renderer-marked-0.2.11.tgz#32fd3880d3c3979fd7b8015ec121a6c44ff49f84"
+  resolved "https://registry.npmjs.org/hexo-renderer-marked/-/hexo-renderer-marked-0.2.11.tgz#32fd3880d3c3979fd7b8015ec121a6c44ff49f84"
   dependencies:
     hexo-util "^0.6.0"
     marked "^0.3.5"
@@ -1057,6 +1094,17 @@ hexo-util@^0.1.0:
 hexo-util@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/hexo-util/-/hexo-util-0.6.0.tgz#b5719cc2d44d9d45522dddcf96143919824b7803"
+  dependencies:
+    bluebird "^3.4.0"
+    camel-case "^3.0.0"
+    cross-spawn "^4.0.0"
+    highlight.js "^9.4.0"
+    html-entities "^1.2.0"
+    striptags "^2.1.1"
+
+hexo-util@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.npmjs.org/hexo-util/-/hexo-util-0.6.3.tgz#16a2ade457bef955af0dfd22a3fe6f0a49a9137c"
   dependencies:
     bluebird "^3.4.0"
     camel-case "^3.0.0"
@@ -1283,6 +1331,7 @@ jade@^1.11.0:
     jstransformer "0.0.2"
     mkdirp "~0.5.0"
     transformers "2.1.0"
+    uglify-js "^2.4.19"
     void-elements "~2.0.1"
     with "~4.0.0"
 
@@ -1360,6 +1409,10 @@ kind-of@^3.0.2:
   dependencies:
     is-buffer "^1.0.2"
 
+lazy-cache@^1.0.3:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"
+
 lcid@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lcid/-/lcid-1.0.0.tgz#308accafa0bc483a3867b4b6f2b9506251d1b835"
@@ -1386,9 +1439,19 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+linkify-it@^2.0.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/linkify-it/-/linkify-it-2.2.0.tgz#e3b54697e78bf915c70a38acd78fd09e0058b1cf"
+  dependencies:
+    uc.micro "^1.0.1"
+
 lodash@^4.1.0, lodash@^4.13.1, lodash@^4.2.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+
+longest@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
 lower-case@^1.1.1:
   version "1.1.4"
@@ -1405,6 +1468,16 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
 
+markdown-it@^8.4.2:
+  version "8.4.2"
+  resolved "https://registry.npmjs.org/markdown-it/-/markdown-it-8.4.2.tgz#386f98998dc15a37722aa7722084f4020bdd9b54"
+  dependencies:
+    argparse "^1.0.7"
+    entities "~1.1.1"
+    linkify-it "^2.0.0"
+    mdurl "^1.0.1"
+    uc.micro "^1.0.5"
+
 markdown@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/markdown/-/markdown-0.5.0.tgz#28205b565a8ae7592de207463d6637dc182722b2"
@@ -1414,6 +1487,10 @@ markdown@~0.5.0:
 marked@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
+
+mdurl@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
 
 micromatch@^2.1.5:
   version "2.3.11"
@@ -1897,6 +1974,12 @@ request@^2.55.0, request@^2.72.0, request@^2.79.0:
     tunnel-agent "~0.4.1"
     uuid "^3.0.0"
 
+right-align@^0.1.1:
+  version "0.1.3"
+  resolved "https://registry.npmjs.org/right-align/-/right-align-0.1.3.tgz#61339b722fe6a3515689210d24e14c96148613ef"
+  dependencies:
+    align-text "^0.1.1"
+
 rimraf@2, rimraf@~2.5.1, rimraf@~2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.5.4.tgz#96800093cbf1a0c86bd95b4625467535c29dfa04"
@@ -2037,6 +2120,10 @@ source-map@~0.2.0:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.2.0.tgz#dab73fbcfc2ba819b4de03bd6f6eaa48164b3f9d"
   dependencies:
     amdefine ">=0.0.4"
+
+source-map@~0.5.1:
+  version "0.5.7"
+  resolved "https://registry.npmjs.org/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
 sprintf-js@^1.0.2, sprintf-js@~1.0.2:
   version "1.0.3"
@@ -2221,6 +2308,19 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
+uc.micro@^1.0.1, uc.micro@^1.0.5:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/uc.micro/-/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"
+
+uglify-js@^2.4.19:
+  version "2.8.29"
+  resolved "https://registry.npmjs.org/uglify-js/-/uglify-js-2.8.29.tgz#29c5733148057bb4e1f75df35b7a9cb72e6a59dd"
+  dependencies:
+    source-map "~0.5.1"
+    yargs "~3.10.0"
+  optionalDependencies:
+    uglify-to-browserify "~1.0.0"
+
 uglify-js@~2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.2.5.tgz#a6e02a70d839792b9780488b7b8b184c095c99c7"
@@ -2377,6 +2477,15 @@ yargs@^3.32.0:
     string-width "^1.0.1"
     window-size "^0.1.4"
     y18n "^3.2.0"
+
+yargs@~3.10.0:
+  version "3.10.0"
+  resolved "https://registry.npmjs.org/yargs/-/yargs-3.10.0.tgz#f7ee7bd857dd7c1d2d38c0e74efbd681d1431fd1"
+  dependencies:
+    camelcase "^1.0.2"
+    cliui "^2.1.0"
+    decamelize "^1.0.0"
+    window-size "0.1.0"
 
 yargs@~3.5.4:
   version "3.5.4"
