@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>avalon 事件总线与依赖调度系统</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="avalon 事件总线与依赖调度系统"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        avalon 事件总线与依赖调度系统
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2015-04-18T16:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2015-04-19
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/源码分析/">源码分析</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/avalon/">avalon</a>
+
+
+    </div>
+    <hr>
+    
+      
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>在工作中经常使用到<a href="http://www.cnblogs.com/rubylouvre/" target="_blank" rel="noopener">司徒</a>的 <a href="https://github.com/RubyLouvre/avalon" target="_blank" rel="noopener">avalon</a> ，由于坑点太多，有时需要经常查阅其源码实现。而 avalon 由于方兴未艾，网上对其进行源码解析的文章并不多，查了半天也就只有这篇 <a href="http://www.cnblogs.com/sskyy/p/3679572.html" target="_blank" rel="noopener">MVVM 大比拼</a>，以及这篇 <a href="http://www.cnblogs.com/aaronjs/archive/2013/06/16/3138631.html" target="_blank" rel="noopener">avalon 源码分析</a>。个人认为这两篇文章写得都并不算好，其一是成文较早，研究的源码还是 1.2.5 版本，而目前的新版本已经到了 1.4+，比之前不知道高到哪里去。其二是大比拼一文作者阅码无数，心中早已无码，写分析只观其大要，似乎在和原作者谈笑风生；而后者的分析仿佛又只是对源码的粗略通读，也没怎么经过实践，有些图样图森破。因此自己决定安下心来写点源码分析。</p>
+<a id="more"></a>
+<p>本文源起自同事的一个疑问，“<em>可否使用事件中的 <code>$fire</code> 来改变一个普通双绑属性的值？</em>”这样问也是有它的理由：因为在视图模型中，可以用 <code>$watch</code> 来监听属性的变化；而在事件总线中，可以用 <code>$fire</code> 来触发 <code>$watch</code> 的回调，那似乎用 <code>$fire</code> 来改变双绑属性的值也变得可以接受。但实际测试中，发现这样操作是不起作用的。如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> demo = avalon.define(&#123;</span><br><span class="line">    $id: <span class="string">'demo'</span>,</span><br><span class="line">    a: <span class="number">1</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">demo.$fire(<span class="string">'a'</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">// nothing output</span></span><br></pre></td></tr></table></figure>
+<p>这是为什么呢？起初我认为事件总线与依赖调度实际上是绑在一起的，也就是说双绑属性上的事件——如值改变后通知视图——也是通过事件总线来实现的；后来想到 avalon 师承 knockout，而事件是 angular 中才有的概念，可能是后来单独实现的也说不定。带着这样的疑问，我翻开了源码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> EventBus = &#123;</span><br><span class="line">    $watch: <span class="function"><span class="keyword">function</span> (<span class="params">type, callback</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> callback === <span class="string">"function"</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> callbacks = <span class="keyword">this</span>.$events[type]</span><br><span class="line">            <span class="keyword">if</span> (callbacks) &#123;</span><br><span class="line">                callbacks.push(callback)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">this</span>.$events[type] = [callback]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">//重新开始监听此VM的第一重简单属性的变动</span></span><br><span class="line">            <span class="keyword">this</span>.$events = <span class="keyword">this</span>.$watch.backup</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 省略了 unwatch 事件</span></span><br><span class="line">    $fire: <span class="function"><span class="keyword">function</span> (<span class="params">type</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 这里对 $fire 处理 dom 层级关系的部分做了大量省略</span></span><br><span class="line">        <span class="keyword">var</span> callbacks = events[type] || []</span><br><span class="line">        <span class="keyword">var</span> all = events.$all || []</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; callback = callbacks[i++]; ) &#123;</span><br><span class="line">            <span class="keyword">if</span> (isFunction(callback))</span><br><span class="line">                callback.apply(<span class="keyword">this</span>, args)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; callback = all[i++]; ) &#123;</span><br><span class="line">            <span class="keyword">if</span> (isFunction(callback))</span><br><span class="line">                callback.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，在源码中出现最多的东西就是这个 <code>$events</code> 。上面两段代码的主要意思就是说，在 <code>$watch</code> 的时候，查看一下当前层级的 <code>$event</code> 中是否有对应名称的事件队列，在确保 <code>$watch</code> 参数是函数的前提下将回调添加到事件队列中；而 <code>$fire</code> 的时候需要遍历 <code>$event</code> 对应的事件队列，取出是函数的部分执行它。</p>
+<p>这里就产生了一个疑问：我之前以为依赖调度的事件也是存放在 <code>$events</code> 队列中的，比如上文的视图模型 demo，加入页面上有写了双绑的 a，如 <code>&lt;span ms-if=&quot;a&quot;&gt;&lt;/span&gt;</code> 之类，那么 a 的依赖调度就是储存在 <code>demo.$events</code> 中的。既然事件总线的回调也是储存在 <code>$events</code> 中，那二者的实现方式又有何区别？</p>
+<p>继续翻到依赖调度系统的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerSubscriber</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    Registry[expose] = data</span><br><span class="line">    <span class="comment">// 暴光此函数,方便collectSubscribers收集</span></span><br><span class="line">    <span class="keyword">var</span> fn = data.evaluator</span><br><span class="line">    <span class="keyword">if</span> (fn) &#123; <span class="comment">//如果是求值函数</span></span><br><span class="line">        <span class="keyword">var</span> c = ronduplex.test(data.type) ? data : fn.apply(<span class="number">0</span>, data.args)</span><br><span class="line">        data.handler(c, data.element, data)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">collectSubscribers</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> data = Registry[expose]</span><br><span class="line">    <span class="comment">// 收集依赖于这个访问器的订阅者</span></span><br><span class="line">    <span class="keyword">if</span> (list &amp;&amp; data &amp;&amp; avalon.Array.ensure(list, data) &amp;&amp; data.element) &#123;</span><br><span class="line">        <span class="comment">//只有数组不存在此元素才push进去</span></span><br><span class="line">        addSubscribers(data, list)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">notifySubscribers</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 通知依赖于这个访问器的订阅者更新自身</span></span><br><span class="line">    <span class="keyword">if</span> (list &amp;&amp; list.length) &#123;</span><br><span class="line">        <span class="comment">// 省略了定时检查移除订阅和监控数组的代码</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = list.length, fn; fn = list[--i]; ) &#123;</span><br><span class="line">            <span class="keyword">var</span> fun = fn.evaluator || noop</span><br><span class="line">            fn.handler(fun.apply(<span class="number">0</span>, fn.args || []), el, fn)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>过一遍依赖调度的代码我们会发现它的三个主要的功能：</p>
+<ul>
+<li><code>registerSubscriber</code> 用于给依赖调度系统曝光一个依赖。该方法是在智能代理 <code>parseExprProxy</code> 中调用的，而这一方法是承自 avalon 的两大系统之一——<strong>扫描系统</strong>——在扫描绑定的时候执行的，而参数 <code>data</code> 就是扫描绑定生成的对象。</li>
+<li><code>collectSubscribers</code> 用于收集访问器的订阅者。这个方法是在<strong>访问器（accessor）</strong>中进行收集的，当一个属性被 get 的时候进行收集。</li>
+<li><code>notifySubscribers</code> 通知依赖于这个访问器的订阅者更新自身。这个方法也是在访问器中进行收集的，对应了属性 set 的情况。</li>
+</ul>
+<p>由于访问器是在模型工厂中被生成的，也就是说，<strong>依赖调度系统是链接 avalon 两大系统——扫描系统（scan）和模型工厂（define）的重要模块</strong>，是将扫描页面产生的绑定与处理 viewModel 生成的属性结合起来的重要手段。</p>
+<p>这是依赖调度系统的功能，这一枝我们按下不表，有机会会开篇详述。我们关注的问题还是在于：为何依赖调度与事件总线都是通过 <code>$events</code> 来进行处理，二者却花开两朵呢？</p>
+<p>对上面两个重要的方法进行再一次简化，得到如下的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerSubscriber</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    Registry[expose] = data</span><br><span class="line">    data.evaluator.apply(<span class="number">0</span>, data.args)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">collectSubscribers</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> data = Registry[expose]</span><br><span class="line">    avalon.Array.ensure(list, data)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>registerSubscriber</code> 中，执行了一步求值函数。这时候就会触发访问器的 get 方法，继而触发 <code>collectSubscribers</code>；而后者的参数就是对应的 <code>$events</code>，在这里将刚才曝光的 <code>data</code> 添加到 <code>$events</code> 队列中。这里的 <code>data</code> 不是回调函数，而是扫描绑定生成的数据，包含 DOM 节点、求值函数、vm等等。</p>
+<p>看到这里我们就明白了——尽管依赖调度和事件总线的内容都寄存在 <code>$events</code> 中，但一个存的是对象，一个存的是回调函数，所以两者实际上走的是不同的处理路线。</p>
+<p>观察一下访问器的代码，证实了我们这一观点：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这里只探究简单属性，故而对其进行了简化</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">arguments</span>.length) &#123; <span class="comment">// 有参数表示 set</span></span><br><span class="line">    <span class="keyword">if</span> (!isEqual(oldValue, newValue)) &#123;</span><br><span class="line">        $model[name] = newValue</span><br><span class="line">        notifySubscribers($events[name]) <span class="comment">// 同步视图</span></span><br><span class="line">        safeFire($vmodel, name, newValue, oldValue) <span class="comment">// 触发$watch回调</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123; <span class="comment">// 无参数表示 get</span></span><br><span class="line">    collectSubscribers($events[name]) <span class="comment">// 收集视图函数</span></span><br><span class="line">    <span class="keyword">return</span> accessor.svmodel || oldValue</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在访问器中，需要分别进行同步视图与触发 <code>$watch</code> 回调的操作，分别处理了两个系统的事务。回到之前同事的问题：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> demo = avalon.define(&#123;</span><br><span class="line">    $id: <span class="string">'demo'</span>,</span><br><span class="line">    a: <span class="number">1</span></span><br><span class="line">&#125;);</span><br><span class="line">demo.$watch(<span class="string">'a'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;);</span><br><span class="line">demo.$fire(<span class="string">'a'</span>, <span class="number">2</span>); <span class="comment">// 输出2</span></span><br><span class="line">demo.a = <span class="number">3</span>;         <span class="comment">// 输出3</span></span><br></pre></td></tr></table></figure>
+<p>由于依赖调度与事件总线是两个不同的系统，因此 <code>$fire</code> 只能触发事件总线中挂载在 a 上的回调，而无法触发访问器；而由于访问器中在 set 时对两个系统都进行了触发，因此可以即同步视图，又能触发事件回调，所以可以使用 <code>$watch</code> 来监听属性值的变化。</p>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <div id="disqus_thread"></div>
+        <script>
+
+        var disqus_config = function () {
+        this.page.url = 'http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/index.html';
+        this.page.identifier = undefined;
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//malcolmyu.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+var disqus_shortname = 'malcolmyu';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('body')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

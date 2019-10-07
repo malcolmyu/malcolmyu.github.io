@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>MobX 源码探究之一 —— 核心概念</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="MobX 源码探究之一 —— 核心概念"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        MobX 源码探究之一 —— 核心概念
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2018-09-08T16:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2018-09-09
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/源码分析/">源码分析</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/MobX/">MobX</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#核心概念"><span class="toc-text">核心概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推导"><span class="toc-text">推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#依赖收集"><span class="toc-text">依赖收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#封装可观测值"><span class="toc-text">封装可观测值</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p><strong>Anything that can be derived from the application state, should be derived. Automatically.</strong></p>
+<p>任何可以从应用状态中推导的东西，都应该被<strong>自动地</strong>推导出来。</p>
+</blockquote>
+<p>上面两句话是 MobX 中文官网关于 MobX 的总结，初读起来觉得逼格慢慢，但毫无诚意——因为这样上升到哲学高度的话对于你对它工作原理的理解实际上是毫无帮助的，甚至于你用了框架若干年之后，依然无法理解这其中的含义。但是，哲学层次的总结总是需要在读完代码之后再细细品味的，就像老话说的，『当你千辛万苦读完代码爬上山顶的时候，框架作者装逼的哲学总结已经在此等候多时了』。</p>
+<a id="more"></a>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p>我们今天先抛开这段话，简单的看一下 MobX 基本的工作原理和几个核心的概念。MobX 是一个接地气的数据流框架，它给命令式编程和响应式编程搭建了一座桥梁，让前端小白们能够通过简单的赋值语句驱动 React 视图的渲染。这对于个把月也搞不明白 Redux 是个啥，或者即使搞明白也要天天撸模板代码的各位前端同僚们来说，节省了大把时间，下班回家的时间又可以提前几分钟<del>（不存在的）</del>。</p>
+<p>我们来看一个最简单的例子：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 封装可观测值</span></span><br><span class="line"><span class="keyword">const</span> store = observable(&#123; a: <span class="number">1</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 依赖收集，打印 1</span></span><br><span class="line">autorun(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(store.a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 推导，触发 derivation 的重新执行，打印 2</span></span><br><span class="line">store.a = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>这个例子就是一个最基础的 MobX 功能，它明显的分为三个步骤：</p>
+<ol>
+<li><p><strong>封装可观测值</strong>，对其他 MVVM 框架有了解的同学们应该能理解这个过程，这一步的操作的目的是：把一个单纯对象，封装成一个巨复杂的对象。（如上例中的 <code>{ a: 1 }</code> 就变成了下图的样子）</p>
+<p><img src="https://ww1.sinaimg.cn/large/7921624bly1fv3l54n33tj21bs06cabh.jpg" alt="面目全非的 Plain Object"></p>
+<p>这个巨复杂的对象它的学名叫做<strong>可观测值（Observable）</strong>，是 MobX 里第一个重要的概念。</p>
+</li>
+<li><p><strong>依赖收集</strong>，第二步使用 autorun 包裹一个回调的操作，学名叫做依赖收集。这里这个打印 a 的回调，MobX 叫它<strong>衍生（Derivation）</strong>，这是 MobX 里第二个重要的概念。但实际上，这里在运行时还暗含了一个步骤，就是<strong>封装衍生</strong>，衍生本身也是一个巨复杂的对象，在运行 <code>autorun</code> 的时候，会构造出这个对象。</p>
+</li>
+<li><p><strong>推导</strong>，第三步给可观测值赋值的行为会触发推导，这是展示 MobX 膜法实力的一步，前面几部的铺垫实际上也是为了这一步而做准备。这里仅仅使用了一行赋值语句，便可以驱动第二步中的衍生函数自动执行，这就是文档里提到的桥接『命令式编程』与『响应式编程』。</p>
+</li>
+</ol>
+<p>上面的三个步骤还引出了 MobX 的两个核心概念：<strong>可观测值</strong>和<strong>衍生</strong>。MobX 的其他概念和行为要么是基于这两个概念实现的，要么是围绕着这两个概念展开的。</p>
+<h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><p>说了这么多是不是懵逼了？别急，这几段如同开头的哲学语录一样，主要是切个题，回过头我们再来看这些概念。现在先看下 MobX 是怎么做到自动执行代码的？</p>
+<p>大家应该都对前端里经常用到的一个设计模式『观察者模式』有一定的了解，DOM 的事件绑定本身就有这种模式，而且很多组件库里大多都实现了这种 <code>EventEimitter</code> 的效果，例如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册回调，对应上面的第二步『依赖收集』</span></span><br><span class="line">em.on(<span class="string">'event-a'</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'aaa'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 触发回调，对应上面的第三部『推导』</span></span><br><span class="line">em.emit(<span class="string">'event-a'</span>); <span class="comment">// 执行之前注册的回调，输出 aaa</span></span><br></pre></td></tr></table></figure>
+<p>其实细细看来，这个自动触发的效果，跟上面的 <code>autorun</code> 也有几分类似嘛！<code>autorun</code> 其实就是这里 <code>on</code> 方法的效果；对 <code>store.a</code> 的赋值，实际上就是 <code>emit</code> 的效果。实际上，除却 <code>computed</code> 计算属性，普通的自动执行或者叫<strong>自动推导的原理，实际上跟 EventEmitter 是非常相似的</strong>。</p>
+<p>他们的区别仅仅在于：<strong>回调注册和触发的手段，是隐式而非显式的</strong>。为了这一 magic 的效果，各路 MVVM 框架做了好多工作，才让代码写起来如此的令人愉悦。</p>
+<p>我们先看一下 MobX 里『触发回调』的实现手段：仅仅是一行简单的赋值语句：<code>store.a = 2</code>。这行我们天天都会写到的赋值，背后实际上干了许许多多的工作。我们思考一下，能够让一行赋值语句，能够执行其他回调的方式有什么办法呢？</p>
+<p>是的，就是 <code>Object.definePorperty</code>（或者 Proxy），具体参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">这里</a>。因此我们可以简单的理解 MobX 在运行过程中，进行了这样的操作：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(store, <span class="string">'a'</span>, &#123;</span><br><span class="line">  <span class="keyword">set</span>: function() &#123;</span><br><span class="line">    em.emit(<span class="string">'event'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 执行 set 方法，触发 event-a</span></span><br></pre></td></tr></table></figure>
+<p>好了，推导的手段有了，那么如何确定在 emit 的时候应该触发哪个方法呢？或者说 MobX 的回调是什么时候注册的呢？其实核心就在这个 <code>autorun</code> 方法之中。</p>
+<h2 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h2><p>我们看一下 <code>autorun</code> 的功能，它实际上是要把回调中运行的所有可观测值收集起来，等到其中一个值发生变动时，重新运行该回调。有心的同学可能会发现，上面的例子中在第二步有输出结果，也就是<strong>在运行 <code>autorun</code> 方法的时候，内部的回调是会执行的</strong>。如图：</p>
+<p><img src="https://ww1.sinaimg.cn/large/7921624bly1fvjlw2yjqfj215y09ejt3.jpg" alt="autorun 的自动执行"></p>
+<p>这里的执行实际上就是关键：我们上文中提到，MobX 在赋值时，通过 <code>set</code> 成功的做了触发回调的行为，那么与 <code>set</code> 相对应的就是 <code>get</code> 方法。在代码执行的时候，涉及到取值操作，就会导致  <code>get</code> 方法的触发，MobX 就是在这里进行了依赖收集，或者叫回调注册的的操作。</p>
+<p>我们把上面的代码再扩展一下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(store, <span class="string">'a'</span>, &#123;</span><br><span class="line">  <span class="keyword">get</span>: function() &#123;</span><br><span class="line">    em.on(<span class="string">'event'</span>, <span class="comment">/* 这里的回调怎么写呢？ */</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span>: function() &#123;</span><br><span class="line">    em.emit(<span class="string">'event'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 执行 set 方法，触发 event-a</span></span><br></pre></td></tr></table></figure>
+<p>那么问题来了，我们知道 MobX 是在 get 中进行的依赖收集，那它是如何知道对应的回调是哪一个呢？这里其实就是一个问题，如何在函数运行时获得当前正在运行的函数？</p>
+<p>有人可能会立刻提到一个手段：<code>arguments.callee</code>。首先，这个方法并不推荐使用，而且如果遇到下面的情况会引发问题：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">autorun(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// other code...</span></span><br><span class="line">  <span class="keyword">const</span> funcInAutorun = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(store.a);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  funcInAutorun();</span><br><span class="line">  <span class="comment">// other code...</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样会仅执行 funcInAutorun，而不会执行 autorun 的其他代码</span></span><br><span class="line">store.a = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>那么 MobX 究竟是怎么操作的呢？其实很简单，MobX 用了一个全局变量。</p>
+<p>MobX 在 <code>autorun</code> 的回调执行前，开了一个全局变量叫做 <code>pendingDerivation</code>，并把当前的回调赋值给它，当这个方法执行完成后再把这个变量置空（或者置回上层推导函数）。由于 <code>get</code> 方法也是同步执行，因此在执行时可以找到当前的 <code>pendingDerivation</code>，把它当做要收集的回调。</p>
+<p>我们修改代码如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"><span class="comment">// 简单起见就叫 pending 吧</span></span><br><span class="line"><span class="keyword">let</span> pending = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> autorun = <span class="function">(<span class="params">fn</span>) =&gt;</span> &#123;</span><br><span class="line">  pending = fn;</span><br><span class="line">  fn();</span><br><span class="line">  pending = <span class="literal">null</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(store, <span class="string">'a'</span>, &#123;</span><br><span class="line">  <span class="keyword">get</span>: function() &#123;</span><br><span class="line">    <span class="comment">// 直接注册当前执行的推导函数</span></span><br><span class="line">    em.on(<span class="string">'event'</span>, pending);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span>: function() &#123;</span><br><span class="line">    em.emit(<span class="string">'event'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 触发 get 方法，进行依赖收集</span></span><br><span class="line">autorun(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(store.a));</span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 执行 set 方法，触发 event</span></span><br></pre></td></tr></table></figure>
+<p>其实在同步情况下，使用全局变量标记运行情况可以解决很多问题。</p>
+<h2 id="封装可观测值"><a href="#封装可观测值" class="headerlink" title="封装可观测值"></a>封装可观测值</h2><p>实际上，做完这一步，就把自动推导的核心工作搞定了，不过我们上面的代码还有个问题没有考虑：没有对 a 本身的值进行管理，现在赋值和取值都只能触发副作用，而不能得到正确的值，这有点不太行。</p>
+<p>好吧，因此我们需要处理一下上面简陋的 <code>defineProperty</code> 工作，也就是 MobX 里面的 <code>observable</code> 方法。</p>
+<p>根据上面的探索，我们得出 <code>observable</code> 方法需要进行两步的工作：</p>
+<ol>
+<li>对本身的值进行存储；</li>
+<li>进行依赖收集和触发的封装；</li>
+</ol>
+<p>我们定义一个 <code>_data</code> 私有属性，来存放它原本的值，代码如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> EM = <span class="built_in">require</span>(<span class="string">'events'</span>).EventEmitter;</span><br><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EM();</span><br><span class="line"></span><br><span class="line"><span class="comment">// -----框架代码-----</span></span><br><span class="line"><span class="keyword">let</span> pending = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> autorun = <span class="function">(<span class="params">fn</span>) =&gt;</span> &#123;</span><br><span class="line">  pending = fn;</span><br><span class="line">  fn();</span><br><span class="line">  pending = <span class="literal">null</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observable = <span class="function">(<span class="params">o</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 这个 _data 要是不可枚举的，放在被再次封装上 get、set 方法</span></span><br><span class="line">  <span class="comment">// 它仅用于进行值的存储</span></span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(o, <span class="string">'_data'</span>, &#123;</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    value: <span class="built_in">Object</span>.assign(&#123;&#125;, o),</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 封装 get/set</span></span><br><span class="line">  <span class="built_in">Object</span>.keys(o).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(o, key, &#123;</span><br><span class="line">      <span class="keyword">get</span>: function() &#123;</span><br><span class="line">        <span class="keyword">if</span> (pending) em.on(<span class="string">'event'</span>, pending);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._data[key];</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="keyword">set</span>: function(v) &#123;</span><br><span class="line">        <span class="comment">// 一个简单的处理，值不变时不触发</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>._data[key] !== v) &#123;</span><br><span class="line">          <span class="keyword">this</span>._data[key] = v;</span><br><span class="line">          em.emit(<span class="string">'event'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// -----业务代码-----</span></span><br><span class="line"><span class="keyword">const</span> store = observable(&#123; <span class="attr">a</span>: <span class="number">1</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 触发 get 方法，进行依赖收集</span></span><br><span class="line">autorun(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(store.a)); <span class="comment">// 成功工作执行 1</span></span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 成功工作执行 2</span></span><br></pre></td></tr></table></figure>
+<p>经过这样一通处理，我们用不到 50 行代码实现了一个简单的，只有一层深度可观测值，且推导函数不能嵌套的微型 MobX<del>（缺点好多啊好像没什么卵用）</del>。不过这次的代码编写只是想跟大家分享一下 MobX 的最最基本的原理，这时候我们再去回顾一下开篇的几个概念：</p>
+<ol>
+<li><strong>封装可观测值</strong>（box observable values），把一个单纯对象，封装成一个巨复杂的对象。在我们代码里，这里处理了事件收集、触发和值本身，是最复杂的逻辑；</li>
+<li><strong>依赖收集</strong>（tracking dependencies），依赖收集实际上是 <code>get</code> 里面做的工作，要注意的是 MobX 通过一个全局变量，完成了对当前正在运行的推导函数的收集；</li>
+<li><strong>推导 </strong>(derive)，经过上面两步的操作，推导反而成了最容易的一步，只要触发回调就好，水到渠成。</li>
+</ol>
+<p>本文我们主要聊了聊 MobX 中或者说是 MVVM 框架中的几个核心概念，如果想阅读 MobX 源代码，希望参考我文末的文章，特别推荐 JSON 简时空的<a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="noopener">几篇博文</a>，起到了把代码翻译成人话的作用，对有志阅读代码的童鞋简直就是一盏指明灯。</p>
+<p>下篇文章我会着重说下 MobX 作者最引以为豪的 <code>computed</code> 的实现，大多数自动推导的框架都没有在 <code>computed</code> 上进行像 MobX 这样的性能优化（同时回味一下作者那句哲学总结）。</p>
+<hr>
+<p><em>参考文章</em></p>
+<ul>
+<li><a href="https://cn.mobx.js.org/" target="_blank" rel="noopener">MobX 中文文档</a> 至少先搞明白咋用吧</li>
+<li><a href="https://github.com/sorrycc/blog/issues/3" target="_blank" rel="noopener">MobX 原理</a> dva 作者，云谦老哥写的，简单易懂</li>
+<li><a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="noopener">用故事解读 MobX 源码系列</a> 这个系列非常好，跟读源码差不多，作者对很多细节有图文并茂的解释 </li>
+</ul>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <div id="disqus_thread"></div>
+        <script>
+
+        var disqus_config = function () {
+        this.page.url = 'http://malcolmyu.github.io/2018/09/09/Core-Concepts-of-Mobx/index.html';
+        this.page.identifier = undefined;
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//malcolmyu.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+var disqus_shortname = 'malcolmyu';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('body')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

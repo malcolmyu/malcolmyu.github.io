@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>细说 Charles 配置 HTTPS 代理的乱码问题</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="细说 Charles 配置 HTTPS 代理的乱码问题"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        细说 Charles 配置 HTTPS 代理的乱码问题
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2017-02-25T16:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2017-02-26
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/计算机网络/">计算机网络</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/HTTPS/">HTTPS</a>·<a href="/tags/SSL/">SSL</a>·<a href="/tags/TLS/">TLS</a>·<a href="/tags/Charles/">Charles</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Charles-HTTPS-代理配置"><span class="toc-text">Charles HTTPS 代理配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSL-代理设置"><span class="toc-text">SSL 代理设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端证书安装"><span class="toc-text">客户端证书安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PC-端证书安装"><span class="toc-text">PC 端证书安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#手机端证书安装"><span class="toc-text">手机端证书安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#乱码的缘由-——-SSL-加密"><span class="toc-text">乱码的缘由 —— SSL 加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Charles-的破解之道"><span class="toc-text">Charles 的破解之道</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css">
+<p>最近因工作需要，要用 Charles 来监听 HTTPS 的请求，然而好不容易按照网上的文章配置完成之后，却发现监听的内容居然是一坨乱码。随后进行了一个 SSL 代理配置，和手机证书的安装，才终于获取到了明文。虽然之前有了解 HTTPS 是使用大素数收到进行加密，也知道有一次非对称加密和对称加密，但是经过这次的配置发现对它的根本原理还不是很了解，于是专门研究了一下，才搞明白它的原委。</p>
+<a id="more"></a>
+<h2 id="Charles-HTTPS-代理配置"><a href="#Charles-HTTPS-代理配置" class="headerlink" title="Charles HTTPS 代理配置"></a>Charles HTTPS 代理配置</h2><p>我们先开宗明义，把问题解决一下：要进行 HTTPS 代理配置，其实只需要两个步骤：</p>
+<ol>
+<li>在代理端进行 SSL 代理设置；</li>
+<li>在客户端进行证书安装。</li>
+</ol>
+<h3 id="SSL-代理设置"><a href="#SSL-代理设置" class="headerlink" title="SSL 代理设置"></a>SSL 代理设置</h3><p>在 Charles 设置 SSL 代理，步骤为：</p>
+<blockquote>
+<p>Proxy –&gt; SSL Proxying Setting –&gt; Enable SSL Proxying</p>
+</blockquote>
+<p>之后便会看到下面的选框：</p>
+<p><img src="https://7xinjg.com1.z0.glb.clouddn.com/ssl-proxying.jpeg" alt="设置SSL代理"></p>
+<p>点击 Add，编辑 Loction，按照如下填写：</p>
+<p><img src="https://7xinjg.com1.z0.glb.clouddn.com/edit-location.jpeg" alt="编辑Location"></p>
+<p>一路点 OK，这第一步就这样成了。</p>
+<h3 id="客户端证书安装"><a href="#客户端证书安装" class="headerlink" title="客户端证书安装"></a>客户端证书安装</h3><h4 id="PC-端证书安装"><a href="#PC-端证书安装" class="headerlink" title="PC 端证书安装"></a>PC 端证书安装</h4><p>假如代理的是 PC 端的 HTTPS 请求，需要在 PC 上信任 Charles 的证书，步骤为：</p>
+<blockquote>
+<p>Help –&gt; SSL Proxying –&gt; Install Charles Root Certificate</p>
+</blockquote>
+<p>选择 Charles 的证书，并信任此证书：</p>
+<p><img src="https://7xinjg.com1.z0.glb.clouddn.com/trust-certificate.jpeg" alt="信任证书"></p>
+<h4 id="手机端证书安装"><a href="#手机端证书安装" class="headerlink" title="手机端证书安装"></a>手机端证书安装</h4><p>在移动端安装证书，步骤为：</p>
+<blockquote>
+<p>Help –&gt; SSL Proxying –&gt;Install Charles Root Certificate on a Mobile Device</p>
+</blockquote>
+<p>之后会弹出这样一个对话框：</p>
+<p><img src="https://7xinjg.com1.z0.glb.clouddn.com/install-certificate.jpeg" alt="安装证书"></p>
+<p>按照上面的要求，在手机上配置好端口为 8888 的代理之后，访问 <a href="https://chls.pro/ssl" target="_blank" rel="noopener">https://chls.pro/ssl</a> 就可以下载证书并安装了。</p>
+<p>实际上做完这两部，就可以在你的 PC 和移动设备上愉快的进行 HTTPS 的代理，并获取明文内容了（具体如何解决问题，也可以参考<a href="https://itangqi.me/2016/05/30/tips-for-using-charles/" target="_blank" rel="noopener">这篇文章</a>）；尽管到这一步就已经达到了实际使用的效果，但我还是产生了这样的疑问：为何进行 HTTPS 代理的配置需要配置 SSL，以及在客户端安装证书呢？之前截获的内容又为什么是乱码呢？</p>
+<h2 id="乱码的缘由-——-SSL-加密"><a href="#乱码的缘由-——-SSL-加密" class="headerlink" title="乱码的缘由 —— SSL 加密"></a>乱码的缘由 —— SSL 加密</h2><p>其实稍微对 HTTPS 有点认知的童鞋，一开始就不应该对 HTTPS 截取的内容是乱码而感动吃惊：喵的这可是 HTTPS 啊，一个代理就能窃听到获明文内容，那也毫无安全性可言了吧。</p>
+<p>那 HTTPS 到底是利用什么原理进行加密的呢？我们可以看到，上面的步骤中，配置 Charles 的第一步就是先配置一个 SSL 代理，实际上 HTTPS 的那个 S 也可以翻译为 HTTP over SSL/TLS，这个 SSL 正是 HTTP 加密依赖的基础协议。</p>
+<p>SSL/TLS 是传输层安全协议，与其他应用层协议（如 HTTP/FTP 等）独立无关，也就是说，在应用层协议开始通信之前，SSL/TLS 协议就已经完成了相关的加密工作，后续协议传输的内容已经是加密数据了。所以其实 HTTP 还是那个 HTTP，但传输的内容早已变成天书，这也就是我们在用 Charles 进行代理的时候，看到一堆乱码的原因。</p>
+<p>不过快播的审判员说的好：『文件加密了，你为什么不解密呢？』是啊，为什么经过 SSL/TLS 协议处理过的内容，不能够被解密呢？这里就涉及到 SSL 协议的基本原理，我们用写信，来模拟一下这个加密的过程：</p>
+<ol>
+<li>小明和小王是一对好基友，但是远隔万水千山，只能通过写信来传递消息。俩人每天的信件都是通过邮递员小红来传递的，这俩人每天纸条上<strong>明文写着信息</strong>，小红也天天看的不亦乐乎，这就是 HTTP。</li>
+<li>时间久了，两人发现不行，比如有时候会传递一些不和谐的内容，不希望小红这样的腐女看到；于是小明灵机一动，换成葬爱家族的杀马特火星文来进行通信；小王看后，心领神会。由于转换方式两人都知道，这就是<strong>对称加密技术</strong>。</li>
+<li>然而好景不长，小红勤学苦练，终于练成了火星文十级，又能看懂俩人加密的内容了。俩人必须要更换加密方式，但是更换的加密方式也只能通过小红来传递，所以这个加密的手段很难瞒住小红，这就是 HTTP 的不安全性。</li>
+<li>正好小明是一位博学的哲♂学家，他立刻写了封信给小王：把你家储物间箱子的上那把挂锁寄过来！小王看后立刻拿出了那把 82 年的挂锁，把它打开并寄给了小明。这个锁大家都能看到，但只有小王有钥匙，这就是传说中的<strong>非对称加密</strong>，锁就是公钥，小王的钥匙就是私钥。</li>
+<li>小明收到后，仔细研究了那把锁，上面烫着『隔壁老王』四个鎏金大字，正是王家祖传的锁，这就是验证服务端的<strong>数字证书</strong>。</li>
+<li>于是小明放心的把新的加密方式写在信中，放到盒子里，然后用锁锁上。由于小红没有钥匙，没法查看盒子里到底写了啥，只能原样送过去。小王收到后，用自己的钥匙打开了锁，获得了新的加密方式。这就完成了 <strong>SSL 协议的握手</strong>。</li>
+</ol>
+<p>当然，上面的过程描述的非常粗糙，小明和小王在互相寄锁的时候，还需传递随机数来辅助生产最终的加密方式（也是一个随机数，称之为 Premaster secret）；有兴趣的兄贵们可以看看文末的参考文章。</p>
+<h2 id="Charles-的破解之道"><a href="#Charles-的破解之道" class="headerlink" title="Charles 的破解之道"></a>Charles 的破解之道</h2><p>那么问题就来了：Charles 作为一只小红，是怎么破解上述加密通信的呢？莫非她大力出奇迹，直接砸了锁？我们知道，要砸锁是不太现实的，这等于要对大素数的乘积进行因式分解，现阶段下还做不到；因此 Charles 就做了一件最简单的事情：伪装成小明（也就是<a href="https://zh.wikipedia.org/zh-hk/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB" target="_blank" rel="noopener">中间人攻击</a>）。</p>
+<p>Charles 的<a href="https://www.charlesproxy.com/documentation/proxying/ssl-proxying/" target="_blank" rel="noopener">官网上</a>是这么说的：</p>
+<blockquote>
+<p>Charles 作为一个中间人来进行 HTTPS 的代理，让我们检测到浏览器和 SSL web 服务端之间的明文通信。<br>Charles 把自己变成一个中间人来达到这一目的。你的浏览器是收不到服务端证书的，Charles 会用自己的根证书动态签发一张证书，然后 Charles 来接受服务端的证书，你的浏览器接受 Charles 的证书。<br>…<br>Charles 仍然通过 SSL 与服务端进行通信，但通信是通过浏览器到 Charles，然后在从 Charles 到服务器。</p>
+</blockquote>
+<p>那么上文所说的<strong>根证书</strong>与<strong>动态签发证书</strong>，指的是什么意思呢？这里就说到了证书的信任链体系，这是一个树状的结构，全球有为数不多的根证书颁发机构，授权二级证书颁发机构进行证书颁发；而只要用户信任了根证书，就会对其下属二级机构颁发的所有证书都予以信任。</p>
+<p><img src="https://7xinjg.com1.z0.glb.clouddn.com/certificate.jpeg" alt="证书颁发体系"></p>
+<p>上图可以看到 VeriSign 就是根证书颁发机构，而知乎的证书是由其二级证书颁发机构颁发的。由于操作系统里内置了对 VeriSign 的授信，因此知乎的地址栏才能有一把绿色的小锁。</p>
+<p>因此 Charles 如果想对所有的域名颁发证书，必须要有一个根证书；用户信任了这个根证书，所有走 Charles 代理的 HTTPS 就都能被窃听了。</p>
+<p>我们在用小红为例，复现一下这个场景：</p>
+<ol>
+<li>小红拿到锁以后，先扣着不发，然后掏出了自己的锁寄给小明，这就是 Charles 签发了自己根证书；</li>
+<li>小明一看这把锁不是正宗王家的，但是小红家的锁，似乎也可以相信，这就是<strong>信任了 Charles 的根证书</strong>；</li>
+<li>小明把加密方式写进去，然后用小红的锁锁起来了，小红打开之后研究了加密方式，发现两人是在用水星文进行交流，瞬间水星文也达到了十级，然后在换上小王的锁锁上了盒子，还给了小王；</li>
+<li>小王毫不知情，之后俩人用水星文进行交流，但内容已经全被小红捕获到了。</li>
+</ol>
+<p>搞明白这些之后，我们再来看一下，为什么要进行 Charles 的那两个配置呢？</p>
+<ol>
+<li>设置 SSL 代理：因为默认 HTTP 请求走的是 80 端口，HTTPS 请求走的是 443 端口，不设置的话 Charles 仅会默认更改系统的 HTTP 代理，只有 HTTP 流量会走 Charles，而设置这个 HTTPS 的流量才会从这儿走；</li>
+<li>安装 Charles 的根证书：根据信任链，只要安装一下 Charles 的根证书，之后 Charles 颁发的所有域名的证书都能被自动信任，因此 HTTPS 就都能被窃听了。</li>
+</ol>
+<p>把证书的信任链翻译到锁上，等于小明会预先信任几个大厂生产的锁，比如只要是老王牌的锁，那我都相信，其他人也可以用这类锁来跟我要加密方式；Charles 等于创造了一个小红五金厂，把所有代理的请求都挂上了小红锁。那么 12306 其实跟小红一样，由于某些原因没有大厂申请一个锁，而是自己开了一个老铁五金厂，然后跟用户说：『相信我铁道部的老铁五金厂的锁吧，不然你就憋想回家！』</p>
+<p>用户还能怎么办？只能含着泪点确认：『老铁，没毛病！』</p>
+<p>参考文献</p>
+<ol>
+<li><a href="https://zhihu.com/question/22306245/answer/21002652" target="_blank" rel="noopener">支付宝偷偷添加根证书 - 知乎</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="noopener">图解 SSL/TLS</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">SSL/TLS 协议运行机制的概述</a></li>
+<li><a href="https://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/" target="_blank" rel="noopener">细说 CA 和证书</a></li>
+</ol>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <div id="disqus_thread"></div>
+        <script>
+
+        var disqus_config = function () {
+        this.page.url = 'http://malcolmyu.github.io/2017/02/26/Dive-into-Charles-HTTPS-Proxying/index.html';
+        this.page.identifier = undefined;
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//malcolmyu.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+var disqus_shortname = 'malcolmyu';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('body')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>协程与事件循环</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="协程与事件循环"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        协程与事件循环
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2015-11-17T16:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2015-11-18
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/技术研究/">技术研究</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/协程/">协程</a>·<a href="/tags/yield/">yield</a>·<a href="/tags/event-loop/">event loop</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#协程实现机制"><span class="toc-text">协程实现机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程与线程"><span class="toc-text">进程与线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#协程、子例程与生成器"><span class="toc-text">协程、子例程与生成器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#现有协程的实现"><span class="toc-text">现有协程的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CO"><span class="toc-text">CO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-fibers"><span class="toc-text">Node-fibers</span></a></li></ol></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>最近研究了一下 es6 的生成器函数，以及传说中的 co。虽然网上关于协程、co 源码分析的文章数不胜数，但是将其与先前异步实现的事件队列结合起来说明的文章却很难寻觅。之前只知道协程是实现异步的一种方式，那其和之前的各种异步实现究竟有什么本质区别呢？本文将根据协程机制简要探讨一下<strong>引入协程之后的新的事件循环模型</strong>。由于笔者基础知识不够扎实，所以会先讲述一大堆协程产生的背景和原理，再进行模型变化的讲解。</p>
+<a id="more"></a>
+<h2 id="协程实现机制"><a href="#协程实现机制" class="headerlink" title="协程实现机制"></a>协程实现机制</h2><h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><p>说起协程就不得不提到面试宝典必备题目之一：啥是进程啥是线程他俩有啥区别？ 之前阮一峰老师写过一篇<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">博文</a>进行科普，但是文中将电力比作 CPU 以及用厕所比喻锁都不合适。反而是评论里有位叫 viho_he 的哥们说的不错，在这里简单的把他的思路整理一下：</p>
+<ol>
+<li>单核 CPU 无法被平行使用。为了创造『共享』CPU 的假象，搞出了一个叫做时间片的概念，给任务分配时间片进行调度的调度器后来成为操作系统的核心组件；</li>
+<li>在调度的时候，如果不对内存进行管理，那么切换时间片的时候会造成程序上下文的互相污染。但是手工管理物理地址实在是太蛋疼了，因此引入了『虚拟地址』的概念，共包含三个部分：<ul>
+<li>CPU 增加了内存管理单元模块，来进行虚拟地址和物理地址的转换；</li>
+<li>操作系统加入了内存管理模块，负责管理物理内存和虚拟内存；</li>
+<li>发明了一个概念叫做<strong>进程</strong>。进程的虚拟地址一样，经过操作系统和 MMU 映射到不同的物理地址上。</li>
+</ul>
+</li>
+<li>深入的谈一谈进程。进程是由一大堆元素组成的一个实体，其中最基本的两个元素就是<strong>代码</strong>和能够被代码控制的<strong>资源</strong>（包括内存、I/O、文件等）；一个进程从产生到消亡，可以被操作系统<strong>调度</strong>。掌控资源和能够被调度是进程的两大基本特点。但是进程作为一个基本的调度单位有点不人性：假如我想一边循环输出 hello world，一边接收用户输入计算加减法，就得起俩进程，那随便写个代码都像 chrome 一样变成内存杀手了。</li>
+<li>因此诞生了<strong>线程</strong>的概念，线程在进程内部，处理并发的逻辑，拥有<strong>独立的栈</strong>，却共享线程的资源。使用线程作为 CPU 的基本调度单位显得更加有效率，但也引发各种抢占资源的问题<del>，使得笔试又多了一个考题</del>。</li>
+</ol>
+<p>最后总结一下就是：进程掌握着独立资源，线程享受着基本调度。一个进程里跑多个线程处理并发，6 的飞起。但纯粹的内核态线程有一个问题就是性能消耗：线程切换的时候，进程需要为了管理而切换到内核态，状态转换的消耗有点严重。为此又产生了一个概念，唤做<strong>用户态线程</strong>。用户态线程吼啊，程序自己控制状态切换，进程不用陷入内核态，会玩儿的开发者可以按照程序的特性来选择更适合的调度算法，代码的效率飞了起来。</p>
+<h3 id="协程、子例程与生成器"><a href="#协程、子例程与生成器" class="headerlink" title="协程、子例程与生成器"></a>协程、子例程与生成器</h3><p>那协程是干啥的咧？实际上，协程的概念产生的非常早，<a href="https://en.wikipedia.org/wiki/Melvin_Conway" target="_blank" rel="noopener">Melvin Conway</a> 早在 1963 年就针对编辑器的设计提出一种将『语法分析』和『词法分析』分离的方案，把 token 作为货物，将其转换为经典的<a href="https://zh.wikipedia.org/wiki/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98" target="_blank" rel="noopener">『生产者-消费者问题』</a>。编译器的控制流在词法和语法解析之间来回切换：当词法模块读入足够多的 token 时，控制流交给语法分析；当语法分析消化完所有 token 后，控制流交给词法分析。从这一概念提出的环境我们可以看出，协程的核心思想在于：<strong>控制流的主动让出和恢复</strong>。</p>
+<p>这一点和上文说的用户态线程有几分相似，但是用户态线程多在语言层面实现，对于使用者还是不够开放，无法提供显示的调度方式。但是协程做到了这一点，用户可以在编码阶段通过类似 <code>yieldto</code> 原语对控制流进行调度。</p>
+<p>说到这里可能有读者会产生疑问：『我大协程这么吊，为何提出了这么多年一直不火啊？』这就要说到当年命令式编程与函数式编程的『剑气之争』，当年命令式编程围绕着自顶向下的开发理念，将子例程调用作为唯一的控制结构。实际上，子例程就是没用使用 <code>yield</code> 的协程，大宗师 <a href="https://en.wikipedia.org/wiki/Donald_Knuth" target="_blank" rel="noopener">Donald E. Knuth</a> 也曾经曰过：</p>
+<blockquote>
+<p>子例程是协程的一种特例。</p>
+</blockquote>
+<p>但不进行让步和恢复的协程，终究失掉了协程的灵魂内核，不能称之为协程。直到后来出现了一个叫做<strong>迭代器（Iterator）</strong>的神奇的东西。迭代器的出现主要还是因为数据结构日趋复杂，以前用 <code>for</code> 循环就可以遍历的结构需要抽象出一个独立的迭代器来支持遍历，用 js 为例。迭代器的遍历会搞成下面这个样子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">of</span> <span class="built_in">Object</span>.keys(obj)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(key + <span class="string">": "</span> + obj[key]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上，要实现这种迭代器的语法糖，就必须引入协程的思想：主执行栈在进入循环后先让步给迭代器，迭代器取出下一个迭代元素之后再恢复主执行栈的控制流。这种迭代器的实现就是因为内置了<del>葛炮</del><strong>生成器（generator）</strong>。生成器也是一种特殊的协程，它拥有 <code>yield</code> 原语，但是却不能指定让步的协程，<strong>只能让步给生成器的调用者或恢复者</strong>。由于不能多个协程跳来跳去，生成器相对主执行线程来说只是一个可暂停的玩具，它甚至都<strong>不需要</strong>另开新的执行栈，只需要在让步的时候保存一下上下文就好。因此我们认为生成器与主控制流的关系是不对等的，也称之为<strong>非对称协程（semi-coroutine）</strong>。</p>
+<p>由此我们也知道了，为啥 es6 一下引起了这么一大坨特性啊，因为引入迭代器，就必须引入生成器，这俩就是这种不可分割的基友关系。</p>
+<h2 id="现有协程的实现"><a href="#现有协程的实现" class="headerlink" title="现有协程的实现"></a>现有协程的实现</h2><p>自 es6 尝试引入生成器以来，大量的协程实现尝试开始兴起，协程一时间成为风靡前端界的新名词。但这些实现中有的仅仅是实现了一个看上去很像协程的语法糖，有的却 hack 了底层代码，实现了真正的协程。这里以 TJ 大神的 <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> 和 <a href="https://github.com/laverdet/node-fibers" target="_blank" rel="noopener">node-fibers</a> 为例，浅析这两种协程实现方式上的差异。</p>
+<h3 id="CO"><a href="#CO" class="headerlink" title="CO"></a>CO</h3><p>co 实际上是一个语法糖，它可以包裹一个生成器，然后生成器里可以使用同步的方式来编写异步代码，效果如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> readFile = <span class="function"><span class="keyword">function</span> (<span class="params">fileName</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">        fs.readFile(fileName, <span class="function"><span class="keyword">function</span>(<span class="params">error, data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (error) reject(error);</span><br><span class="line">            resolve(data);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">co(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> f1 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/fstab'</span>);</span><br><span class="line">    <span class="keyword">let</span> f2 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/shells'</span>);</span><br><span class="line">    <span class="keyword">let</span> sum = f1.toString().length + f2.toString().length;</span><br><span class="line">    <span class="built_in">console</span>.log(sum);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在 es7 中已经推出了一个更甜的语法糖： <code>async/await</code>，实现效果如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> f1 = <span class="keyword">await</span> readFile(<span class="string">'/etc/fstab'</span>);</span><br><span class="line">    <span class="keyword">let</span> f2 = <span class="keyword">await</span> readFile(<span class="string">'/etc/shells'</span>);</span><br><span class="line">    <span class="keyword">let</span> sum = f1.toString().length + f2.toString().length;</span><br><span class="line">    <span class="built_in">console</span>.log(sum);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>是不是碉堡了！这段代码仿佛是在说明：我们把 <code>readFile</code> 丢到另一个协程里去了！等他搞定之后就又回到主线程上！代码可读性 6666 啊！但事实真的是这样的么？我们来看一下 co 的不考虑异常处理的精简版本实现：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">co</span>(<span class="params">gen</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> def = <span class="built_in">Promise</span>.defer();</span><br><span class="line">    <span class="keyword">let</span> iter = gen();</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 恢复迭代器并带入promise的终值</span></span><br><span class="line">        step(iter.next(data));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">step</span>(<span class="params">it</span>) </span>&#123;</span><br><span class="line">        it.done ?</span><br><span class="line">            <span class="comment">// 迭代结束则解决co返回的promise</span></span><br><span class="line">            def.resolve(it.value) :</span><br><span class="line">            <span class="comment">// 否则继续用解决程序解决下一个让步出来的promise</span></span><br><span class="line">            it.value.then(resolve);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    resolve();</span><br><span class="line">    <span class="keyword">return</span> def.promise;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从 co 的代码实现可以看出，实际上 co 只是进行了对生成器让步、恢复的控制，把让步出来的 promise 对象求取终值，之后恢复给生成器——这都没有多个执行栈，并没有什么协程么！但是有观众会指出：这不是用了生成器么，生成器就是非对称协程，所以它就是协程！好的，我们再来捋一捋：</p>
+<ol>
+<li>协程在诞生之时，只有一个 Ghost，叫做<strong>主动让步和恢复控制流</strong>，协程因之而生；</li>
+<li>后来在实现上，发现可以采用可控用户态线程的方式来实现，因此这种线程成为了协程的一个 shell。</li>
+<li>后来又发现，生成器也可以实现一部分主动让步和恢复的功能，但是弱了一点，我们也称生成器为协程的一个弱弱的 shell。</li>
+<li>所以我们说起协程，实际上说的是它的 Ghost，只要能主动让步和恢复，就可以叫做协程；但协程的实现方式有多种，有的有独立栈，有的没有独立栈，他们都只是协程的壳，不要在意这些细节，嗯。</li>
+</ol>
+<p>好的，因此 TJ 大神叫它 co，也还是有一定道理的，尽管可能产生一些奇怪的误导……我们来看一下，引入了 co 之后，js 原有的事件循环产生了什么改变呢？</p>
+<p>【回头补个图】</p>
+<p>好吧，实际上并没有什么改变。因为 promise 本身的实现机制还是回调，所以在 <code>then</code> 的时候就把回调扔给 webAPI 了，等到合适的时机又扔回给事件队列。事件队列中的代码需要等到主栈清空的时候再运行，这时候执行了 <code>iter.next</code> 来恢复生成器——而生成器是没有独立栈的，只有一份保存的上下文；因此只是把生产器的上下文再次加载到栈顶，然后沿着恢复的点继续执行而已。引入生成器之后，事件循环的一切都木有改变！</p>
+<h3 id="Node-fibers"><a href="#Node-fibers" class="headerlink" title="Node-fibers"></a>Node-fibers</h3><p>看完了生成器的实现，我们再来看下真·协程的效果。这里以 hack 了 node.js 线程的 <code>node-fibers</code> 为例，看一下真·协程与生产器的区别在何处。</p>
+<p>首先，<code>node-fibers</code> 本身仅仅是实现了创造协程的功能以及一些原语，本身并没有类似 co 的异步转同步的语法糖，我们采用相似的方式来包裹一个，为了区别，就叫它 ceo 吧（什么鬼）：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Fiber = <span class="built_in">require</span>(<span class="string">'fibers'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ceo</span>(<span class="params">cb</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> def = <span class="built_in">Promise</span>.defer();</span><br><span class="line">    <span class="comment">// 注意这里传入的是回调函数</span></span><br><span class="line">    <span class="keyword">let</span> fiber = <span class="keyword">new</span> Fiber(cb);</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 恢复迭代器并带入promise的终值</span></span><br><span class="line">        step(fiber.run(data));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">step</span>(<span class="params">it</span>) </span>&#123;</span><br><span class="line">        !fiber.started ?</span><br><span class="line">            <span class="comment">// 迭代结束则解决co返回的promise</span></span><br><span class="line">            def.resolve(it.value) :</span><br><span class="line">            <span class="comment">// 否则继续用解决程序解决下一个让步出来的promise</span></span><br><span class="line">            it.then(resolve);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    resolve();</span><br><span class="line">    <span class="keyword">return</span> def.promise;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ceo(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> f1 = Fiber.yield(readFile(<span class="string">'/etc/fstab'</span>));</span><br><span class="line">    <span class="keyword">let</span> f2 = Fiber.yield(readFile(<span class="string">'/etc/shells'</span>));</span><br><span class="line">    <span class="keyword">let</span> sum = f1.toString().length + f2.toString().length;</span><br><span class="line">    <span class="built_in">console</span>.log(sum);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>观众老爷会说了，这不是差不多么！好像最大的区别就是生成器变成了回调函数，只是少了一个 <code>*</code> 嘛。错！这就是区别！这里最关键的一点在于：没有了生成器，我们可以在任意一层函数里进行让步，这里使用 <code>ceo</code> 包裹的这个回调，是一个真正<strong>独立的执行栈</strong>。在真·协程里，我们可以搞出这样的代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ceo(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> foo1 = <span class="function"><span class="params">a</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'read from file1'</span>);</span><br><span class="line">        <span class="keyword">let</span> ret = Fiber.yield(a);</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">let</span> foo2 = <span class="function"><span class="params">b</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'read from file2'</span>);</span><br><span class="line">        <span class="keyword">let</span> ret = Fiber.yield(b);</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> getSum = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> f1 = foo1(readFile(<span class="string">'/etc/fstab'</span>));</span><br><span class="line">        <span class="keyword">let</span> f2 = foo2(readFile(<span class="string">'/etc/shells'</span>));</span><br><span class="line">        <span class="keyword">return</span> f1.toString().length + f2.toString().length;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> sum = getSum();</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">console</span>.log(sum);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>通过这个代码可以发现，在第一次让步被恢复的时候，恢复的是一坨执行栈！从栈顶到栈底依次为：<code>foo1</code> =&gt; <code>getSum</code> =&gt; <code>ceo</code> 里的匿名函数；而使用生成器，我们就无法写出这样的程序，因为 <code>yield</code> 原语只能在生产器内部使用——无论什么时候被恢复，都是简单的恢复在生成器内部，所以说生成器是不用开新栈滴。</p>
+<p>那么问题就来了，使用了真·协程之后，原先的事件循环模型是否会发生改变呢？是不是主执行栈调用协程的时候，协程就会在自己的栈里跑，而主栈就排空了可以执行异步代码呢？我们来看下面这个例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"><span class="keyword">var</span> Fiber = <span class="built_in">require</span>(<span class="string">'fibers'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> syncTask = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> now = +<span class="keyword">new</span> <span class="built_in">Date</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">new</span> <span class="built_in">Date</span> - now &lt; <span class="number">1000</span>) &#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'SyncTask Loaded!'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> asyncTask = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'AsyncTask Loaded!'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fiber = Fiber(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    syncTask();</span><br><span class="line">    Fiber.yield();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mainThread</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    asyncTask();</span><br><span class="line">    fiber.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mainThread();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// SyncTask Loaded!</span></span><br><span class="line"><span class="comment">// AsyncTask Loaded!</span></span><br></pre></td></tr></table></figure>
+<p>我们在主线程执行的时候抛出了一个异步方法，之后在协程里用冗长的同步代码阻塞它，这里我们可以清楚的看到：阻塞任何一个执行中的协程都会阻塞掉主线程！也就是说，即使加入了协程，js 还是可以被认为是单线程的，因为<strong>同一时刻势必只有一个协程在运行</strong>，在协程运行和恢复期间，js 会将当前栈保存，然后用对应协程的栈来填充主的执行栈。<strong>只有所有协程都被挂起或运行结束，才能继续运行异步代码</strong>。</p>
+<p>因此，真·协程的引入对事件循环还是造成了一定的影响，可怜的异步代码要等的更久了。</p>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <div id="disqus_thread"></div>
+        <script>
+
+        var disqus_config = function () {
+        this.page.url = 'http://malcolmyu.github.io/2015/11/18/Coroutine-and-Event-Loop/index.html';
+        this.page.identifier = undefined;
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//malcolmyu.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+var disqus_shortname = 'malcolmyu';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('body')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>
