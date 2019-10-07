@@ -100,7 +100,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jsdoc test.js</span><br></pre></td></tr></table></figure>
 <p>文档即可被生成在根目录下的 out 文件夹中。</p>
 <p>上面的过程看上去十分简便，但我们省略了配置这一步，如果我们不想生成在 out 文件夹下怎么办？我们想针对一个项目工程生成文档怎么办？觉得原有文档模板太丑想换个风格怎么办（<em>说句实话个人感觉默认模板是目前见过所有模板中最好看的……</em>）？这就需要在配置这一步中进行繁杂的个性化指定。对于项目的个性化指定可以通过<strong>配置文件</strong>和<strong>命令行参数</strong>两种方式来设置，先说一下命令行参数的配置。</p>
-<p>有关命令行参数的配置可以参考<a href="http://usejsdoc.org/about-commandline.html" target="_blank" rel="noopener">官网文档</a>的详细说明，这里只列出几个重要的参数：</p>
+<p>有关命令行参数的配置可以参考<a href="http://usejsdoc.org/about-commandline.html" target="_blank" rel="external">官网文档</a>的详细说明，这里只列出几个重要的参数：</p>
 <table>
 <thead>
 <tr>
@@ -145,7 +145,7 @@
 <p>举个例子，比如我们要将 <code>./src</code> 路径下的所有 js 文件生成文档，然后存放在 <code>./docs</code> 文件夹中，操作如下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jsdoc src -r -d docs</span><br></pre></td></tr></table></figure>
 <p>但是这样感觉还是不方便，如何对特定文件进行文档解析呢？如果有一些文件不想进行文档解析如何从中间剔除呢？而且每次都要输入如此复杂的命令行参数也十分不方便。要解决这些问题，就需要用到配置文件 <code>conf.json</code> 了。</p>
-<p>对于配置文件的详细解释可以参见<a href="http://usejsdoc.org/about-configuring-jsdoc.html" target="_blank" rel="noopener">官方文档</a>的说明，这里也是举一个简单的例子：</p>
+<p>对于配置文件的详细解释可以参见<a href="http://usejsdoc.org/about-configuring-jsdoc.html" target="_blank" rel="external">官方文档</a>的说明，这里也是举一个简单的例子：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"tags"</span>: &#123;</span><br><span class="line">        <span class="attr">"allowUnknownTags"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"source"</span>: &#123;</span><br><span class="line">        <span class="attr">"include"</span>: [<span class="string">"./src/lib"</span>, <span class="string">"./src/util"</span>],</span><br><span class="line">        <span class="attr">"exclude"</span>: [<span class="string">"./src/lib/demo"</span>],</span><br><span class="line">        <span class="attr">"includePattern"</span>: <span class="string">".+\\.js$"</span>,</span><br><span class="line">        <span class="attr">"excludePattern"</span>: <span class="string">"(^|\\/|\\\\)_"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"opts"</span>: &#123;</span><br><span class="line">        <span class="attr">"recurse"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>tags.allowUnknownTags</code> 表示允许使用为定义的 tag 标签，不然使用未知标签会报错；</li>
@@ -157,7 +157,7 @@
 </ul>
 <p>这里的 <code>opts</code> 里面的内容与上表中命令行参数配置的内容一致，即也可以在此处配置各种参数，详情官网文档中有叙述。将上文保存为一个 json 格式的文件，然后使用 <code>-c</code> 参数引入，就可以按照设定好的规则直接批量生成文档了。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jsdoc -c conf.json</span><br></pre></td></tr></table></figure>
-<h3 id="通过-grunt-生成"><a href="#通过-grunt-生成" class="headerlink" title="通过 grunt 生成"></a>通过 grunt 生成</h3><p>在项目中如果使用了 grunt 工具，也可以将 jsdoc 集成到 grunt 中去。这种方式十分的简便，在其 <a href="https://github.com/krampstudio/grunt-jsdoc" target="_blank" rel="noopener">github 地址</a>上也有详尽的介绍，具体流程与其他的 grunt 模块差别不大，使用如下命令进行安装：</p>
+<h3 id="通过-grunt-生成"><a href="#通过-grunt-生成" class="headerlink" title="通过 grunt 生成"></a>通过 grunt 生成</h3><p>在项目中如果使用了 grunt 工具，也可以将 jsdoc 集成到 grunt 中去。这种方式十分的简便，在其 <a href="https://github.com/krampstudio/grunt-jsdoc" target="_blank" rel="external">github 地址</a>上也有详尽的介绍，具体流程与其他的 grunt 模块差别不大，使用如下命令进行安装：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install grunt-jsdoc --save-dev</span><br></pre></td></tr></table></figure>
 <p>然后在 <code>Gruntfile.js</code> 文件中进行配置，就可以在命令行中使用了：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    jsdoc: &#123;</span><br><span class="line">        dist: &#123;</span><br><span class="line">            <span class="comment">// 必填项，需要生成文档的路径数组，也可以将 README.md 文件加入其中</span></span><br><span class="line">            src: [<span class="string">'src/*.js'</span>, <span class="string">'test/*.js'</span>],</span><br><span class="line">            <span class="comment">// 可选项，jsdoc bin 文件路径，一般不写，会自己在 node_modules 中寻找</span></span><br><span class="line">            jsdoc: <span class="string">''</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">                <span class="comment">// 必填项，生成文件的路径</span></span><br><span class="line">                destination: <span class="string">'./docs/'</span>,</span><br><span class="line">                <span class="comment">// 可选项，conf 文件的路径</span></span><br><span class="line">                configure: <span class="string">'conf.json'</span>,</span><br><span class="line">                <span class="comment">// 可选项，模板路径</span></span><br><span class="line">                template: <span class="string">''</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">grunt.task.loadNpmTasks(<span class="string">'grunt-jsdoc'</span>);</span><br><span class="line">grunt.task.registerTask(<span class="string">'doc'</span>, [<span class="string">'jsdoc'</span>]);</span><br></pre></td></tr></table></figure>
@@ -288,8 +288,8 @@
 </table>
 <p><em>参考链接</em></p>
 <ul>
-<li><a href="https://github.com/jsdoc3/jsdoc" target="_blank" rel="noopener">jsdoc - Github</a>： jsdoc npm module 的 Github 地址</li>
-<li><a href="http://usejsdoc.org/index.html" target="_blank" rel="noopener">jsdoc 官网</a> ：jsdoc 官方文档</li>
+<li><a href="https://github.com/jsdoc3/jsdoc" target="_blank" rel="external">jsdoc - Github</a>： jsdoc npm module 的 Github 地址</li>
+<li><a href="http://usejsdoc.org/index.html" target="_blank" rel="external">jsdoc 官网</a> ：jsdoc 官方文档</li>
 </ul>
 
 

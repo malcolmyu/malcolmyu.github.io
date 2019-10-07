@@ -118,7 +118,7 @@
 <p>其实细细看来，这个自动触发的效果，跟上面的 <code>autorun</code> 也有几分类似嘛！<code>autorun</code> 其实就是这里 <code>on</code> 方法的效果；对 <code>store.a</code> 的赋值，实际上就是 <code>emit</code> 的效果。实际上，除却 <code>computed</code> 计算属性，普通的自动执行或者叫<strong>自动推导的原理，实际上跟 EventEmitter 是非常相似的</strong>。</p>
 <p>他们的区别仅仅在于：<strong>回调注册和触发的手段，是隐式而非显式的</strong>。为了这一 magic 的效果，各路 MVVM 框架做了好多工作，才让代码写起来如此的令人愉悦。</p>
 <p>我们先看一下 MobX 里『触发回调』的实现手段：仅仅是一行简单的赋值语句：<code>store.a = 2</code>。这行我们天天都会写到的赋值，背后实际上干了许许多多的工作。我们思考一下，能够让一行赋值语句，能够执行其他回调的方式有什么办法呢？</p>
-<p>是的，就是 <code>Object.definePorperty</code>（或者 Proxy），具体参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">这里</a>。因此我们可以简单的理解 MobX 在运行过程中，进行了这样的操作：</p>
+<p>是的，就是 <code>Object.definePorperty</code>（或者 Proxy），具体参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="external">这里</a>。因此我们可以简单的理解 MobX 在运行过程中，进行了这样的操作：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(store, <span class="string">'a'</span>, &#123;</span><br><span class="line">  <span class="keyword">set</span>: function() &#123;</span><br><span class="line">    em.emit(<span class="string">'event'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 执行 set 方法，触发 event-a</span></span><br></pre></td></tr></table></figure>
 <p>好了，推导的手段有了，那么如何确定在 emit 的时候应该触发哪个方法呢？或者说 MobX 的回调是什么时候注册的呢？其实核心就在这个 <code>autorun</code> 方法之中。</p>
 <h2 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h2><p>我们看一下 <code>autorun</code> 的功能，它实际上是要把回调中运行的所有可观测值收集起来，等到其中一个值发生变动时，重新运行该回调。有心的同学可能会发现，上面的例子中在第二步有输出结果，也就是<strong>在运行 <code>autorun</code> 方法的时候，内部的回调是会执行的</strong>。如图：</p>
@@ -149,14 +149,14 @@
 <li><strong>依赖收集</strong>（tracking dependencies），依赖收集实际上是 <code>get</code> 里面做的工作，要注意的是 MobX 通过一个全局变量，完成了对当前正在运行的推导函数的收集；</li>
 <li><strong>推导 </strong>(derive)，经过上面两步的操作，推导反而成了最容易的一步，只要触发回调就好，水到渠成。</li>
 </ol>
-<p>本文我们主要聊了聊 MobX 中或者说是 MVVM 框架中的几个核心概念，如果想阅读 MobX 源代码，希望参考我文末的文章，特别推荐 JSON 简时空的<a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="noopener">几篇博文</a>，起到了把代码翻译成人话的作用，对有志阅读代码的童鞋简直就是一盏指明灯。</p>
+<p>本文我们主要聊了聊 MobX 中或者说是 MVVM 框架中的几个核心概念，如果想阅读 MobX 源代码，希望参考我文末的文章，特别推荐 JSON 简时空的<a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="external">几篇博文</a>，起到了把代码翻译成人话的作用，对有志阅读代码的童鞋简直就是一盏指明灯。</p>
 <p>下篇文章我会着重说下 MobX 作者最引以为豪的 <code>computed</code> 的实现，大多数自动推导的框架都没有在 <code>computed</code> 上进行像 MobX 这样的性能优化（同时回味一下作者那句哲学总结）。</p>
 <hr>
 <p><em>参考文章</em></p>
 <ul>
-<li><a href="https://cn.mobx.js.org/" target="_blank" rel="noopener">MobX 中文文档</a> 至少先搞明白咋用吧</li>
-<li><a href="https://github.com/sorrycc/blog/issues/3" target="_blank" rel="noopener">MobX 原理</a> dva 作者，云谦老哥写的，简单易懂</li>
-<li><a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="noopener">用故事解读 MobX 源码系列</a> 这个系列非常好，跟读源码差不多，作者对很多细节有图文并茂的解释 </li>
+<li><a href="https://cn.mobx.js.org/" target="_blank" rel="external">MobX 中文文档</a> 至少先搞明白咋用吧</li>
+<li><a href="https://github.com/sorrycc/blog/issues/3" target="_blank" rel="external">MobX 原理</a> dva 作者，云谦老哥写的，简单易懂</li>
+<li><a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="external">用故事解读 MobX 源码系列</a> 这个系列非常好，跟读源码差不多，作者对很多细节有图文并茂的解释 </li>
 </ul>
 
 

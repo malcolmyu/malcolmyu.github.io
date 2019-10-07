@@ -120,8 +120,8 @@
 </blockquote>
 <p>之后会弹出这样一个对话框：</p>
 <p><img src="https://7xinjg.com1.z0.glb.clouddn.com/install-certificate.jpeg" alt="安装证书"></p>
-<p>按照上面的要求，在手机上配置好端口为 8888 的代理之后，访问 <a href="https://chls.pro/ssl" target="_blank" rel="noopener">https://chls.pro/ssl</a> 就可以下载证书并安装了。</p>
-<p>实际上做完这两部，就可以在你的 PC 和移动设备上愉快的进行 HTTPS 的代理，并获取明文内容了（具体如何解决问题，也可以参考<a href="https://itangqi.me/2016/05/30/tips-for-using-charles/" target="_blank" rel="noopener">这篇文章</a>）；尽管到这一步就已经达到了实际使用的效果，但我还是产生了这样的疑问：为何进行 HTTPS 代理的配置需要配置 SSL，以及在客户端安装证书呢？之前截获的内容又为什么是乱码呢？</p>
+<p>按照上面的要求，在手机上配置好端口为 8888 的代理之后，访问 <a href="https://chls.pro/ssl" target="_blank" rel="external">https://chls.pro/ssl</a> 就可以下载证书并安装了。</p>
+<p>实际上做完这两部，就可以在你的 PC 和移动设备上愉快的进行 HTTPS 的代理，并获取明文内容了（具体如何解决问题，也可以参考<a href="https://itangqi.me/2016/05/30/tips-for-using-charles/" target="_blank" rel="external">这篇文章</a>）；尽管到这一步就已经达到了实际使用的效果，但我还是产生了这样的疑问：为何进行 HTTPS 代理的配置需要配置 SSL，以及在客户端安装证书呢？之前截获的内容又为什么是乱码呢？</p>
 <h2 id="乱码的缘由-——-SSL-加密"><a href="#乱码的缘由-——-SSL-加密" class="headerlink" title="乱码的缘由 —— SSL 加密"></a>乱码的缘由 —— SSL 加密</h2><p>其实稍微对 HTTPS 有点认知的童鞋，一开始就不应该对 HTTPS 截取的内容是乱码而感动吃惊：喵的这可是 HTTPS 啊，一个代理就能窃听到获明文内容，那也毫无安全性可言了吧。</p>
 <p>那 HTTPS 到底是利用什么原理进行加密的呢？我们可以看到，上面的步骤中，配置 Charles 的第一步就是先配置一个 SSL 代理，实际上 HTTPS 的那个 S 也可以翻译为 HTTP over SSL/TLS，这个 SSL 正是 HTTP 加密依赖的基础协议。</p>
 <p>SSL/TLS 是传输层安全协议，与其他应用层协议（如 HTTP/FTP 等）独立无关，也就是说，在应用层协议开始通信之前，SSL/TLS 协议就已经完成了相关的加密工作，后续协议传输的内容已经是加密数据了。所以其实 HTTP 还是那个 HTTP，但传输的内容早已变成天书，这也就是我们在用 Charles 进行代理的时候，看到一堆乱码的原因。</p>
@@ -135,8 +135,8 @@
 <li>于是小明放心的把新的加密方式写在信中，放到盒子里，然后用锁锁上。由于小红没有钥匙，没法查看盒子里到底写了啥，只能原样送过去。小王收到后，用自己的钥匙打开了锁，获得了新的加密方式。这就完成了 <strong>SSL 协议的握手</strong>。</li>
 </ol>
 <p>当然，上面的过程描述的非常粗糙，小明和小王在互相寄锁的时候，还需传递随机数来辅助生产最终的加密方式（也是一个随机数，称之为 Premaster secret）；有兴趣的兄贵们可以看看文末的参考文章。</p>
-<h2 id="Charles-的破解之道"><a href="#Charles-的破解之道" class="headerlink" title="Charles 的破解之道"></a>Charles 的破解之道</h2><p>那么问题就来了：Charles 作为一只小红，是怎么破解上述加密通信的呢？莫非她大力出奇迹，直接砸了锁？我们知道，要砸锁是不太现实的，这等于要对大素数的乘积进行因式分解，现阶段下还做不到；因此 Charles 就做了一件最简单的事情：伪装成小明（也就是<a href="https://zh.wikipedia.org/zh-hk/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB" target="_blank" rel="noopener">中间人攻击</a>）。</p>
-<p>Charles 的<a href="https://www.charlesproxy.com/documentation/proxying/ssl-proxying/" target="_blank" rel="noopener">官网上</a>是这么说的：</p>
+<h2 id="Charles-的破解之道"><a href="#Charles-的破解之道" class="headerlink" title="Charles 的破解之道"></a>Charles 的破解之道</h2><p>那么问题就来了：Charles 作为一只小红，是怎么破解上述加密通信的呢？莫非她大力出奇迹，直接砸了锁？我们知道，要砸锁是不太现实的，这等于要对大素数的乘积进行因式分解，现阶段下还做不到；因此 Charles 就做了一件最简单的事情：伪装成小明（也就是<a href="https://zh.wikipedia.org/zh-hk/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB" target="_blank" rel="external">中间人攻击</a>）。</p>
+<p>Charles 的<a href="https://www.charlesproxy.com/documentation/proxying/ssl-proxying/" target="_blank" rel="external">官网上</a>是这么说的：</p>
 <blockquote>
 <p>Charles 作为一个中间人来进行 HTTPS 的代理，让我们检测到浏览器和 SSL web 服务端之间的明文通信。<br>Charles 把自己变成一个中间人来达到这一目的。你的浏览器是收不到服务端证书的，Charles 会用自己的根证书动态签发一张证书，然后 Charles 来接受服务端的证书，你的浏览器接受 Charles 的证书。<br>…<br>Charles 仍然通过 SSL 与服务端进行通信，但通信是通过浏览器到 Charles，然后在从 Charles 到服务器。</p>
 </blockquote>
@@ -160,10 +160,10 @@
 <p>用户还能怎么办？只能含着泪点确认：『老铁，没毛病！』</p>
 <p>参考文献</p>
 <ol>
-<li><a href="https://zhihu.com/question/22306245/answer/21002652" target="_blank" rel="noopener">支付宝偷偷添加根证书 - 知乎</a></li>
-<li><a href="https://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="noopener">图解 SSL/TLS</a></li>
-<li><a href="https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">SSL/TLS 协议运行机制的概述</a></li>
-<li><a href="https://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/" target="_blank" rel="noopener">细说 CA 和证书</a></li>
+<li><a href="https://zhihu.com/question/22306245/answer/21002652" target="_blank" rel="external">支付宝偷偷添加根证书 - 知乎</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="external">图解 SSL/TLS</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="external">SSL/TLS 协议运行机制的概述</a></li>
+<li><a href="https://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/" target="_blank" rel="external">细说 CA 和证书</a></li>
 </ol>
 
 

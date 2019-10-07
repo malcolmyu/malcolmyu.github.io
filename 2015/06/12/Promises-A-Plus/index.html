@@ -91,7 +91,7 @@
     <div class="picture-container">
       
     </div>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>英文原文：<a href="https://promisesaplus.com/" target="_blank" rel="noopener">Promise/A+</a><br>图灵译文：<a href="http://www.ituring.com.cn/article/66566" target="_blank" rel="noopener">【翻译】Promises/A+规范</a></p>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>英文原文：<a href="https://promisesaplus.com/" target="_blank" rel="external">Promise/A+</a><br>图灵译文：<a href="http://www.ituring.com.cn/article/66566" target="_blank" rel="external">【翻译】Promises/A+规范</a></p>
 <p><strong>译者序：</strong>一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。</p>
 <a id="more"></a>
 <p><strong>一个开放、健全且通用的 JavaScript Promise 标准。由开发者制定，供开发者参考。</strong></p>
@@ -106,7 +106,7 @@
 <hr>
 <p>Promise 表示一个异步操作的最终结果，与之进行交互的方式主要是 <code>then</code> 方法，该方法注册了两个回调函数，用于接收 promise 的终值或本 promise 不能执行的原因。</p>
 <p>本规范详细列出了 <code>then</code> 方法的执行过程，所有遵循 Promises/A+ 规范实现的 promise 均可以本标准作为参照基础来实施 <code>then</code> 方法。因而本规范是十分稳定的。尽管 Promise/A+ 组织有时可能会修订本规范，但主要是为了处理一些特殊的边界情况，且这些改动都是微小且向下兼容的。如果我们要进行大规模不兼容的更新，我们一定会在事先进行谨慎地考虑、详尽的探讨和严格的测试。</p>
-<p>从历史上说，本规范实际上是把之前 <a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="noopener">Promise/A 规范</a> 中的建议明确成为了行为标准：我们一方面扩展了原有规范约定俗成的行为，一方面删减了原规范的一些特例情况和有问题的部分。</p>
+<p>从历史上说，本规范实际上是把之前 <a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">Promise/A 规范</a> 中的建议明确成为了行为标准：我们一方面扩展了原有规范约定俗成的行为，一方面删减了原规范的一些特例情况和有问题的部分。</p>
 <p>最后，核心的 Promises/A+ 规范不设计如何创建、解决和拒绝 promise，而是专注于提供一个通用的 <code>then</code> 方法。上述对于 promises 的操作方法将来在其他规范中可能会提及。</p>
 <h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><hr>
 <h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>promise 是一个拥有 <code>then</code> 方法的对象或函数，其行为符合本规范；</p>
@@ -151,7 +151,7 @@
 <li>在 <code>promise</code> 被拒绝执行前其不可被调用</li>
 <li>其调用次数不可超过一次</li>
 </ul>
-<h4 id="调用时机"><a href="#调用时机" class="headerlink" title="调用时机"></a>调用时机</h4><p><code>onFulfilled</code> 和 <code>onRejected</code> 只有在<a href="http://es5.github.io/#x10.3" target="_blank" rel="noopener">执行环境</a>堆栈仅包含<strong>平台代码</strong>时才可被调用<a href="#note-1">注1</a></p>
+<h4 id="调用时机"><a href="#调用时机" class="headerlink" title="调用时机"></a>调用时机</h4><p><code>onFulfilled</code> 和 <code>onRejected</code> 只有在<a href="http://es5.github.io/#x10.3" target="_blank" rel="external">执行环境</a>堆栈仅包含<strong>平台代码</strong>时才可被调用<a href="#note-1">注1</a></p>
 <h4 id="调用要求"><a href="#调用要求" class="headerlink" title="调用要求"></a>调用要求</h4><p><code>onFulfilled</code> 和 <code>onRejected</code> 必须被作为函数调用（即没有 <code>this</code> 值）<sup><a href="#note-2">注2</a></sup></p>
 <h4 id="多次调用"><a href="#多次调用" class="headerlink" title="多次调用"></a>多次调用</h4><p><code>then</code> 方法可以被同一个 <code>promise</code> 调用多次</p>
 <ul>
@@ -198,13 +198,13 @@
 <p>如果一个 promise 被一个循环的 <em>thenable</em> 链中的对象解决，而 <code>[[Resolve]](promise, thenable)</code> 的递归性质又使得其被再次调用，根据上述的算法将会陷入无限递归之中。算法虽不强制要求，但也鼓励施者检测这样的递归是否存在，若检测到存在则以一个可识别的 <code>TypeError</code> 为据因来拒绝 <code>promise</code> <sup><a href="#note-6">注6</a></sup>。</p>
 <h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><hr>
 <ul>
-<li><p><b id="note-1">注1</b> 这里的<strong>平台代码</strong>指的是引擎、环境以及 promise 的实施代码。实践中要确保 <code>onFulfilled</code> 和 <code>onRejected</code> 方法异步执行，且应该在 <code>then</code> 方法被调用的那一轮事件循环之后的新执行栈中执行。这个事件队列可以采用“宏任务（macro-task）”机制或者“微任务（micro-task）”机制来实现。由于 promise 的实施代码本身就是平台代码（<strong>译者注：</strong> 即都是 JavaScript），故代码自身在处理在处理程序时可能已经包含一个任务调度队列或<a href="https://en.wikipedia.org/wiki/Trampoline_(computing" target="_blank" rel="noopener">『跳板』</a>)。</p>
+<li><p><b id="note-1">注1</b> 这里的<strong>平台代码</strong>指的是引擎、环境以及 promise 的实施代码。实践中要确保 <code>onFulfilled</code> 和 <code>onRejected</code> 方法异步执行，且应该在 <code>then</code> 方法被调用的那一轮事件循环之后的新执行栈中执行。这个事件队列可以采用“宏任务（macro-task）”机制或者“微任务（micro-task）”机制来实现。由于 promise 的实施代码本身就是平台代码（<strong>译者注：</strong> 即都是 JavaScript），故代码自身在处理在处理程序时可能已经包含一个任务调度队列或<a href="https://en.wikipedia.org/wiki/Trampoline_(computing" target="_blank" rel="external">『跳板』</a>)。</p>
 <p>  <strong>译者注：</strong> 这里提及了 macrotask 和 microtask 两个概念，这表示异步任务的两种分类。在挂起任务时，JS 引擎会将所有任务按照类别分到这两个队列中，首先在 macrotask 的队列（这个队列也被叫做 task queue）中取出第一个任务，执行完毕后取出 microtask 队列中的所有任务顺序执行；之后再取 macrotask 任务，周而复始，直至两个队列的任务都取完。</p>
 <p>  两个类别的具体分类如下：</p>
 <ul>
 <li><strong>macro-task:</strong> script（整体代码）, <code>setTimeout</code>, <code>setInterval</code>, <code>setImmediate</code>, I/O, UI rendering</li>
 <li><p><strong>micro-task:</strong> <code>process.nextTick</code>, <code>Promises</code>（这里指浏览器实现的原生 Promise）, <code>Object.observe</code>, <code>MutationObserver</code></p>
-<p>详见 <a href="http://stackoverflow.com/questions/25915634/difference-between-microtask-and-macrotask-within-an-event-loop-context" target="_blank" rel="noopener">stackoverflow 解答</a> 或 <a href="http://wengeezhang.com/?p=11" target="_blank" rel="noopener">这篇博客</a></p>
+<p>详见 <a href="http://stackoverflow.com/questions/25915634/difference-between-microtask-and-macrotask-within-an-event-loop-context" target="_blank" rel="external">stackoverflow 解答</a> 或 <a href="http://wengeezhang.com/?p=11" target="_blank" rel="external">这篇博客</a></p>
 </li>
 </ul>
 </li>

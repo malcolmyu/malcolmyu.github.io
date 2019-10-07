@@ -93,7 +93,7 @@
     </div>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>公司内部的公用图标字体平台 iconfont 上线一年以来，运行良好，在内部承担起了客户端减容、提高前端开发效率的任务。但由于其臃肿的架构导致的运行效率底下和页面卡顿等问题也一直给使用者造成诸多不便。我们对项目老架构导致的许多问题进行了探索总结，并针对问题提出了 react 同构的解决方案。</p>
 <a id="more"></a>
-<h2 id="旧版架构问题探索"><a href="#旧版架构问题探索" class="headerlink" title="旧版架构问题探索"></a>旧版架构问题探索</h2><p>在进行旧版平台开发的时候，我们采用了当时淘宝推出的先进思想：<a href="https://www.zhihu.com/question/23512853" target="_blank" rel="noopener">中途岛 midway 前后端分离方式</a>，搭建了一个 node 中间层进行页面的渲染，以求提升页面的渲染速度。我们旧版平台的结构如下：</p>
+<h2 id="旧版架构问题探索"><a href="#旧版架构问题探索" class="headerlink" title="旧版架构问题探索"></a>旧版架构问题探索</h2><p>在进行旧版平台开发的时候，我们采用了当时淘宝推出的先进思想：<a href="https://www.zhihu.com/question/23512853" target="_blank" rel="external">中途岛 midway 前后端分离方式</a>，搭建了一个 node 中间层进行页面的渲染，以求提升页面的渲染速度。我们旧版平台的结构如下：</p>
 <p><img src="http://s.qunarzz.com/iconfont/blog/universal-app/old-architecture.png" alt="旧版平台的三层结构"></p>
 <p>从图中我们可以看到，尽管我们前端掌握了 server，可以进行页面渲染的控制，但是服务端的渲染和前端的渲染和路由依然是割裂的，之间有很多冗余的内容。导致这些冗余的主要原因，其实还是前后端渲染方式不一致以及前后端代码的分离。</p>
 <h3 id="是否需要前后端分离"><a href="#是否需要前后端分离" class="headerlink" title="是否需要前后端分离"></a>是否需要前后端分离</h3><p>我们知道，在传统的 MVC 架构的项目之中，js 代码只占 View 层的很小的一部分。随着项目的渐进发展，前端功能的复杂度日益增高，导致项目难以维护；同时前后端语言并不一致（我们都知道 Java 跟 JavaScript 基本上是雷锋和雷峰塔的关系），不同的开发在一个项目里操作极为不便，因此才产生了前后端分离。</p>
@@ -109,7 +109,7 @@
 <li>模块依赖方式：通过 webpack 这样的打包工具，可以保证前端和均采用 CommonJS 的依赖方式，确保代码可以互相依赖。</li>
 </ol>
 <p>有了这二者的保证，我们就可以完美的解决同构的问题，剩下需要考虑的就是如何处理服务端渲染了。</p>
-<h2 id="react-全家桶对服务端渲染的支持"><a href="#react-全家桶对服务端渲染的支持" class="headerlink" title="react 全家桶对服务端渲染的支持"></a>react 全家桶对服务端渲染的支持</h2><p>react 自诞生之初就对服务端渲染非常重视，它的『全家桶』都对服务端渲染进行了良好的支持。所谓的『全家桶』指的就是大家耳熟能详的 react 御三家：<a href="https://facebook.github.io/react/" target="_blank" rel="noopener">react</a>、<a href="https://github.com/ReactTraining/react-router" target="_blank" rel="noopener">react-router</a> 和 <a href="http://redux.js.org/" target="_blank" rel="noopener">redux</a>。</p>
+<h2 id="react-全家桶对服务端渲染的支持"><a href="#react-全家桶对服务端渲染的支持" class="headerlink" title="react 全家桶对服务端渲染的支持"></a>react 全家桶对服务端渲染的支持</h2><p>react 自诞生之初就对服务端渲染非常重视，它的『全家桶』都对服务端渲染进行了良好的支持。所谓的『全家桶』指的就是大家耳熟能详的 react 御三家：<a href="https://facebook.github.io/react/" target="_blank" rel="external">react</a>、<a href="https://github.com/ReactTraining/react-router" target="_blank" rel="external">react-router</a> 和 <a href="http://redux.js.org/" target="_blank" rel="external">redux</a>。</p>
 <p><img src="http://s.qunarzz.com/iconfont/blog/universal-app/react-everything.png" alt="react 全家桶"></p>
 <h3 id="React-和-ReactDOM"><a href="#React-和-ReactDOM" class="headerlink" title="React 和 ReactDOM"></a>React 和 ReactDOM</h3><p>ReactDOM 在这里提供的支持就是 <code>ReactDOM.render</code> 和 <code>ReactDOM.renderToString</code> 函数，其中前者会在浏览器端生成 DOM 结构，后者会在服务端生成对应的 HTML 字符串模板。React 会在生成的 DOM 结构上添加一个 <code>data-react-checksum</code> 的属性，这是一个 adler32 算法的校验和，用以确保两份模板的一致性。</p>
 <p><img src="http://s.qunarzz.com/iconfont/blog/universal-app/checksum.png" alt="checksum 判断"></p>

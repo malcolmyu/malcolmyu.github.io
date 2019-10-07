@@ -111,7 +111,7 @@
 <h4 id="origin-远端"><a href="#origin-远端" class="headerlink" title="origin 远端"></a>origin 远端</h4><p>当你使用 <code>git clone</code> 命令克隆一个仓库时，Git 会自动创建一个叫做 origin 的远程链接指向被克隆的仓库。这对开发者来说十分有益：当我们在本地创建一个中央仓库的副本时，可以便捷的推动本地提交或拉取远端修改。这也是大多数基于 Git 的项目管中央仓库叫“origin”的原因。</p>
 <h4 id="仓库-URLs"><a href="#仓库-URLs" class="headerlink" title="仓库 URLs"></a>仓库 URLs</h4><p>Git 提供了许多方式以作为远端仓库的引用。两个最常用的方式就是通过 HTTP 协议和 SSH 协议。HTTP 是对仓库进行匿名且只有只读权限的访问的一条便捷方式，例如：</p>
 <blockquote>
-<p><a href="http://host/path/to/repo.git" target="_blank" rel="noopener">http://host/path/to/repo.git</a></p>
+<p><a href="http://host/path/to/repo.git" target="_blank" rel="external">http://host/path/to/repo.git</a></p>
 </blockquote>
 <p>但是通常情况下给一个 HTTP 地址推送提交是不太可能的（我们应该也不会允许匿名用户推送提交）。我们应该使用 SSH 协议以获取读写权限：</p>
 <blockquote>
@@ -179,14 +179,14 @@
 <hr>
 <p><strong>译注</strong></p>
 <ul>
-<li><b id="note-1">注1</b> <strong>非快进合并状态（non-fast-forward merge）</strong>：与快进状态相对立，按 Git Pro 书上的<a href="http://iissnan.com/progit/html/zh/ch3_2.html" target="_blank" rel="noopener">解释</a>：</li>
+<li><b id="note-1">注1</b> <strong>非快进合并状态（non-fast-forward merge）</strong>：与快进状态相对立，按 Git Pro 书上的<a href="http://iissnan.com/progit/html/zh/ch3_2.html" target="_blank" rel="external">解释</a>：</li>
 </ul>
 <blockquote>
 <p>如果顺着一个分支走下去可以到达另一个分支的话，那么 Git 在合并两者时，只会简单地把指针右移，因为这种单线的历史分支不存在任何需要解决的分歧，所以这种合并过程可以称为快进（Fast forward）</p>
 </blockquote>
 <p>因此非快进合并状态即是指当要合并的分支不是在当前分支的上游，提交出现分岔的状态。</p>
 <ul>
-<li><b id="note-2">注2</b> <strong>标签</strong>：再发布版本的时候打上标签标记，是 VCS 的通用方法。详见 Git Pro <a href="http://iissnan.com/progit/html/zh/ch2_6.html" target="_blank" rel="noopener">打标签</a>一章。</li>
+<li><b id="note-2">注2</b> <strong>标签</strong>：再发布版本的时候打上标签标记，是 VCS 的通用方法。详见 Git Pro <a href="http://iissnan.com/progit/html/zh/ch2_6.html" target="_blank" rel="external">打标签</a>一章。</li>
 </ul>
 
 

@@ -4,7 +4,7 @@
   <url>
     <loc>http://malcolmyu.github.io/2019/07/24/Notes-of-Business-Intelligence/</loc>
     
-    <lastmod>2019-10-07T11:25:49.448Z</lastmod>
+    <lastmod>2019-10-07T11:31:51.839Z</lastmod>
     
   </url>
   
@@ -16,28 +16,7 @@
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2015/06/12/Promises-A-Plus/</loc>
-    
-    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://malcolmyu.github.io/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/</loc>
-    
-    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://malcolmyu.github.io/2014/08/30/JavaScript-Promise-In-Wicked-Detail/</loc>
-    
-    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://malcolmyu.github.io/2016/04/02/Reaction-to-Soulstealers/</loc>
     
     <lastmod>2019-08-18T12:24:41.784Z</lastmod>
     
@@ -51,9 +30,23 @@
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2015/10/16/Git-Hooks/</loc>
+    <loc>http://malcolmyu.github.io/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/</loc>
     
-    <lastmod>2019-08-18T12:24:41.783Z</lastmod>
+    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2015/06/12/Promises-A-Plus/</loc>
+    
+    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2016/04/02/Reaction-to-Soulstealers/</loc>
+    
+    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
     
   </url>
   
@@ -65,9 +58,9 @@
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2016/10/24/Create-React-Universal-App/</loc>
+    <loc>http://malcolmyu.github.io/2015/10/16/Git-Hooks/</loc>
     
-    <lastmod>2019-08-18T12:24:41.782Z</lastmod>
+    <lastmod>2019-08-18T12:24:41.783Z</lastmod>
     
   </url>
   
@@ -80,6 +73,13 @@
   
   <url>
     <loc>http://malcolmyu.github.io/2017/02/26/Dive-into-Charles-HTTPS-Proxying/</loc>
+    
+    <lastmod>2019-08-18T12:24:41.782Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2016/10/24/Create-React-Universal-App/</loc>
     
     <lastmod>2019-08-18T12:24:41.782Z</lastmod>
     
@@ -107,14 +107,14 @@
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/</loc>
+    <loc>http://malcolmyu.github.io/2016/12/03/Chat-about-Redux-1/</loc>
     
     <lastmod>2019-08-18T12:24:41.778Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2016/12/03/Chat-about-Redux-1/</loc>
+    <loc>http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/</loc>
     
     <lastmod>2019-08-18T12:24:41.778Z</lastmod>
     

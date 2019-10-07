@@ -6,7 +6,11 @@
     <entry>
       <title><![CDATA[《智能商业》读书杂感]]></title>
       <url>http://malcolmyu.github.io/2019/07/24/Notes-of-Business-Intelligence/</url>
-      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>智能商业的作者是阿里巴巴的曾鸣教授，可以看做是作者执鞭阿里巴巴十年的经验总结。在提笔写总结之前，我经常会想，读这样的书有什么用呢？因为自己的格局没有达到，读这样的总结其实很难理解作者的各中意昧，即便是写了笔记，体会必然也十分肤浅。后来便觉得没必须要考虑这些，这种类型的书就先囫囵吞枣，以后再反复咀嚼，真正明白之时，感触必然更加深刻。</p>
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2019/07/24/Notes-of-Business-Intelligence/title.png" alt="redux" title="redux">
+<p>智能商业的作者是阿里巴巴的曾鸣教授，可以看做是作者执鞭阿里巴巴十年的经验总结。</p>
+<a id="more"></a>
+<hr>
+<p>在提笔写总结之前，我经常会想，读这样的书有什么用呢？因为自己的格局没有达到，读这样的总结其实很难理解作者的各中意昧，即便是写了笔记，体会必然也十分肤浅。后来便觉得没必须要考虑这些，这种类型的书就先囫囵吞枣，以后再反复咀嚼，真正明白之时，感触必然更加深刻。</p>
 <p>不过，吞归吞，对于这种通识类的书应当整理出思维脉络，毕竟<a href="https://www.bilibili.com/video/av33980096" target="_blank" rel="external">知识是一个网</a>，找到其中关键节点才能理解整个网络。</p>
 <p>书里共有六章，按照书作者的自述，实际上 2013 年就已经完成了初稿，但自觉没有统一框架，又在剩下的几年里反复更迭，补充案例，才写成了现在这样的效果。书中第一章讲的是智能商业，这一章讲的是微观层面的问题，即当今商业是由什么细胞组成的；第二三章讲商业模式与战略，这其实是宏观层面的问题，讲这些年和今后商业的大趋势是什么。前三章思路清晰、格局宏大，应该是作者先前的定稿。第四章作者笔锋一转，写到了组织术上，聊了了如何构建一支队伍，更好的完成上位者的商业策略；第五章讲了讲具体案例，是对前三章知识理论的补充说明；第六章则谈了一些对未来的展望。后三章更像对前三章思路的补充，更像是作者后续的修改与补充。</p>
 <p>本文准备简单聊一聊前三章，智能商业的组成与商业模式的范式转移。</p>
@@ -174,7 +178,7 @@
 <p>其实细细看来，这个自动触发的效果，跟上面的 <code>autorun</code> 也有几分类似嘛！<code>autorun</code> 其实就是这里 <code>on</code> 方法的效果；对 <code>store.a</code> 的赋值，实际上就是 <code>emit</code> 的效果。实际上，除却 <code>computed</code> 计算属性，普通的自动执行或者叫<strong>自动推导的原理，实际上跟 EventEmitter 是非常相似的</strong>。</p>
 <p>他们的区别仅仅在于：<strong>回调注册和触发的手段，是隐式而非显式的</strong>。为了这一 magic 的效果，各路 MVVM 框架做了好多工作，才让代码写起来如此的令人愉悦。</p>
 <p>我们先看一下 MobX 里『触发回调』的实现手段：仅仅是一行简单的赋值语句：<code>store.a = 2</code>。这行我们天天都会写到的赋值，背后实际上干了许许多多的工作。我们思考一下，能够让一行赋值语句，能够执行其他回调的方式有什么办法呢？</p>
-<p>是的，就是 <code>Object.definePorperty</code>（或者 Proxy），具体参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">这里</a>。因此我们可以简单的理解 MobX 在运行过程中，进行了这样的操作：</p>
+<p>是的，就是 <code>Object.definePorperty</code>（或者 Proxy），具体参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="external">这里</a>。因此我们可以简单的理解 MobX 在运行过程中，进行了这样的操作：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(store, <span class="string">'a'</span>, &#123;</span><br><span class="line">  <span class="keyword">set</span>: function() &#123;</span><br><span class="line">    em.emit(<span class="string">'event'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 执行 set 方法，触发 event-a</span></span><br></pre></td></tr></table></figure>
 <p>好了，推导的手段有了，那么如何确定在 emit 的时候应该触发哪个方法呢？或者说 MobX 的回调是什么时候注册的呢？其实核心就在这个 <code>autorun</code> 方法之中。</p>
 <h2 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h2><p>我们看一下 <code>autorun</code> 的功能，它实际上是要把回调中运行的所有可观测值收集起来，等到其中一个值发生变动时，重新运行该回调。有心的同学可能会发现，上面的例子中在第二步有输出结果，也就是<strong>在运行 <code>autorun</code> 方法的时候，内部的回调是会执行的</strong>。如图：</p>
@@ -205,14 +209,14 @@
 <li><strong>依赖收集</strong>（tracking dependencies），依赖收集实际上是 <code>get</code> 里面做的工作，要注意的是 MobX 通过一个全局变量，完成了对当前正在运行的推导函数的收集；</li>
 <li><strong>推导 </strong>(derive)，经过上面两步的操作，推导反而成了最容易的一步，只要触发回调就好，水到渠成。</li>
 </ol>
-<p>本文我们主要聊了聊 MobX 中或者说是 MVVM 框架中的几个核心概念，如果想阅读 MobX 源代码，希望参考我文末的文章，特别推荐 JSON 简时空的<a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="noopener">几篇博文</a>，起到了把代码翻译成人话的作用，对有志阅读代码的童鞋简直就是一盏指明灯。</p>
+<p>本文我们主要聊了聊 MobX 中或者说是 MVVM 框架中的几个核心概念，如果想阅读 MobX 源代码，希望参考我文末的文章，特别推荐 JSON 简时空的<a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="external">几篇博文</a>，起到了把代码翻译成人话的作用，对有志阅读代码的童鞋简直就是一盏指明灯。</p>
 <p>下篇文章我会着重说下 MobX 作者最引以为豪的 <code>computed</code> 的实现，大多数自动推导的框架都没有在 <code>computed</code> 上进行像 MobX 这样的性能优化（同时回味一下作者那句哲学总结）。</p>
 <hr>
 <p><em>参考文章</em></p>
 <ul>
-<li><a href="https://cn.mobx.js.org/" target="_blank" rel="noopener">MobX 中文文档</a> 至少先搞明白咋用吧</li>
-<li><a href="https://github.com/sorrycc/blog/issues/3" target="_blank" rel="noopener">MobX 原理</a> dva 作者，云谦老哥写的，简单易懂</li>
-<li><a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="noopener">用故事解读 MobX 源码系列</a> 这个系列非常好，跟读源码差不多，作者对很多细节有图文并茂的解释 </li>
+<li><a href="https://cn.mobx.js.org/" target="_blank" rel="external">MobX 中文文档</a> 至少先搞明白咋用吧</li>
+<li><a href="https://github.com/sorrycc/blog/issues/3" target="_blank" rel="external">MobX 原理</a> dva 作者，云谦老哥写的，简单易懂</li>
+<li><a href="https://segmentfault.com/a/1190000013682735" target="_blank" rel="external">用故事解读 MobX 源码系列</a> 这个系列非常好，跟读源码差不多，作者对很多细节有图文并茂的解释 </li>
 </ul>
 ]]></content>
       
@@ -236,10 +240,10 @@
     <entry>
       <title><![CDATA[【翻译】终极响应式编程：深入探究 MobX]]></title>
       <url>http://malcolmyu.github.io/2017/10/14/An-in-Depth-Explanation-of-MobX/</url>
-      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2017/10/14/An-in-Depth-Explanation-of-MobX/title.jpg" title="mobx">
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2017/10/14/An-in-Depth-Explanation-of-MobX/title.jpg" alt="mobx" title="mobx">
 <p>鉴于广大人民群众的要求（并为了到时候能给我的孙子吹个 NB），我写了这篇 MobX 的内部工作原理。许多朋友震惊于 MobX 的性能和一致性，但请各位放心，这里没有什么黑科技！</p>
 <a id="more"></a>
-<p><a href="https://medium.com/@mweststrate/becoming-fully-reactive-an-in-depth-explanation-of-mobservable-55995262a254" target="_blank" rel="noopener">原文链接</a></p>
+<p><a href="https://medium.com/@mweststrate/becoming-fully-reactive-an-in-depth-explanation-of-mobservable-55995262a254" target="_blank" rel="external">原文链接</a></p>
 <p>首先让我们定义 MobX 里的一些核心概念：</p>
 <ol>
 <li><strong>可观测状态（Observable State）</strong>任何可以被变异（mutate）且可作为计算值来源的值都是状态。MobX 可以使大多数类型的值（基本类型、数组、类、对象等）甚至引用（以及循环引用）自动变成可观测的。</li>
@@ -252,7 +256,7 @@
 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  @observable firstName = <span class="string">"Michel"</span>;</span><br><span class="line">  @observable lastName = <span class="string">"Weststrate"</span>;</span><br><span class="line">  @observable nickName;</span><br><span class="line">  </span><br><span class="line">  @computed <span class="keyword">get</span> fullName() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.firstName + <span class="string">" "</span> + <span class="keyword">this</span>.lastName;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> michel = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 响应：当用户信息改变时进行打印</span></span><br><span class="line">autorun(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(</span><br><span class="line">    person.nickName ? person.nickName : person.fullName</span><br><span class="line">  )</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// React 组件作为一个观测状态的例子</span></span><br><span class="line"><span class="keyword">const</span> ProfileView = observer(<span class="function"><span class="params">props</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (props.person.nickName)</span><br><span class="line">    <span class="keyword">return</span> &lt;div&gt;&#123;props.person.nickName&#125;&lt;/div&gt;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> &lt;div&gt;&#123;props.person.fullName&#125;&lt;/div&gt;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 行为</span></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> michel.nickName = <span class="string">"mweststrate"</span>, <span class="number">5000</span>)</span><br><span class="line"></span><br><span class="line">React.render(&lt;ProfileView person=&#123;michel&#125; /&gt;), document.body);</span><br></pre></td></tr></table></figure>
   <figcaption>代码 1：可观测状态、计算值、可响应的 Reactjs 组件和一些行为</figcaption>
 
-<p><a href="https://jsfiddle.net/mweststrate/049r6jox/" target="_blank" rel="noopener">在线运行该实例</a></p>
+<p><a href="https://jsfiddle.net/mweststrate/049r6jox/" target="_blank" rel="external">在线运行该实例</a></p>
 <p>我们可以根据上面的代码绘制一个依赖树，直观看来如下所示：</p>
 <p><img src="figure1.png" alt="图 1"></p>
   <figcaption>图 1：ProfileView 组件的依赖树，FullName 处在响应模式，主动观察 firstName 和  lastName</figcaption>
@@ -267,7 +271,7 @@
 <h3 id="对状态改变做出响应，总是比直接处理状态改变要好"><a href="#对状态改变做出响应，总是比直接处理状态改变要好" class="headerlink" title="对状态改变做出响应，总是比直接处理状态改变要好"></a>对状态改变做出响应，总是比直接处理状态改变要好</h3><blockquote>
 <p>自动更新应用的状态是一个反模式，数据应该被衍生。</p>
 </blockquote>
-<p>应用程序触发的用来响应状态变化的任何命令式行为通常都会创建或改变某些值。换句话说，大多数行为都会管理一个<a href="https://medium.com/@mweststrate/pure-rendering-in-the-light-of-time-and-state-4b537d8d40b1" target="_blank" rel="noopener">本地缓存</a>。触发用户界面的更新？更新级联的值？通知后端？这些通常被认为是潜在的缓存失效。为了确保这些缓存同步，你需要订阅（subscribe）将来的状态更改，这会导致行为再次被触发。</p>
+<p>应用程序触发的用来响应状态变化的任何命令式行为通常都会创建或改变某些值。换句话说，大多数行为都会管理一个<a href="https://medium.com/@mweststrate/pure-rendering-in-the-light-of-time-and-state-4b537d8d40b1" target="_blank" rel="external">本地缓存</a>。触发用户界面的更新？更新级联的值？通知后端？这些通常被认为是潜在的缓存失效。为了确保这些缓存同步，你需要订阅（subscribe）将来的状态更改，这会导致行为再次被触发。</p>
 <p>但是使用订阅（或者叫游标、镜头、选择器、连接器等）都有一个根本的问题：随着应用程序复杂度的加深，你在管理这些订阅时可能会出现错误：要么出现<strong>超额订阅</strong>（指订阅了一个不再在 component 中使用的值或 store），要么出现<strong>失效订阅</strong>（指忘记监听更新导致一些不易察觉的数据过期的 bug）。</p>
 <blockquote>
 <p>换句话说，当人为管理订阅时，你的应用最终会出现不一致性。</p>
@@ -275,8 +279,8 @@
 <p><img src="figure3.png" alt="图 3"></p>
   <figcaption>图 3：Twitter 页面在更新个人信息时产生的不一致性。推文中的小图片展示了一个过时的用户名和头像</figcaption>
 
-<p>上面的图片是一个展示 Twitter UI 不一致的很好的例子，我在 <a href="https://www.youtube.com/watch?v=FEwLwiizlk0" target="_blank" rel="noopener">Reactive 2015 talk</a> 中解释过，只有两种情况可能会导致这一点：要么是推文的模块没有订阅对应用户信息的改变，要么是数据正常且推文的作者甚至不与当前登录的用户关联，尽管事实上两者都尝试描述同一人的相同属性。</p>
-<p>像 Flux 那种类型的 store 粗粒度的订阅方式很容易触发超额订阅。在使用 React 的时候，你可以简单的通过打印<a href="https://reactjs.org/docs/perf.html#perf.printwastedmeasurements" target="_blank" rel="noopener">浪费的渲染</a>以很快的检测到你的组件是否超额订阅。MobX 会把<a href="https://www.mendix.com/blog/making-react-reactive-pursuit-high-performing-easily-maintainable-react-apps/" target="_blank" rel="noopener">浪费渲染的次数降到 0</a>。这个理念简单却违反直觉：更多的订阅导致更少的重复计算。MobX 帮你管理成千上万的观测者，你可以有效地平衡内存和 CPU 轮转。</p>
+<p>上面的图片是一个展示 Twitter UI 不一致的很好的例子，我在 <a href="https://www.youtube.com/watch?v=FEwLwiizlk0" target="_blank" rel="external">Reactive 2015 talk</a> 中解释过，只有两种情况可能会导致这一点：要么是推文的模块没有订阅对应用户信息的改变，要么是数据正常且推文的作者甚至不与当前登录的用户关联，尽管事实上两者都尝试描述同一人的相同属性。</p>
+<p>像 Flux 那种类型的 store 粗粒度的订阅方式很容易触发超额订阅。在使用 React 的时候，你可以简单的通过打印<a href="https://reactjs.org/docs/perf.html#perf.printwastedmeasurements" target="_blank" rel="external">浪费的渲染</a>以很快的检测到你的组件是否超额订阅。MobX 会把<a href="https://www.mendix.com/blog/making-react-reactive-pursuit-high-performing-easily-maintainable-react-apps/" target="_blank" rel="external">浪费渲染的次数降到 0</a>。这个理念简单却违反直觉：更多的订阅导致更少的重复计算。MobX 帮你管理成千上万的观测者，你可以有效地平衡内存和 CPU 轮转。</p>
 <p>请注意超额订阅也会以一种非常微妙的方式存在。如果你订阅的数据确实在被使用，但不是在<strong>所有条件</strong>下都被使用（指不是在所有的分支语句中都被使用），那么这仍然算是超额订阅。例如如果 ProfileView 组件订阅了 fullName 的变化，但这个人有 nickName，这就超额订阅了（见代码 1）。所以说在 MobX 设计思想的背后有一个很重要的原则就是：</p>
 <blockquote>
 <p><strong>只有在运行时确定订阅，才能实现最小的、一致的订阅集合。</strong></p>
@@ -367,8 +371,8 @@
 </blockquote>
 <p>之后会弹出这样一个对话框：</p>
 <p><img src="https://7xinjg.com1.z0.glb.clouddn.com/install-certificate.jpeg" alt="安装证书"></p>
-<p>按照上面的要求，在手机上配置好端口为 8888 的代理之后，访问 <a href="https://chls.pro/ssl" target="_blank" rel="noopener">https://chls.pro/ssl</a> 就可以下载证书并安装了。</p>
-<p>实际上做完这两部，就可以在你的 PC 和移动设备上愉快的进行 HTTPS 的代理，并获取明文内容了（具体如何解决问题，也可以参考<a href="https://itangqi.me/2016/05/30/tips-for-using-charles/" target="_blank" rel="noopener">这篇文章</a>）；尽管到这一步就已经达到了实际使用的效果，但我还是产生了这样的疑问：为何进行 HTTPS 代理的配置需要配置 SSL，以及在客户端安装证书呢？之前截获的内容又为什么是乱码呢？</p>
+<p>按照上面的要求，在手机上配置好端口为 8888 的代理之后，访问 <a href="https://chls.pro/ssl" target="_blank" rel="external">https://chls.pro/ssl</a> 就可以下载证书并安装了。</p>
+<p>实际上做完这两部，就可以在你的 PC 和移动设备上愉快的进行 HTTPS 的代理，并获取明文内容了（具体如何解决问题，也可以参考<a href="https://itangqi.me/2016/05/30/tips-for-using-charles/" target="_blank" rel="external">这篇文章</a>）；尽管到这一步就已经达到了实际使用的效果，但我还是产生了这样的疑问：为何进行 HTTPS 代理的配置需要配置 SSL，以及在客户端安装证书呢？之前截获的内容又为什么是乱码呢？</p>
 <h2 id="乱码的缘由-——-SSL-加密"><a href="#乱码的缘由-——-SSL-加密" class="headerlink" title="乱码的缘由 —— SSL 加密"></a>乱码的缘由 —— SSL 加密</h2><p>其实稍微对 HTTPS 有点认知的童鞋，一开始就不应该对 HTTPS 截取的内容是乱码而感动吃惊：喵的这可是 HTTPS 啊，一个代理就能窃听到获明文内容，那也毫无安全性可言了吧。</p>
 <p>那 HTTPS 到底是利用什么原理进行加密的呢？我们可以看到，上面的步骤中，配置 Charles 的第一步就是先配置一个 SSL 代理，实际上 HTTPS 的那个 S 也可以翻译为 HTTP over SSL/TLS，这个 SSL 正是 HTTP 加密依赖的基础协议。</p>
 <p>SSL/TLS 是传输层安全协议，与其他应用层协议（如 HTTP/FTP 等）独立无关，也就是说，在应用层协议开始通信之前，SSL/TLS 协议就已经完成了相关的加密工作，后续协议传输的内容已经是加密数据了。所以其实 HTTP 还是那个 HTTP，但传输的内容早已变成天书，这也就是我们在用 Charles 进行代理的时候，看到一堆乱码的原因。</p>
@@ -382,8 +386,8 @@
 <li>于是小明放心的把新的加密方式写在信中，放到盒子里，然后用锁锁上。由于小红没有钥匙，没法查看盒子里到底写了啥，只能原样送过去。小王收到后，用自己的钥匙打开了锁，获得了新的加密方式。这就完成了 <strong>SSL 协议的握手</strong>。</li>
 </ol>
 <p>当然，上面的过程描述的非常粗糙，小明和小王在互相寄锁的时候，还需传递随机数来辅助生产最终的加密方式（也是一个随机数，称之为 Premaster secret）；有兴趣的兄贵们可以看看文末的参考文章。</p>
-<h2 id="Charles-的破解之道"><a href="#Charles-的破解之道" class="headerlink" title="Charles 的破解之道"></a>Charles 的破解之道</h2><p>那么问题就来了：Charles 作为一只小红，是怎么破解上述加密通信的呢？莫非她大力出奇迹，直接砸了锁？我们知道，要砸锁是不太现实的，这等于要对大素数的乘积进行因式分解，现阶段下还做不到；因此 Charles 就做了一件最简单的事情：伪装成小明（也就是<a href="https://zh.wikipedia.org/zh-hk/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB" target="_blank" rel="noopener">中间人攻击</a>）。</p>
-<p>Charles 的<a href="https://www.charlesproxy.com/documentation/proxying/ssl-proxying/" target="_blank" rel="noopener">官网上</a>是这么说的：</p>
+<h2 id="Charles-的破解之道"><a href="#Charles-的破解之道" class="headerlink" title="Charles 的破解之道"></a>Charles 的破解之道</h2><p>那么问题就来了：Charles 作为一只小红，是怎么破解上述加密通信的呢？莫非她大力出奇迹，直接砸了锁？我们知道，要砸锁是不太现实的，这等于要对大素数的乘积进行因式分解，现阶段下还做不到；因此 Charles 就做了一件最简单的事情：伪装成小明（也就是<a href="https://zh.wikipedia.org/zh-hk/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB" target="_blank" rel="external">中间人攻击</a>）。</p>
+<p>Charles 的<a href="https://www.charlesproxy.com/documentation/proxying/ssl-proxying/" target="_blank" rel="external">官网上</a>是这么说的：</p>
 <blockquote>
 <p>Charles 作为一个中间人来进行 HTTPS 的代理，让我们检测到浏览器和 SSL web 服务端之间的明文通信。<br>Charles 把自己变成一个中间人来达到这一目的。你的浏览器是收不到服务端证书的，Charles 会用自己的根证书动态签发一张证书，然后 Charles 来接受服务端的证书，你的浏览器接受 Charles 的证书。<br>…<br>Charles 仍然通过 SSL 与服务端进行通信，但通信是通过浏览器到 Charles，然后在从 Charles 到服务器。</p>
 </blockquote>
@@ -407,10 +411,10 @@
 <p>用户还能怎么办？只能含着泪点确认：『老铁，没毛病！』</p>
 <p>参考文献</p>
 <ol>
-<li><a href="https://zhihu.com/question/22306245/answer/21002652" target="_blank" rel="noopener">支付宝偷偷添加根证书 - 知乎</a></li>
-<li><a href="https://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="noopener">图解 SSL/TLS</a></li>
-<li><a href="https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">SSL/TLS 协议运行机制的概述</a></li>
-<li><a href="https://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/" target="_blank" rel="noopener">细说 CA 和证书</a></li>
+<li><a href="https://zhihu.com/question/22306245/answer/21002652" target="_blank" rel="external">支付宝偷偷添加根证书 - 知乎</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank" rel="external">图解 SSL/TLS</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="external">SSL/TLS 协议运行机制的概述</a></li>
+<li><a href="https://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/" target="_blank" rel="external">细说 CA 和证书</a></li>
 </ol>
 ]]></content>
       
@@ -438,10 +442,10 @@
     <entry>
       <title><![CDATA[闲聊 Redux（下）]]></title>
       <url>http://malcolmyu.github.io/2017/02/02/Chat-about-Redux-2/</url>
-      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2017/02/02/Chat-about-Redux-2/title.png" title="redux">
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2017/02/02/Chat-about-Redux-2/title.png" alt="redux" title="redux">
 <p><a href="/2016/12/03/Chat-about-Redux-1/">上文</a>里，我们剥茧抽丝，聊了聊 Redux 里面的各种烦人概念，以及这些概念是怎么来的；本文我们着重聊一聊，让 Redux 大行其道的『中间件』。</p>
 <a id="more"></a>
-<h2 id="什么是中间件"><a href="#什么是中间件" class="headerlink" title="什么是中间件"></a>什么是中间件</h2><p>宏观意义上的中间件（middleware），定义十分模糊，只要能弥合底层操作系统之间差异，对不同顶层应用提供支持的软件，都算是中间件。按照笔者自己的理解，传统意义的中间件更像是一层封装，掩盖了底层的实现细节、提升了开发效率，例如游戏引擎、<a href="https://en.wikipedia.org/wiki/Java_Database_Connectivity" target="_blank" rel="noopener">JDBC</a>，甚至 jQuery 也算是广泛意义上的中间件。然而自动 TJ 大神搞了 Express 之后，中间件这个概念在前端的语境下也产生了一些变化，它逐渐的变成了一种<strong>对框架的扩展方式</strong>，成为一种开放接口，用户可以通过自行编写中间件，控制数据在框架内部的流动方式、数据的内容，或者是函数的应用方式。</p>
+<h2 id="什么是中间件"><a href="#什么是中间件" class="headerlink" title="什么是中间件"></a>什么是中间件</h2><p>宏观意义上的中间件（middleware），定义十分模糊，只要能弥合底层操作系统之间差异，对不同顶层应用提供支持的软件，都算是中间件。按照笔者自己的理解，传统意义的中间件更像是一层封装，掩盖了底层的实现细节、提升了开发效率，例如游戏引擎、<a href="https://en.wikipedia.org/wiki/Java_Database_Connectivity" target="_blank" rel="external">JDBC</a>，甚至 jQuery 也算是广泛意义上的中间件。然而自动 TJ 大神搞了 Express 之后，中间件这个概念在前端的语境下也产生了一些变化，它逐渐的变成了一种<strong>对框架的扩展方式</strong>，成为一种开放接口，用户可以通过自行编写中间件，控制数据在框架内部的流动方式、数据的内容，或者是函数的应用方式。</p>
 <p>拿 Express 来说，它的中间件实现的就是<strong>数据与控制的集合</strong>，它可以对 https 请求的请求（request）和相应（response）数据进行更改，并通过 <code>next</code> 方法进行对中间件的控制，让中间件的编写者有能力控制中间件的<strong>进入与错误终止</strong>。React-Router 的中间件技术也主要是一套异步控制手段，在 <code>onEnter</code> 生命周期中加入了对异步行为的支持，异步的中间件可以通过调用 <code>next</code> 方法，自行控制进入到下一个中间件的时间点。</p>
 <p><img src="https://ww1.sinaimg.cn/large/7921624bjw1fccmekzhe7j207805e74j.jpg" alt="著名的中间件洋葱示意图"></p>
 <p>在 Redux 这里呢，中间件的含义又发生了变化，Redux 官方文档这样说道：</p>
@@ -474,11 +478,11 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">applyMiddleware</span>(<span class="params">...middlewares</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">store</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 使用 reduceRight 确保先应用的中间件先执行</span></span><br><span class="line">    <span class="keyword">const</span> dispatch = middlewares.reduceRight(</span><br><span class="line">      (next, middleware) =&gt; middleware(store)(next),</span><br><span class="line">      store.dispatch</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123; ...store, dispatch &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>实际上，Redux 的 <code>applyMiddleware</code> 通过一个技巧很好的解决了上面两个问题：<strong>返回全新的 store 对象</strong>。这确保原有 store 的 <code>dipatch</code> 方法没有被覆盖，且很好的保留了原始 <code>dispatch</code> 对象（就是 <code>store.dispatch</code>）。用户在中间件中可以自行选择调用 <code>store.dispatch(action)</code> 或是 <code>next(action)</code>：前者表示终止后续中间件的执行，直接将 action 送给 reducer；后者表示将 action 送给后续的中间件并继续执行。</p>
 <h2 id="异步中间件"><a href="#异步中间件" class="headerlink" title="异步中间件"></a>异步中间件</h2><p>介绍完官方中间件的实现与使用方式，我们再来看一下业务中必然会用到的<strong>异步中间件</strong>。在上文中我们说过：执行 dispatch 之后遍历 reducer 是一个<strong>同步的过程</strong>，那怎么执行异步操作呢？这也好办，因为上文我们也说过，<strong>Redux 中间件实际上是对 <code>store.dispatch</code> 方法的劫持</strong>，所以只要在异步的时间点去执行 <code>dispatch</code> 就行了。</p>
-<p>我们来看一下著名的 <a href="https://github.com/gaearon/redux-thunk" target="_blank" rel="noopener">redux-thunk</a> 中间件的源码与用法：</p>
+<p>我们来看一下著名的 <a href="https://github.com/gaearon/redux-thunk" target="_blank" rel="external">redux-thunk</a> 中间件的源码与用法：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 源码</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createThunkMiddleware</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">&#123; dispatch, getState &#125;</span>) =&gt;</span> <span class="function"><span class="params">next</span> =&gt;</span> <span class="function"><span class="params">action</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> action === <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> action(dispatch, getState);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> next(action);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line">store.dispatch(<span class="function"><span class="params">dispatch</span> =&gt;</span> &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 异步触发 dispatch 打到异步效果</span></span><br><span class="line">    dispatch(&#123; <span class="attr">type</span>: <span class="string">'AN_ANCTION'</span> &#125;);</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>这里我们看到，该中间件会检测 action 是否是函数，如果是函数则将原始 <code>dispatch</code> 方法当做函数的参数传入并调用函数（这意味后面的中间件会被当前中间件阻断）；否则将 action 丢给下一个中间件。</p>
 <p>从这里我们可以看出，实际上所有的异步中间件实现，本质上都是因为 Redux 的中间件机制提供了一个切入点，让用户可以自行控制 action 流向 reducer 的时机和 action 的内容；控制的方式就是实现一个 wrapper 来接替原始的 <code>dispatch</code> 方法，并在 wrapper 中可以异步执行原始 <code>dispatch</code>。</p>
-<p>至于异步中间件的选型，本文不会详细介绍，可以参考这篇文章：<a href="https://zhuanlan.zhihu.com/p/24337401" target="_blank" rel="noopener">Redux 异步方案选型</a>。</p>
+<p>至于异步中间件的选型，本文不会详细介绍，可以参考这篇文章：<a href="https://zhuanlan.zhihu.com/p/24337401" target="_blank" rel="external">Redux 异步方案选型</a>。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>尽管 Redux 框架与 15 年刚刚问世的盛极一时相比已经风光不再，但它精巧的设计、良好的解耦与扩展性，以及中间件的扩展方式，都值得我们在进行设计框架时效仿学习。</p>
 ]]></content>
       
@@ -560,25 +564,25 @@
     <entry>
       <title><![CDATA[闲聊 Redux（上）]]></title>
       <url>http://malcolmyu.github.io/2016/12/03/Chat-about-Redux-1/</url>
-      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2016/12/03/Chat-about-Redux-1/title.png" title="redux">
-<p>Redux 算是 React 全家桶里最饱受争议的一个框架，就算是天天变 API 的 <a href="https://github.com/ReactTraining/react-router" target="_blank" rel="noopener">React-Router</a>，也因为占据了意识形态的最高点 —— 便捷优雅的声明式路由、异步路由控制与加载，导致尽管骂声不断，却没有一个人说不用。反观 Redux，用不惯的说它夹杂了太多的私心，找遍业务线所有的代码，也找不到一个逻辑用到这么复杂的函数式；用的惯的也嫌它使用太复杂，凭空多出几个文件夹、丑陋的 <code>switch</code>、一遍一遍的常量声明，真是端起键盘开发，放下鼠标骂娘。与 React-Router 横行社区不同，Redux 从来不缺竞争者，前有 Reflux，后有 <a href="https://github.com/mobxjs/mobx" target="_blank" rel="noopener">Mobx</a>；但似乎也没见有一个竞争者真正撼动 redux 的地位：完美适配服务端渲染，完善的调试工具与社区支持，都让 Redux 成为 React 学习者首选的数据流框架。</p>
-<p>今天就来简单聊聊这个可能是这两年最火的数据流框架：<a href="https://github.com/reactjs/redux" target="_blank" rel="noopener">Redux</a>。</p>
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2016/12/03/Chat-about-Redux-1/title.png" alt="redux" title="redux">
+<p>Redux 算是 React 全家桶里最饱受争议的一个框架，就算是天天变 API 的 <a href="https://github.com/ReactTraining/react-router" target="_blank" rel="external">React-Router</a>，也因为占据了意识形态的最高点 —— 便捷优雅的声明式路由、异步路由控制与加载，导致尽管骂声不断，却没有一个人说不用。反观 Redux，用不惯的说它夹杂了太多的私心，找遍业务线所有的代码，也找不到一个逻辑用到这么复杂的函数式；用的惯的也嫌它使用太复杂，凭空多出几个文件夹、丑陋的 <code>switch</code>、一遍一遍的常量声明，真是端起键盘开发，放下鼠标骂娘。与 React-Router 横行社区不同，Redux 从来不缺竞争者，前有 Reflux，后有 <a href="https://github.com/mobxjs/mobx" target="_blank" rel="external">Mobx</a>；但似乎也没见有一个竞争者真正撼动 redux 的地位：完美适配服务端渲染，完善的调试工具与社区支持，都让 Redux 成为 React 学习者首选的数据流框架。</p>
+<p>今天就来简单聊聊这个可能是这两年最火的数据流框架：<a href="https://github.com/reactjs/redux" target="_blank" rel="external">Redux</a>。</p>
 <a id="more"></a>
 <p>本文将分为上下两部分，在第一部分中我们会聊一聊 Redux 那些烦人的概念，在第二部分中我们会聊一聊『中间件』这一使 Redux 获得社区广泛支持的大杀器。</p>
 <h2 id="烦人的概念"><a href="#烦人的概念" class="headerlink" title="烦人的概念"></a>烦人的概念</h2><p>没用过 Redux 的开发者打开它的文档，扑面而来就是难懂的概念，什么 <code>compose</code>、<code>applyMiddleware</code>、<code>reducer</code> 之类，引得大家都尴尬了起来，关了网页翻身又刷知乎去了。实际上我个人认为，把这些繁杂的概念丢到 Redux 的首页介绍上简直就是一个败笔，这些东西实际上都是在后来的开发过程中，高度抽象的业务逻辑，根本没有必要直接介绍给用户。</p>
-<p>那 Redux 到底是个啥咧？我们抛去这些复杂的概念不看，先看看我们开发中最常用到的，也是最核心的概念：<a href="https://cn.redux.js.org/docs/basics/Store.html" target="_blank" rel="noopener">store</a>。这个 store 顾名思义，就是一个数据存储的结构，我们可以自己先自己脑补一下，实现一个数据存储需要写什么功能呢？大概不外乎就是『获取数据』、『存储数据』，但是 Redux 的 store 显然不是这么简单，因为在修改数据之余，我们还需要监听数据变化，以便进行一些其他的操作：比如跟着修改组件监听的 <code>props</code>；而这个数据监听的行为，实际上是由使用者定义的，因此还需要接入一套事件管理的机制：『订阅事件』、『取消订阅』、『事件发布』。</p>
-<p>简单来说，Redux 的 store 就是<strong>数据管理与事件订阅的组合</strong>，实际上，这个基本的内核也并非 Redux 的原创，而是 Facebook 最早提出来的 <a href="https://facebook.github.io/flux/" target="_blank" rel="noopener">Flux</a> 的概念。翻一下它的<a href="https://github.com/reactjs/redux/blob/master/src/createStore.js#L247" target="_blank" rel="noopener">源码</a>，可以明显的看到它对外提供了三个方法：<code>dispatch</code>，<code>subscribe</code> 和 <code>getState</code>，翻译一下就是『调度』、『订阅』和『状态获取』。这个 <code>getState</code> 就不多说了，就是获取一份 store 的当前数据，我们重点聊一聊 <code>dispatch</code> 和 <code>subscribe</code>。</p>
+<p>那 Redux 到底是个啥咧？我们抛去这些复杂的概念不看，先看看我们开发中最常用到的，也是最核心的概念：<a href="https://cn.redux.js.org/docs/basics/Store.html" target="_blank" rel="external">store</a>。这个 store 顾名思义，就是一个数据存储的结构，我们可以自己先自己脑补一下，实现一个数据存储需要写什么功能呢？大概不外乎就是『获取数据』、『存储数据』，但是 Redux 的 store 显然不是这么简单，因为在修改数据之余，我们还需要监听数据变化，以便进行一些其他的操作：比如跟着修改组件监听的 <code>props</code>；而这个数据监听的行为，实际上是由使用者定义的，因此还需要接入一套事件管理的机制：『订阅事件』、『取消订阅』、『事件发布』。</p>
+<p>简单来说，Redux 的 store 就是<strong>数据管理与事件订阅的组合</strong>，实际上，这个基本的内核也并非 Redux 的原创，而是 Facebook 最早提出来的 <a href="https://facebook.github.io/flux/" target="_blank" rel="external">Flux</a> 的概念。翻一下它的<a href="https://github.com/reactjs/redux/blob/master/src/createStore.js#L247" target="_blank" rel="external">源码</a>，可以明显的看到它对外提供了三个方法：<code>dispatch</code>，<code>subscribe</code> 和 <code>getState</code>，翻译一下就是『调度』、『订阅』和『状态获取』。这个 <code>getState</code> 就不多说了，就是获取一份 store 的当前数据，我们重点聊一聊 <code>dispatch</code> 和 <code>subscribe</code>。</p>
 <h3 id="dispatch：更新状态、触发回调"><a href="#dispatch：更新状态、触发回调" class="headerlink" title="dispatch：更新状态、触发回调"></a>dispatch：更新状态、触发回调</h3><p>我们说 store 是数据管理与事件订阅的组合，那么 <code>dispatch</code> 方法就是 store 最核心的功能。看一下它代码的精简版：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dispatch</span>(<span class="params">action</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 1. 通过 Reducer 遍历 action，更新 state</span></span><br><span class="line">  currentState = currentReducer(currentState, action)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. 触发通过 subscribe 订阅的回调</span></span><br><span class="line">  <span class="keyword">var</span> listeners = currentListeners = nextListeners</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; listeners.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> listener = listeners[i]</span><br><span class="line">    listener()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3. 返回 action</span></span><br><span class="line">  <span class="keyword">return</span> action</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>是不是简洁明了？基本上就干了两件事：<strong>更新当前状态</strong>，<strong>触发监听回调</strong>。读者也许会问，这里的 <code>currentReducer</code> 方法是个啥，<code>listeners</code> 又是哪里注册的？我们按下不表，只简单的说一下：前者跟 <code>reducer</code> 这个概念有关，我们随后会讲到；后者就是 <code>subscribe</code> 方法注册的，等下也会细说。</p>
 <p>注意到，<code>dispatch</code> 函数的参数是 action，这个东西的含义我们会在讲 reducer 的时候<a href="#核心的思想">简单说明</a>。</p>
-<p>其实笔者个人认为，最需要注意的一点是上面注释中的第三点：<strong><code>dispatch</code> 方法的返回值是 action</strong>。也就是说，对于没有使用中间件，或中间件也遵守这一原则的情况下，是可以利用 <code>dispatch</code> 方法的返回值，来处理一些贴近业务的耦合代码，例如使用了 <a href="https://github.com/acdlite/redux-promise" target="_blank" rel="noopener">redux-promise</a> 中间件时，我们可以获取 <code>dispatch</code> 的返回值的 <code>payload</code> 属性（它是那个处理中的 promise），然后等这个 <code>payload</code> 处理完成后进行一些业务逻辑操作。</p>
+<p>其实笔者个人认为，最需要注意的一点是上面注释中的第三点：<strong><code>dispatch</code> 方法的返回值是 action</strong>。也就是说，对于没有使用中间件，或中间件也遵守这一原则的情况下，是可以利用 <code>dispatch</code> 方法的返回值，来处理一些贴近业务的耦合代码，例如使用了 <a href="https://github.com/acdlite/redux-promise" target="_blank" rel="external">redux-promise</a> 中间件时，我们可以获取 <code>dispatch</code> 的返回值的 <code>payload</code> 属性（它是那个处理中的 promise），然后等这个 <code>payload</code> 处理完成后进行一些业务逻辑操作。</p>
 <h3 id="subscriber：注册回调、做好清理"><a href="#subscriber：注册回调、做好清理" class="headerlink" title="subscriber：注册回调、做好清理"></a>subscriber：注册回调、做好清理</h3><p>我们再来看下 <code>subscriber</code> 代码的精简版，同样是非常的好理解：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">subscribe</span>(<span class="params">listener</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 1. 注册回调</span></span><br><span class="line">  nextListeners.push(listener)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. 返回清理函数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">unsubscribe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> index = nextListeners.indexOf(listener)</span><br><span class="line">    nextListeners.splice(index, <span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>总共又是干了两件事，第一是把回调注册到 <code>nextListeners</code> 中，供 <code>dispatch</code> 时调用；第二是返回一个清理注册函数的函数，便于用户进行注册函数的清理。这里要注意的，就是第二步清理函数。react 初心者应该都会遇到下面的这行错误提示：</p>
 <p><img src="https://ww1.sinaimg.cn/large/7921624bgw1fb55pktexgj21kw01qdhl.jpg" alt="setState 错误"></p>
 <p>导致这个错误的原因，就是异步调用 <code>setState</code>，结果执行的时候，由于异步的关系，代码所在的组件都被销毁了。当你使用 redux 时，你会发现基本不会出现这样的提示，那就是因为 redux <strong>在组件销毁的时候调用了清理函数</strong>，因此所有能导致状态发生变化的操作都会在组件移除时被清理。</p>
-<h2 id="精神内核"><a href="#精神内核" class="headerlink" title="精神内核"></a>精神内核</h2><p>说完 redux 跟 flux 相关的内核，再说下 redux 独有的特性：reducer。reducer 是传入给 <code>createStore</code> 的参数，是创建 store 的最基本依赖。先说下 reducer 是什么，这东西基本等于 flux 中 <a href="https://facebook.github.io/flux/docs/dispatcher.html" target="_blank" rel="noopener">dispatcher</a> 的升级版。dispatcher 翻译过来就是『调度器』，我们知道 <code>dispatch</code> 是『进行调度』，<code>subscribe</code> 是『监听调度』，那 reducer 就是处理『怎么调度』。</p>
+<h2 id="精神内核"><a href="#精神内核" class="headerlink" title="精神内核"></a>精神内核</h2><p>说完 redux 跟 flux 相关的内核，再说下 redux 独有的特性：reducer。reducer 是传入给 <code>createStore</code> 的参数，是创建 store 的最基本依赖。先说下 reducer 是什么，这东西基本等于 flux 中 <a href="https://facebook.github.io/flux/docs/dispatcher.html" target="_blank" rel="external">dispatcher</a> 的升级版。dispatcher 翻译过来就是『调度器』，我们知道 <code>dispatch</code> 是『进行调度』，<code>subscribe</code> 是『监听调度』，那 reducer 就是处理『怎么调度』。</p>
 <p>如要实现下面这个简单的功能：</p>
 <p><img src="https://ww1.sinaimg.cn/large/7921624bgw1fb5blrrg9vg204101pwed.gif" alt="简单的例子"></p>
 <p>就需要编写这样一个 reducer：</p>
@@ -588,10 +592,10 @@
 <p>为什么要这样设计呢？想象一下上面的例子：我们对数字进行修改，点左边减少、点右边增加，那么每一次点击就会触发一次 action —— 因为每点击一次状态肯定会发生改变；但是左边的点击和右边的点击触发的肯定是<strong>不同的 action</strong> —— 因为改变状态的方式不同。区分 action 的就是它的 <code>type</code> 属性（在这个例子里就是 <code>&#39;INCREMENT&#39;</code> 和 <code>&#39;DECREMENT&#39;</code>）；而不同 action 对应的不同操作就是由 reducer 来处理（如上面的 <code>state + 1</code> 和 <code>state - 1</code>）。</p>
 <p>根据 action，Redux 还衍生出一个 <code>actionCreator</code> 的概念 —— 其实这个概念也很无聊，它指代一个 action 的创造函数，毕竟从用户行为转换到 action 对象还需要一些过程，比如下面这样：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">incrementIfOdd</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">dispatch</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (num % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dispatch(&#123;</span><br><span class="line">      type: <span class="string">'INCREMENT'</span>,</span><br><span class="line">      payload: num</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个例子，对 action 进行了逻辑处理，只有奇数才会触发 <code>dispatch</code> 行为。这里你可能会注意到，它返回的并非一个纯对象，这是因为使用了 <a href="https://github.com/gaearon/redux-thunk" target="_blank" rel="noopener">redux-thunk</a> 中间件，action 的形态就从纯对象变为函数，这在下篇中会有所讲述。</p>
+<p>这个例子，对 action 进行了逻辑处理，只有奇数才会触发 <code>dispatch</code> 行为。这里你可能会注意到，它返回的并非一个纯对象，这是因为使用了 <a href="https://github.com/gaearon/redux-thunk" target="_blank" rel="external">redux-thunk</a> 中间件，action 的形态就从纯对象变为函数，这在下篇中会有所讲述。</p>
 <h3 id="reducer：可以自由组合的调度器"><a href="#reducer：可以自由组合的调度器" class="headerlink" title="reducer：可以自由组合的调度器"></a>reducer：可以自由组合的调度器</h3><p>从上面的例子中，我们可以看到 reducer 的主要功能是进行状态的改变的调度控制。但这并非 reducer 的特色，其实它最大的特色正如其名，是进行状态树的<strong>缩减合并</strong>。这是什么意思呢，我们先看一段 js 数组 reducer 的用法：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [ &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;, &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;, &#123; <span class="attr">c</span>: <span class="number">3</span> &#125; ];</span><br><span class="line">arr.reduce(<span class="function">(<span class="params">prev, next</span>) =&gt;</span> (&#123; ...next, <span class="attr">child</span>: prev &#125;), &#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 会变成这样的对象：</span></span><br><span class="line"><span class="comment">// &#123; c: 3, child: &#123; b: 2, child: &#123; a: 1, child: &#123;&#125; &#125; &#125; &#125;</span></span><br></pre></td></tr></table></figure>
-<p>那么，redux 的 reducer 也起到了类似的作用（尽管它的源码没有一行用到 <code>reduce</code> 函数😂），它可以将我们编写的调度器 reducer 集合起来，最终集合成一个调度器树。这样做的意义在于，在保证了<strong>唯一状态树的前提</strong>之下，我们在编码时还能只关注状态调度的某一细节。那么集合 reducer 的方法呢，就叫做 <a href="https://redux.js.org/docs/api/combineReducers.html" target="_blank" rel="noopener"><code>combineReducers</code></a>。</p>
+<p>那么，redux 的 reducer 也起到了类似的作用（尽管它的源码没有一行用到 <code>reduce</code> 函数😂），它可以将我们编写的调度器 reducer 集合起来，最终集合成一个调度器树。这样做的意义在于，在保证了<strong>唯一状态树的前提</strong>之下，我们在编码时还能只关注状态调度的某一细节。那么集合 reducer 的方法呢，就叫做 <a href="https://redux.js.org/docs/api/combineReducers.html" target="_blank" rel="external"><code>combineReducers</code></a>。</p>
 <p><img src="https://7xinjg.com1.z0.glb.clouddn.com/combined-redux.png" alt="combineReducer"></p>
 <p>这里我们就不对具体的 API 进行讲解了，综合来说，reducer 带给 redux 最大的特性就在于：<strong>编码时关心单个 reducer，但最终生成统一调度器，调度生成单一的状态树</strong>。</p>
 <h2 id="compose：函数式编程的私货"><a href="#compose：函数式编程的私货" class="headerlink" title="compose：函数式编程的私货"></a>compose：函数式编程的私货</h2><p>Redux 有一个单独的概念，叫做 compose，这其实是函数式编程里面的一个套路，可以单拿出来说一说。</p>
@@ -600,7 +604,7 @@
 <p>这简直就是阻碍函数式编程普及的恶魔啊！不过没关系，这里要将的 <code>compose</code> 方法，就是起到代码美化作用的：它可以把上面的 <code>a(b(c(d(e(123)))))</code> 改成：<code>compose(a,b,c,d,e)(123)</code>。是不是瞬间有了活下去的动力？</p>
 <p>我们来考虑考虑，在 ES6 里，这个函数应该怎么写：</p>
 <ol>
-<li>首先我们应该把传入的一坨函数改造成数组，这个 ES6 里面的 <a href="https://es6.ruanyifeng.com/#docs/function#rest参数" target="_blank" rel="noopener">rest 参数</a>已经帮我们很好的搞定了；</li>
+<li>首先我们应该把传入的一坨函数改造成数组，这个 ES6 里面的 <a href="https://es6.ruanyifeng.com/#docs/function#rest参数" target="_blank" rel="external">rest 参数</a>已经帮我们很好的搞定了；</li>
 <li>其次我们需要<strong>逆序</strong>执行函数，这就可以用到 <code>reduceRight</code>。</li>
 </ol>
 <p>我们来实现一下：</p>
@@ -631,7 +635,7 @@
       <url>http://malcolmyu.github.io/2016/10/24/Create-React-Universal-App/</url>
       <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>公司内部的公用图标字体平台 iconfont 上线一年以来，运行良好，在内部承担起了客户端减容、提高前端开发效率的任务。但由于其臃肿的架构导致的运行效率底下和页面卡顿等问题也一直给使用者造成诸多不便。我们对项目老架构导致的许多问题进行了探索总结，并针对问题提出了 react 同构的解决方案。</p>
 <a id="more"></a>
-<h2 id="旧版架构问题探索"><a href="#旧版架构问题探索" class="headerlink" title="旧版架构问题探索"></a>旧版架构问题探索</h2><p>在进行旧版平台开发的时候，我们采用了当时淘宝推出的先进思想：<a href="https://www.zhihu.com/question/23512853" target="_blank" rel="noopener">中途岛 midway 前后端分离方式</a>，搭建了一个 node 中间层进行页面的渲染，以求提升页面的渲染速度。我们旧版平台的结构如下：</p>
+<h2 id="旧版架构问题探索"><a href="#旧版架构问题探索" class="headerlink" title="旧版架构问题探索"></a>旧版架构问题探索</h2><p>在进行旧版平台开发的时候，我们采用了当时淘宝推出的先进思想：<a href="https://www.zhihu.com/question/23512853" target="_blank" rel="external">中途岛 midway 前后端分离方式</a>，搭建了一个 node 中间层进行页面的渲染，以求提升页面的渲染速度。我们旧版平台的结构如下：</p>
 <p><img src="http://s.qunarzz.com/iconfont/blog/universal-app/old-architecture.png" alt="旧版平台的三层结构"></p>
 <p>从图中我们可以看到，尽管我们前端掌握了 server，可以进行页面渲染的控制，但是服务端的渲染和前端的渲染和路由依然是割裂的，之间有很多冗余的内容。导致这些冗余的主要原因，其实还是前后端渲染方式不一致以及前后端代码的分离。</p>
 <h3 id="是否需要前后端分离"><a href="#是否需要前后端分离" class="headerlink" title="是否需要前后端分离"></a>是否需要前后端分离</h3><p>我们知道，在传统的 MVC 架构的项目之中，js 代码只占 View 层的很小的一部分。随着项目的渐进发展，前端功能的复杂度日益增高，导致项目难以维护；同时前后端语言并不一致（我们都知道 Java 跟 JavaScript 基本上是雷锋和雷峰塔的关系），不同的开发在一个项目里操作极为不便，因此才产生了前后端分离。</p>
@@ -647,7 +651,7 @@
 <li>模块依赖方式：通过 webpack 这样的打包工具，可以保证前端和均采用 CommonJS 的依赖方式，确保代码可以互相依赖。</li>
 </ol>
 <p>有了这二者的保证，我们就可以完美的解决同构的问题，剩下需要考虑的就是如何处理服务端渲染了。</p>
-<h2 id="react-全家桶对服务端渲染的支持"><a href="#react-全家桶对服务端渲染的支持" class="headerlink" title="react 全家桶对服务端渲染的支持"></a>react 全家桶对服务端渲染的支持</h2><p>react 自诞生之初就对服务端渲染非常重视，它的『全家桶』都对服务端渲染进行了良好的支持。所谓的『全家桶』指的就是大家耳熟能详的 react 御三家：<a href="https://facebook.github.io/react/" target="_blank" rel="noopener">react</a>、<a href="https://github.com/ReactTraining/react-router" target="_blank" rel="noopener">react-router</a> 和 <a href="http://redux.js.org/" target="_blank" rel="noopener">redux</a>。</p>
+<h2 id="react-全家桶对服务端渲染的支持"><a href="#react-全家桶对服务端渲染的支持" class="headerlink" title="react 全家桶对服务端渲染的支持"></a>react 全家桶对服务端渲染的支持</h2><p>react 自诞生之初就对服务端渲染非常重视，它的『全家桶』都对服务端渲染进行了良好的支持。所谓的『全家桶』指的就是大家耳熟能详的 react 御三家：<a href="https://facebook.github.io/react/" target="_blank" rel="external">react</a>、<a href="https://github.com/ReactTraining/react-router" target="_blank" rel="external">react-router</a> 和 <a href="http://redux.js.org/" target="_blank" rel="external">redux</a>。</p>
 <p><img src="http://s.qunarzz.com/iconfont/blog/universal-app/react-everything.png" alt="react 全家桶"></p>
 <h3 id="React-和-ReactDOM"><a href="#React-和-ReactDOM" class="headerlink" title="React 和 ReactDOM"></a>React 和 ReactDOM</h3><p>ReactDOM 在这里提供的支持就是 <code>ReactDOM.render</code> 和 <code>ReactDOM.renderToString</code> 函数，其中前者会在浏览器端生成 DOM 结构，后者会在服务端生成对应的 HTML 字符串模板。React 会在生成的 DOM 结构上添加一个 <code>data-react-checksum</code> 的属性，这是一个 adler32 算法的校验和，用以确保两份模板的一致性。</p>
 <p><img src="http://s.qunarzz.com/iconfont/blog/universal-app/checksum.png" alt="checksum 判断"></p>
@@ -746,7 +750,7 @@
 <blockquote>
 <p>蜘蛛：『三位贵人坐在一个房间中：一个国王，一个僧侣和一个富翁。三人之间，站着一名普通佣兵，每位贵人都命佣兵杀死另外二人。孰生，孰死？』<br>小恶魔：那要视那个佣兵而定。<br>蜘蛛：是吗？他既没有王冠，也无金银珠宝，更没有神明的眷顾。<br>小恶魔：但他有利剑，有决定生死的力量。<br>蜘蛛：既然生死取决于士兵，那我们为什么又假装承认国王的权利至高无上呢？奈德·史塔克人头落地，应该负责的究竟是谁？乔佛里？刽子手？还是别的什么东西？<strong>权力存于人心。信则有，不信则无。惑人的把戏，如浮影游墙。即便是矮小之人，也能投射出巨大的影子。</strong></p>
 </blockquote>
-<p>以前看这些对白的时候，并不是很理解权力存于人心的意义；后来看了本书中的观点，感觉似乎确如蜘蛛所说：力量是最初的决定因素，而不是最终的；是个体的，而非群体的。对于个人来说，能发挥的力量终究是有限的；而对于群体来说，能够发挥力量的恰恰是组织术：正是有效的组织使得成千上万人的群落、部队、球场的观众能够井然有序，目标专一。知乎里有一个著名的问答：<a href="https://zhihu.com/question/20529731/answer/36331627" target="_blank" rel="noopener">第二次国共内战时期，国民党战败主要是因为军事策略失误吗？</a> 中督公就在答案里提到，我兔之所以战胜，最根本的原因还是有着强大的组织动员能力。而组织最重要的一点，就是能营造出一种所有人都深信不疑的幻想，或者说是理想。</p>
+<p>以前看这些对白的时候，并不是很理解权力存于人心的意义；后来看了本书中的观点，感觉似乎确如蜘蛛所说：力量是最初的决定因素，而不是最终的；是个体的，而非群体的。对于个人来说，能发挥的力量终究是有限的；而对于群体来说，能够发挥力量的恰恰是组织术：正是有效的组织使得成千上万人的群落、部队、球场的观众能够井然有序，目标专一。知乎里有一个著名的问答：<a href="https://zhihu.com/question/20529731/answer/36331627" target="_blank" rel="external">第二次国共内战时期，国民党战败主要是因为军事策略失误吗？</a> 中督公就在答案里提到，我兔之所以战胜，最根本的原因还是有着强大的组织动员能力。而组织最重要的一点，就是能营造出一种所有人都深信不疑的幻想，或者说是理想。</p>
 <p>那么人类社会的组织结构是怎么产生的呢？</p>
 <h2 id="对剩余价值的剥削产生了阶级和帝国"><a href="#对剩余价值的剥削产生了阶级和帝国" class="headerlink" title="对剩余价值的剥削产生了阶级和帝国"></a>对剩余价值的剥削产生了阶级和帝国</h2><p>书里提到，15000年前，全世界的人类开始不约而同的种起了小麦。有了农作物之后，人类的物资开始丰盈，不必过着东奔西走的采摘、捕猎生活，并且开始进行定居。之后人类开始了对于<strong>未来</strong>的忧虑——在原始的采集社会，人类对于未来是完全没有概念的。对于未来的忧虑使得人类开始进行囤积，最终产生了大量的剩余价值。</p>
 <p>然而不知是幸运还是不幸，物资的丰富并没有使它的制造者们过上更好的日子，反而产生了新的阶层：精英阶层。他们收取赋税，不误农事，从事着政治、军事和艺术的研究。他们的生活日趋优异，而农民们却深陷贫穷。作者在书里说：农业革命实际上是一个骗局，它让更多的人以更糟的状态生活下去。</p>
@@ -779,7 +783,7 @@
       <url>http://malcolmyu.github.io/2015/11/18/Coroutine-and-Event-Loop/</url>
       <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>最近研究了一下 es6 的生成器函数，以及传说中的 co。虽然网上关于协程、co 源码分析的文章数不胜数，但是将其与先前异步实现的事件队列结合起来说明的文章却很难寻觅。之前只知道协程是实现异步的一种方式，那其和之前的各种异步实现究竟有什么本质区别呢？本文将根据协程机制简要探讨一下<strong>引入协程之后的新的事件循环模型</strong>。由于笔者基础知识不够扎实，所以会先讲述一大堆协程产生的背景和原理，再进行模型变化的讲解。</p>
 <a id="more"></a>
-<h2 id="协程实现机制"><a href="#协程实现机制" class="headerlink" title="协程实现机制"></a>协程实现机制</h2><h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><p>说起协程就不得不提到面试宝典必备题目之一：啥是进程啥是线程他俩有啥区别？ 之前阮一峰老师写过一篇<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">博文</a>进行科普，但是文中将电力比作 CPU 以及用厕所比喻锁都不合适。反而是评论里有位叫 viho_he 的哥们说的不错，在这里简单的把他的思路整理一下：</p>
+<h2 id="协程实现机制"><a href="#协程实现机制" class="headerlink" title="协程实现机制"></a>协程实现机制</h2><h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><p>说起协程就不得不提到面试宝典必备题目之一：啥是进程啥是线程他俩有啥区别？ 之前阮一峰老师写过一篇<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="external">博文</a>进行科普，但是文中将电力比作 CPU 以及用厕所比喻锁都不合适。反而是评论里有位叫 viho_he 的哥们说的不错，在这里简单的把他的思路整理一下：</p>
 <ol>
 <li>单核 CPU 无法被平行使用。为了创造『共享』CPU 的假象，搞出了一个叫做时间片的概念，给任务分配时间片进行调度的调度器后来成为操作系统的核心组件；</li>
 <li>在调度的时候，如果不对内存进行管理，那么切换时间片的时候会造成程序上下文的互相污染。但是手工管理物理地址实在是太蛋疼了，因此引入了『虚拟地址』的概念，共包含三个部分：<ul>
@@ -792,9 +796,9 @@
 <li>因此诞生了<strong>线程</strong>的概念，线程在进程内部，处理并发的逻辑，拥有<strong>独立的栈</strong>，却共享线程的资源。使用线程作为 CPU 的基本调度单位显得更加有效率，但也引发各种抢占资源的问题<del>，使得笔试又多了一个考题</del>。</li>
 </ol>
 <p>最后总结一下就是：进程掌握着独立资源，线程享受着基本调度。一个进程里跑多个线程处理并发，6 的飞起。但纯粹的内核态线程有一个问题就是性能消耗：线程切换的时候，进程需要为了管理而切换到内核态，状态转换的消耗有点严重。为此又产生了一个概念，唤做<strong>用户态线程</strong>。用户态线程吼啊，程序自己控制状态切换，进程不用陷入内核态，会玩儿的开发者可以按照程序的特性来选择更适合的调度算法，代码的效率飞了起来。</p>
-<h3 id="协程、子例程与生成器"><a href="#协程、子例程与生成器" class="headerlink" title="协程、子例程与生成器"></a>协程、子例程与生成器</h3><p>那协程是干啥的咧？实际上，协程的概念产生的非常早，<a href="https://en.wikipedia.org/wiki/Melvin_Conway" target="_blank" rel="noopener">Melvin Conway</a> 早在 1963 年就针对编辑器的设计提出一种将『语法分析』和『词法分析』分离的方案，把 token 作为货物，将其转换为经典的<a href="https://zh.wikipedia.org/wiki/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98" target="_blank" rel="noopener">『生产者-消费者问题』</a>。编译器的控制流在词法和语法解析之间来回切换：当词法模块读入足够多的 token 时，控制流交给语法分析；当语法分析消化完所有 token 后，控制流交给词法分析。从这一概念提出的环境我们可以看出，协程的核心思想在于：<strong>控制流的主动让出和恢复</strong>。</p>
+<h3 id="协程、子例程与生成器"><a href="#协程、子例程与生成器" class="headerlink" title="协程、子例程与生成器"></a>协程、子例程与生成器</h3><p>那协程是干啥的咧？实际上，协程的概念产生的非常早，<a href="https://en.wikipedia.org/wiki/Melvin_Conway" target="_blank" rel="external">Melvin Conway</a> 早在 1963 年就针对编辑器的设计提出一种将『语法分析』和『词法分析』分离的方案，把 token 作为货物，将其转换为经典的<a href="https://zh.wikipedia.org/wiki/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98" target="_blank" rel="external">『生产者-消费者问题』</a>。编译器的控制流在词法和语法解析之间来回切换：当词法模块读入足够多的 token 时，控制流交给语法分析；当语法分析消化完所有 token 后，控制流交给词法分析。从这一概念提出的环境我们可以看出，协程的核心思想在于：<strong>控制流的主动让出和恢复</strong>。</p>
 <p>这一点和上文说的用户态线程有几分相似，但是用户态线程多在语言层面实现，对于使用者还是不够开放，无法提供显示的调度方式。但是协程做到了这一点，用户可以在编码阶段通过类似 <code>yieldto</code> 原语对控制流进行调度。</p>
-<p>说到这里可能有读者会产生疑问：『我大协程这么吊，为何提出了这么多年一直不火啊？』这就要说到当年命令式编程与函数式编程的『剑气之争』，当年命令式编程围绕着自顶向下的开发理念，将子例程调用作为唯一的控制结构。实际上，子例程就是没用使用 <code>yield</code> 的协程，大宗师 <a href="https://en.wikipedia.org/wiki/Donald_Knuth" target="_blank" rel="noopener">Donald E. Knuth</a> 也曾经曰过：</p>
+<p>说到这里可能有读者会产生疑问：『我大协程这么吊，为何提出了这么多年一直不火啊？』这就要说到当年命令式编程与函数式编程的『剑气之争』，当年命令式编程围绕着自顶向下的开发理念，将子例程调用作为唯一的控制结构。实际上，子例程就是没用使用 <code>yield</code> 的协程，大宗师 <a href="https://en.wikipedia.org/wiki/Donald_Knuth" target="_blank" rel="external">Donald E. Knuth</a> 也曾经曰过：</p>
 <blockquote>
 <p>子例程是协程的一种特例。</p>
 </blockquote>
@@ -802,7 +806,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">of</span> <span class="built_in">Object</span>.keys(obj)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(key + <span class="string">": "</span> + obj[key]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>实际上，要实现这种迭代器的语法糖，就必须引入协程的思想：主执行栈在进入循环后先让步给迭代器，迭代器取出下一个迭代元素之后再恢复主执行栈的控制流。这种迭代器的实现就是因为内置了<del>葛炮</del><strong>生成器（generator）</strong>。生成器也是一种特殊的协程，它拥有 <code>yield</code> 原语，但是却不能指定让步的协程，<strong>只能让步给生成器的调用者或恢复者</strong>。由于不能多个协程跳来跳去，生成器相对主执行线程来说只是一个可暂停的玩具，它甚至都<strong>不需要</strong>另开新的执行栈，只需要在让步的时候保存一下上下文就好。因此我们认为生成器与主控制流的关系是不对等的，也称之为<strong>非对称协程（semi-coroutine）</strong>。</p>
 <p>由此我们也知道了，为啥 es6 一下引起了这么一大坨特性啊，因为引入迭代器，就必须引入生成器，这俩就是这种不可分割的基友关系。</p>
-<h2 id="现有协程的实现"><a href="#现有协程的实现" class="headerlink" title="现有协程的实现"></a>现有协程的实现</h2><p>自 es6 尝试引入生成器以来，大量的协程实现尝试开始兴起，协程一时间成为风靡前端界的新名词。但这些实现中有的仅仅是实现了一个看上去很像协程的语法糖，有的却 hack 了底层代码，实现了真正的协程。这里以 TJ 大神的 <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> 和 <a href="https://github.com/laverdet/node-fibers" target="_blank" rel="noopener">node-fibers</a> 为例，浅析这两种协程实现方式上的差异。</p>
+<h2 id="现有协程的实现"><a href="#现有协程的实现" class="headerlink" title="现有协程的实现"></a>现有协程的实现</h2><p>自 es6 尝试引入生成器以来，大量的协程实现尝试开始兴起，协程一时间成为风靡前端界的新名词。但这些实现中有的仅仅是实现了一个看上去很像协程的语法糖，有的却 hack 了底层代码，实现了真正的协程。这里以 TJ 大神的 <a href="https://github.com/tj/co" target="_blank" rel="external">co</a> 和 <a href="https://github.com/laverdet/node-fibers" target="_blank" rel="external">node-fibers</a> 为例，浅析这两种协程实现方式上的差异。</p>
 <h3 id="CO"><a href="#CO" class="headerlink" title="CO"></a>CO</h3><p>co 实际上是一个语法糖，它可以包裹一个生成器，然后生成器里可以使用同步的方式来编写异步代码，效果如下：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> readFile = <span class="function"><span class="keyword">function</span> (<span class="params">fileName</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">        fs.readFile(fileName, <span class="function"><span class="keyword">function</span>(<span class="params">error, data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (error) reject(error);</span><br><span class="line">            resolve(data);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">co(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> f1 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/fstab'</span>);</span><br><span class="line">    <span class="keyword">let</span> f2 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/shells'</span>);</span><br><span class="line">    <span class="keyword">let</span> sum = f1.toString().length + f2.toString().length;</span><br><span class="line">    <span class="built_in">console</span>.log(sum);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>在 es7 中已经推出了一个更甜的语法糖： <code>async/await</code>，实现效果如下：</p>
@@ -883,7 +887,7 @@ pre-commit.sample
 <p>维护一个开发团队的钩子可是有点棘手，因为 <code>.git/hooks</code> 目录不会随着项目的其他部分复制的，也不会被版本控制。对上面俩问题的最简单的解决方案就是把钩子存在实际的项目目录中（<code>.git</code> 目录之外），这就可以让我们像任何其他版本控制文件一样来编辑钩子。为了安装钩子，我们可以创造一个链接将其链接到 <code>.git/hooks</code>；或者是当有更新的时候，简单的将其复制粘贴到 <code>.git/hooks</code> 目录中。</p>
 <p><image src="./git-tips-hook02.svg" alt="在提交创建的过程执行钩子" width="80%"></image></p>
 
-<p>另外，Git 还提供一个<a href="http://git-scm.com/docs/git-init#_template_directory" target="_blank" rel="noopener">模板目录</a>的机制来更加便捷的自动安装钩子。模板目录的所有文件和目录在每次使用 <code>git init</code> 和 <code>git clone</code> 时都会被复制进 <code>.git</code> 目录里。</p>
+<p>另外，Git 还提供一个<a href="http://git-scm.com/docs/git-init#_template_directory" target="_blank" rel="external">模板目录</a>的机制来更加便捷的自动安装钩子。模板目录的所有文件和目录在每次使用 <code>git init</code> 和 <code>git clone</code> 时都会被复制进 <code>.git</code> 目录里。</p>
 <p>下文所述的所有本地钩子都可以被仓库管理员替换或删除，这完全取决于每个团队成员是否实际使用钩子。我们最好记住这一点，把 Git 钩子当做一个方便的开发者工具而非一个严格执行的开发政策。</p>
 <p>即便如此，我们也可以用服务端钩子来拒绝那些不符合标准的提交。我们会在稍后讨论这一点。</p>
 <h2 id="本地钩子"><a href="#本地钩子" class="headerlink" title="本地钩子"></a>本地钩子</h2><p>本地钩子只影响它们所在的仓库。当我们读到这一节时，要记住每位开发者都可以替换其本地的钩子，我们不能使用钩子作为一种强制提交策略。然钩子却使得开发人员更容易坚持既定的开发方针。</p>
@@ -902,7 +906,7 @@ pre-commit.sample
 <h3 id="预提交钩子-Pre-Commit"><a href="#预提交钩子-Pre-Commit" class="headerlink" title="预提交钩子 Pre-Commit"></a>预提交钩子 Pre-Commit</h3><p><code>pre-commit</code> 的脚本在每次运行 <code>git commit</code> 命令时，在 Git 要求开发者填写提交信息和生成提交对象之前执行。我们可以用这个钩子在快照将要被提交的时刻对其进行检查。比方说，我们也许想要在此时运行一些自动测试，以防止本次提交破坏现有功能。</p>
 <p><code>pre-commit</code> 脚本没有传入参数，并且以非零状态退出<sup><a href="#note-1">注1</a></sup>会终止整个提交。让我们看一下一个简化的内置 <code>pre-commit</code> 钩子。这个脚本在发现有空白符的错误时会终止整个提交，空白符错误在 <code>git diff-index</code> 命令的 <code>--check</code> 参数里有详细定义（行尾空白符、仅有空白符的行、行首缩进的 tab 后面有空格等格式在默认情况下都会被认为是错误的）。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 检测是否为初始提交</span></span><br><span class="line"><span class="keyword">if</span> git rev-parse --verify HEAD &gt;/dev/null 2&gt;&amp;1</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: About to create a new commit..."</span></span><br><span class="line">    against=HEAD</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: About to create the first commit..."</span></span><br><span class="line">    against=4b825dc642cb6eb9a060e54bf8d69288fbee4904</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 使用 git diff-index 来检测空白符错误</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"pre-commit: Testing for whitespace errors..."</span></span><br><span class="line"><span class="keyword">if</span> ! git diff-index --check --cached <span class="variable">$against</span></span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: Aborting commit due to whitespace errors"</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: No whitespace errors :)"</span></span><br><span class="line">    <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<p>为了使用 <code>git diff-index</code>，我们需要指出需要用来做比较的提交引用。这个引用通常来说是 <code>HEAD</code>，但是在初始提交的时候不存在 <code>HEAD</code> 指针，因此我们的第一个任务就是处理这个边界值。我们使用 <a href="https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="_blank" rel="noopener"><code>git rev-parse --verify</code></a> 命令，该命令可以检查参数是否是一个可用引用。<code>&gt;/dev/null 2&gt;&amp;1</code> 的部分表示不显示所有 <code>git rev-parse</code> 命令的输出。将 HEAD 或是初始提交的空提交对象存放在 <code>against</code> 变量中来给 <code>git diff-index</code> 使用，而 <code>4b825d...</code> 这个哈希值是一个魔术提交 ID，表示一个空提交。</p>
+<p>为了使用 <code>git diff-index</code>，我们需要指出需要用来做比较的提交引用。这个引用通常来说是 <code>HEAD</code>，但是在初始提交的时候不存在 <code>HEAD</code> 指针，因此我们的第一个任务就是处理这个边界值。我们使用 <a href="https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="_blank" rel="external"><code>git rev-parse --verify</code></a> 命令，该命令可以检查参数是否是一个可用引用。<code>&gt;/dev/null 2&gt;&amp;1</code> 的部分表示不显示所有 <code>git rev-parse</code> 命令的输出。将 HEAD 或是初始提交的空提交对象存放在 <code>against</code> 变量中来给 <code>git diff-index</code> 使用，而 <code>4b825d...</code> 这个哈希值是一个魔术提交 ID，表示一个空提交。</p>
 <p><code>git diff-index --cached</code> 命令将当前暂存区与一个提交进行对比，传入 <code>--check</code> 选项表示我们要求在改动包含空白符错误时给出警告。如果存在空白符错误，我们终止提交并返回退出状态 <code>1</code>，否则我们以 <code>0</code> 退出，且提交工作流正常工作。</p>
 <p>这仅仅是 <code>pre-commit</code> 钩子的一个简单例子：使用 Git 命令来在由请求提交引入的更改上运行测试。我们同样可以在 <code>pre-commit</code> 钩子中通过执行其他脚本来做任何想做的事情，例如运行一个第三方测试组件，或者使用 Lint 来检查代码格式。</p>
 <h3 id="准备提交信息钩子-Prepare-Commit-Message"><a href="#准备提交信息钩子-Prepare-Commit-Message" class="headerlink" title="准备提交信息钩子 Prepare Commit Message"></a>准备提交信息钩子 Prepare Commit Message</h3><p><code>prepare-commit-msg</code> 钩子在 <code>pre-commit</code> 钩子之后调用，用于给提交的文本编辑器填充提交信息。这是一个替换压缩提交和合并提交时自动生成提交信息的一个好时机。</p>
@@ -986,8 +990,8 @@ The pre-rebase hook refused to rebase.
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过本文我们学习了如何使用 Git 钩子改变内部行为以及项目中特定事件触发时进行通知。钩子就是放置在 <code>.git/hooks</code> 路径下的普通脚本，这使得他们易于安装和制定。</p>
 <p>我们也研究了一些最普通的本地及服务端钩子，这使得我们可以在整个开发的生命周期中插入操作。我们现在知道了如何在提交创建、推送过程的每一步中执行自定义操作。只需要懂一点脚本知识，我们就可以对 Git 仓库做很多想做的事情。</p>
 <h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><ul>
-<li><b id="note-1">注1：</b>exit 命令一般用于结束一个脚本，能返回一个值给父进程，执行成功的话这个值会是 0，因此非零退出表示脚本执行失败。如果一个脚本以不带参数的 exit 命令结束，脚本的退出状态码将会是执行 exit 命令前的最后一个命令的退出码（用 <code>$?</code> 表示），详见：<a href="http://shouce.jb51.net/shell/exit-status.html" target="_blank" rel="noopener">退出和退出状态</a>。</li>
-<li><b id="note-2">注2：</b>持续集成是一种软件项目管理方法，依据资产库（源码，类库等）的变更自动完成编译、测试、部署和反馈，详见阮老师的博文：<a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="noopener">什么是持续集成系统？</a></li>
+<li><b id="note-1">注1：</b>exit 命令一般用于结束一个脚本，能返回一个值给父进程，执行成功的话这个值会是 0，因此非零退出表示脚本执行失败。如果一个脚本以不带参数的 exit 命令结束，脚本的退出状态码将会是执行 exit 命令前的最后一个命令的退出码（用 <code>$?</code> 表示），详见：<a href="http://shouce.jb51.net/shell/exit-status.html" target="_blank" rel="external">退出和退出状态</a>。</li>
+<li><b id="note-2">注2：</b>持续集成是一种软件项目管理方法，依据资产库（源码，类库等）的变更自动完成编译、测试、部署和反馈，详见阮老师的博文：<a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="external">什么是持续集成系统？</a></li>
 </ul>
 ]]></content>
       
@@ -1029,7 +1033,7 @@ The pre-rebase hook refused to rebase.
 <h4 id="origin-远端"><a href="#origin-远端" class="headerlink" title="origin 远端"></a>origin 远端</h4><p>当你使用 <code>git clone</code> 命令克隆一个仓库时，Git 会自动创建一个叫做 origin 的远程链接指向被克隆的仓库。这对开发者来说十分有益：当我们在本地创建一个中央仓库的副本时，可以便捷的推动本地提交或拉取远端修改。这也是大多数基于 Git 的项目管中央仓库叫“origin”的原因。</p>
 <h4 id="仓库-URLs"><a href="#仓库-URLs" class="headerlink" title="仓库 URLs"></a>仓库 URLs</h4><p>Git 提供了许多方式以作为远端仓库的引用。两个最常用的方式就是通过 HTTP 协议和 SSH 协议。HTTP 是对仓库进行匿名且只有只读权限的访问的一条便捷方式，例如：</p>
 <blockquote>
-<p><a href="http://host/path/to/repo.git" target="_blank" rel="noopener">http://host/path/to/repo.git</a></p>
+<p><a href="http://host/path/to/repo.git" target="_blank" rel="external">http://host/path/to/repo.git</a></p>
 </blockquote>
 <p>但是通常情况下给一个 HTTP 地址推送提交是不太可能的（我们应该也不会允许匿名用户推送提交）。我们应该使用 SSH 协议以获取读写权限：</p>
 <blockquote>
@@ -1097,14 +1101,14 @@ The pre-rebase hook refused to rebase.
 <hr>
 <p><strong>译注</strong></p>
 <ul>
-<li><b id="note-1">注1</b> <strong>非快进合并状态（non-fast-forward merge）</strong>：与快进状态相对立，按 Git Pro 书上的<a href="http://iissnan.com/progit/html/zh/ch3_2.html" target="_blank" rel="noopener">解释</a>：</li>
+<li><b id="note-1">注1</b> <strong>非快进合并状态（non-fast-forward merge）</strong>：与快进状态相对立，按 Git Pro 书上的<a href="http://iissnan.com/progit/html/zh/ch3_2.html" target="_blank" rel="external">解释</a>：</li>
 </ul>
 <blockquote>
 <p>如果顺着一个分支走下去可以到达另一个分支的话，那么 Git 在合并两者时，只会简单地把指针右移，因为这种单线的历史分支不存在任何需要解决的分歧，所以这种合并过程可以称为快进（Fast forward）</p>
 </blockquote>
 <p>因此非快进合并状态即是指当要合并的分支不是在当前分支的上游，提交出现分岔的状态。</p>
 <ul>
-<li><b id="note-2">注2</b> <strong>标签</strong>：再发布版本的时候打上标签标记，是 VCS 的通用方法。详见 Git Pro <a href="http://iissnan.com/progit/html/zh/ch2_6.html" target="_blank" rel="noopener">打标签</a>一章。</li>
+<li><b id="note-2">注2</b> <strong>标签</strong>：再发布版本的时候打上标签标记，是 VCS 的通用方法。详见 Git Pro <a href="http://iissnan.com/progit/html/zh/ch2_6.html" target="_blank" rel="external">打标签</a>一章。</li>
 </ul>
 ]]></content>
       
@@ -1126,7 +1130,7 @@ The pre-rebase hook refused to rebase.
     <entry>
       <title><![CDATA[Promise A+ 规范]]></title>
       <url>http://malcolmyu.github.io/2015/06/12/Promises-A-Plus/</url>
-      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>英文原文：<a href="https://promisesaplus.com/" target="_blank" rel="noopener">Promise/A+</a><br>图灵译文：<a href="http://www.ituring.com.cn/article/66566" target="_blank" rel="noopener">【翻译】Promises/A+规范</a></p>
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>英文原文：<a href="https://promisesaplus.com/" target="_blank" rel="external">Promise/A+</a><br>图灵译文：<a href="http://www.ituring.com.cn/article/66566" target="_blank" rel="external">【翻译】Promises/A+规范</a></p>
 <p><strong>译者序：</strong>一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。</p>
 <a id="more"></a>
 <p><strong>一个开放、健全且通用的 JavaScript Promise 标准。由开发者制定，供开发者参考。</strong></p>
@@ -1141,7 +1145,7 @@ The pre-rebase hook refused to rebase.
 <hr>
 <p>Promise 表示一个异步操作的最终结果，与之进行交互的方式主要是 <code>then</code> 方法，该方法注册了两个回调函数，用于接收 promise 的终值或本 promise 不能执行的原因。</p>
 <p>本规范详细列出了 <code>then</code> 方法的执行过程，所有遵循 Promises/A+ 规范实现的 promise 均可以本标准作为参照基础来实施 <code>then</code> 方法。因而本规范是十分稳定的。尽管 Promise/A+ 组织有时可能会修订本规范，但主要是为了处理一些特殊的边界情况，且这些改动都是微小且向下兼容的。如果我们要进行大规模不兼容的更新，我们一定会在事先进行谨慎地考虑、详尽的探讨和严格的测试。</p>
-<p>从历史上说，本规范实际上是把之前 <a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="noopener">Promise/A 规范</a> 中的建议明确成为了行为标准：我们一方面扩展了原有规范约定俗成的行为，一方面删减了原规范的一些特例情况和有问题的部分。</p>
+<p>从历史上说，本规范实际上是把之前 <a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">Promise/A 规范</a> 中的建议明确成为了行为标准：我们一方面扩展了原有规范约定俗成的行为，一方面删减了原规范的一些特例情况和有问题的部分。</p>
 <p>最后，核心的 Promises/A+ 规范不设计如何创建、解决和拒绝 promise，而是专注于提供一个通用的 <code>then</code> 方法。上述对于 promises 的操作方法将来在其他规范中可能会提及。</p>
 <h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><hr>
 <h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>promise 是一个拥有 <code>then</code> 方法的对象或函数，其行为符合本规范；</p>
@@ -1186,7 +1190,7 @@ The pre-rebase hook refused to rebase.
 <li>在 <code>promise</code> 被拒绝执行前其不可被调用</li>
 <li>其调用次数不可超过一次</li>
 </ul>
-<h4 id="调用时机"><a href="#调用时机" class="headerlink" title="调用时机"></a>调用时机</h4><p><code>onFulfilled</code> 和 <code>onRejected</code> 只有在<a href="http://es5.github.io/#x10.3" target="_blank" rel="noopener">执行环境</a>堆栈仅包含<strong>平台代码</strong>时才可被调用<a href="#note-1">注1</a></p>
+<h4 id="调用时机"><a href="#调用时机" class="headerlink" title="调用时机"></a>调用时机</h4><p><code>onFulfilled</code> 和 <code>onRejected</code> 只有在<a href="http://es5.github.io/#x10.3" target="_blank" rel="external">执行环境</a>堆栈仅包含<strong>平台代码</strong>时才可被调用<a href="#note-1">注1</a></p>
 <h4 id="调用要求"><a href="#调用要求" class="headerlink" title="调用要求"></a>调用要求</h4><p><code>onFulfilled</code> 和 <code>onRejected</code> 必须被作为函数调用（即没有 <code>this</code> 值）<sup><a href="#note-2">注2</a></sup></p>
 <h4 id="多次调用"><a href="#多次调用" class="headerlink" title="多次调用"></a>多次调用</h4><p><code>then</code> 方法可以被同一个 <code>promise</code> 调用多次</p>
 <ul>
@@ -1233,13 +1237,13 @@ The pre-rebase hook refused to rebase.
 <p>如果一个 promise 被一个循环的 <em>thenable</em> 链中的对象解决，而 <code>[[Resolve]](promise, thenable)</code> 的递归性质又使得其被再次调用，根据上述的算法将会陷入无限递归之中。算法虽不强制要求，但也鼓励施者检测这样的递归是否存在，若检测到存在则以一个可识别的 <code>TypeError</code> 为据因来拒绝 <code>promise</code> <sup><a href="#note-6">注6</a></sup>。</p>
 <h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><hr>
 <ul>
-<li><p><b id="note-1">注1</b> 这里的<strong>平台代码</strong>指的是引擎、环境以及 promise 的实施代码。实践中要确保 <code>onFulfilled</code> 和 <code>onRejected</code> 方法异步执行，且应该在 <code>then</code> 方法被调用的那一轮事件循环之后的新执行栈中执行。这个事件队列可以采用“宏任务（macro-task）”机制或者“微任务（micro-task）”机制来实现。由于 promise 的实施代码本身就是平台代码（<strong>译者注：</strong> 即都是 JavaScript），故代码自身在处理在处理程序时可能已经包含一个任务调度队列或<a href="https://en.wikipedia.org/wiki/Trampoline_(computing" target="_blank" rel="noopener">『跳板』</a>)。</p>
+<li><p><b id="note-1">注1</b> 这里的<strong>平台代码</strong>指的是引擎、环境以及 promise 的实施代码。实践中要确保 <code>onFulfilled</code> 和 <code>onRejected</code> 方法异步执行，且应该在 <code>then</code> 方法被调用的那一轮事件循环之后的新执行栈中执行。这个事件队列可以采用“宏任务（macro-task）”机制或者“微任务（micro-task）”机制来实现。由于 promise 的实施代码本身就是平台代码（<strong>译者注：</strong> 即都是 JavaScript），故代码自身在处理在处理程序时可能已经包含一个任务调度队列或<a href="https://en.wikipedia.org/wiki/Trampoline_(computing" target="_blank" rel="external">『跳板』</a>)。</p>
 <p>  <strong>译者注：</strong> 这里提及了 macrotask 和 microtask 两个概念，这表示异步任务的两种分类。在挂起任务时，JS 引擎会将所有任务按照类别分到这两个队列中，首先在 macrotask 的队列（这个队列也被叫做 task queue）中取出第一个任务，执行完毕后取出 microtask 队列中的所有任务顺序执行；之后再取 macrotask 任务，周而复始，直至两个队列的任务都取完。</p>
 <p>  两个类别的具体分类如下：</p>
 <ul>
 <li><strong>macro-task:</strong> script（整体代码）, <code>setTimeout</code>, <code>setInterval</code>, <code>setImmediate</code>, I/O, UI rendering</li>
 <li><p><strong>micro-task:</strong> <code>process.nextTick</code>, <code>Promises</code>（这里指浏览器实现的原生 Promise）, <code>Object.observe</code>, <code>MutationObserver</code></p>
-<p>详见 <a href="http://stackoverflow.com/questions/25915634/difference-between-microtask-and-macrotask-within-an-event-loop-context" target="_blank" rel="noopener">stackoverflow 解答</a> 或 <a href="http://wengeezhang.com/?p=11" target="_blank" rel="noopener">这篇博客</a></p>
+<p>详见 <a href="http://stackoverflow.com/questions/25915634/difference-between-microtask-and-macrotask-within-an-event-loop-context" target="_blank" rel="external">stackoverflow 解答</a> 或 <a href="http://wengeezhang.com/?p=11" target="_blank" rel="external">这篇博客</a></p>
 </li>
 </ul>
 </li>
@@ -1287,7 +1291,7 @@ The pre-rebase hook refused to rebase.
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jsdoc test.js</span><br></pre></td></tr></table></figure>
 <p>文档即可被生成在根目录下的 out 文件夹中。</p>
 <p>上面的过程看上去十分简便，但我们省略了配置这一步，如果我们不想生成在 out 文件夹下怎么办？我们想针对一个项目工程生成文档怎么办？觉得原有文档模板太丑想换个风格怎么办（<em>说句实话个人感觉默认模板是目前见过所有模板中最好看的……</em>）？这就需要在配置这一步中进行繁杂的个性化指定。对于项目的个性化指定可以通过<strong>配置文件</strong>和<strong>命令行参数</strong>两种方式来设置，先说一下命令行参数的配置。</p>
-<p>有关命令行参数的配置可以参考<a href="http://usejsdoc.org/about-commandline.html" target="_blank" rel="noopener">官网文档</a>的详细说明，这里只列出几个重要的参数：</p>
+<p>有关命令行参数的配置可以参考<a href="http://usejsdoc.org/about-commandline.html" target="_blank" rel="external">官网文档</a>的详细说明，这里只列出几个重要的参数：</p>
 <table>
 <thead>
 <tr>
@@ -1332,7 +1336,7 @@ The pre-rebase hook refused to rebase.
 <p>举个例子，比如我们要将 <code>./src</code> 路径下的所有 js 文件生成文档，然后存放在 <code>./docs</code> 文件夹中，操作如下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jsdoc src -r -d docs</span><br></pre></td></tr></table></figure>
 <p>但是这样感觉还是不方便，如何对特定文件进行文档解析呢？如果有一些文件不想进行文档解析如何从中间剔除呢？而且每次都要输入如此复杂的命令行参数也十分不方便。要解决这些问题，就需要用到配置文件 <code>conf.json</code> 了。</p>
-<p>对于配置文件的详细解释可以参见<a href="http://usejsdoc.org/about-configuring-jsdoc.html" target="_blank" rel="noopener">官方文档</a>的说明，这里也是举一个简单的例子：</p>
+<p>对于配置文件的详细解释可以参见<a href="http://usejsdoc.org/about-configuring-jsdoc.html" target="_blank" rel="external">官方文档</a>的说明，这里也是举一个简单的例子：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"tags"</span>: &#123;</span><br><span class="line">        <span class="attr">"allowUnknownTags"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"source"</span>: &#123;</span><br><span class="line">        <span class="attr">"include"</span>: [<span class="string">"./src/lib"</span>, <span class="string">"./src/util"</span>],</span><br><span class="line">        <span class="attr">"exclude"</span>: [<span class="string">"./src/lib/demo"</span>],</span><br><span class="line">        <span class="attr">"includePattern"</span>: <span class="string">".+\\.js$"</span>,</span><br><span class="line">        <span class="attr">"excludePattern"</span>: <span class="string">"(^|\\/|\\\\)_"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"opts"</span>: &#123;</span><br><span class="line">        <span class="attr">"recurse"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>tags.allowUnknownTags</code> 表示允许使用为定义的 tag 标签，不然使用未知标签会报错；</li>
@@ -1344,7 +1348,7 @@ The pre-rebase hook refused to rebase.
 </ul>
 <p>这里的 <code>opts</code> 里面的内容与上表中命令行参数配置的内容一致，即也可以在此处配置各种参数，详情官网文档中有叙述。将上文保存为一个 json 格式的文件，然后使用 <code>-c</code> 参数引入，就可以按照设定好的规则直接批量生成文档了。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jsdoc -c conf.json</span><br></pre></td></tr></table></figure>
-<h3 id="通过-grunt-生成"><a href="#通过-grunt-生成" class="headerlink" title="通过 grunt 生成"></a>通过 grunt 生成</h3><p>在项目中如果使用了 grunt 工具，也可以将 jsdoc 集成到 grunt 中去。这种方式十分的简便，在其 <a href="https://github.com/krampstudio/grunt-jsdoc" target="_blank" rel="noopener">github 地址</a>上也有详尽的介绍，具体流程与其他的 grunt 模块差别不大，使用如下命令进行安装：</p>
+<h3 id="通过-grunt-生成"><a href="#通过-grunt-生成" class="headerlink" title="通过 grunt 生成"></a>通过 grunt 生成</h3><p>在项目中如果使用了 grunt 工具，也可以将 jsdoc 集成到 grunt 中去。这种方式十分的简便，在其 <a href="https://github.com/krampstudio/grunt-jsdoc" target="_blank" rel="external">github 地址</a>上也有详尽的介绍，具体流程与其他的 grunt 模块差别不大，使用如下命令进行安装：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install grunt-jsdoc --save-dev</span><br></pre></td></tr></table></figure>
 <p>然后在 <code>Gruntfile.js</code> 文件中进行配置，就可以在命令行中使用了：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    jsdoc: &#123;</span><br><span class="line">        dist: &#123;</span><br><span class="line">            <span class="comment">// 必填项，需要生成文档的路径数组，也可以将 README.md 文件加入其中</span></span><br><span class="line">            src: [<span class="string">'src/*.js'</span>, <span class="string">'test/*.js'</span>],</span><br><span class="line">            <span class="comment">// 可选项，jsdoc bin 文件路径，一般不写，会自己在 node_modules 中寻找</span></span><br><span class="line">            jsdoc: <span class="string">''</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">                <span class="comment">// 必填项，生成文件的路径</span></span><br><span class="line">                destination: <span class="string">'./docs/'</span>,</span><br><span class="line">                <span class="comment">// 可选项，conf 文件的路径</span></span><br><span class="line">                configure: <span class="string">'conf.json'</span>,</span><br><span class="line">                <span class="comment">// 可选项，模板路径</span></span><br><span class="line">                template: <span class="string">''</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">grunt.task.loadNpmTasks(<span class="string">'grunt-jsdoc'</span>);</span><br><span class="line">grunt.task.registerTask(<span class="string">'doc'</span>, [<span class="string">'jsdoc'</span>]);</span><br></pre></td></tr></table></figure>
@@ -1475,8 +1479,8 @@ The pre-rebase hook refused to rebase.
 </table>
 <p><em>参考链接</em></p>
 <ul>
-<li><a href="https://github.com/jsdoc3/jsdoc" target="_blank" rel="noopener">jsdoc - Github</a>： jsdoc npm module 的 Github 地址</li>
-<li><a href="http://usejsdoc.org/index.html" target="_blank" rel="noopener">jsdoc 官网</a> ：jsdoc 官方文档</li>
+<li><a href="https://github.com/jsdoc3/jsdoc" target="_blank" rel="external">jsdoc - Github</a>： jsdoc npm module 的 Github 地址</li>
+<li><a href="http://usejsdoc.org/index.html" target="_blank" rel="external">jsdoc 官网</a> ：jsdoc 官方文档</li>
 </ul>
 ]]></content>
       
@@ -1498,7 +1502,7 @@ The pre-rebase hook refused to rebase.
     <entry>
       <title><![CDATA[avalon 事件总线与依赖调度系统]]></title>
       <url>http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/</url>
-      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>在工作中经常使用到<a href="http://www.cnblogs.com/rubylouvre/" target="_blank" rel="noopener">司徒</a>的 <a href="https://github.com/RubyLouvre/avalon" target="_blank" rel="noopener">avalon</a> ，由于坑点太多，有时需要经常查阅其源码实现。而 avalon 由于方兴未艾，网上对其进行源码解析的文章并不多，查了半天也就只有这篇 <a href="http://www.cnblogs.com/sskyy/p/3679572.html" target="_blank" rel="noopener">MVVM 大比拼</a>，以及这篇 <a href="http://www.cnblogs.com/aaronjs/archive/2013/06/16/3138631.html" target="_blank" rel="noopener">avalon 源码分析</a>。个人认为这两篇文章写得都并不算好，其一是成文较早，研究的源码还是 1.2.5 版本，而目前的新版本已经到了 1.4+，比之前不知道高到哪里去。其二是大比拼一文作者阅码无数，心中早已无码，写分析只观其大要，似乎在和原作者谈笑风生；而后者的分析仿佛又只是对源码的粗略通读，也没怎么经过实践，有些图样图森破。因此自己决定安下心来写点源码分析。</p>
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>在工作中经常使用到<a href="http://www.cnblogs.com/rubylouvre/" target="_blank" rel="external">司徒</a>的 <a href="https://github.com/RubyLouvre/avalon" target="_blank" rel="external">avalon</a> ，由于坑点太多，有时需要经常查阅其源码实现。而 avalon 由于方兴未艾，网上对其进行源码解析的文章并不多，查了半天也就只有这篇 <a href="http://www.cnblogs.com/sskyy/p/3679572.html" target="_blank" rel="external">MVVM 大比拼</a>，以及这篇 <a href="http://www.cnblogs.com/aaronjs/archive/2013/06/16/3138631.html" target="_blank" rel="external">avalon 源码分析</a>。个人认为这两篇文章写得都并不算好，其一是成文较早，研究的源码还是 1.2.5 版本，而目前的新版本已经到了 1.4+，比之前不知道高到哪里去。其二是大比拼一文作者阅码无数，心中早已无码，写分析只观其大要，似乎在和原作者谈笑风生；而后者的分析仿佛又只是对源码的粗略通读，也没怎么经过实践，有些图样图森破。因此自己决定安下心来写点源码分析。</p>
 <a id="more"></a>
 <p>本文源起自同事的一个疑问，“<em>可否使用事件中的 <code>$fire</code> 来改变一个普通双绑属性的值？</em>”这样问也是有它的理由：因为在视图模型中，可以用 <code>$watch</code> 来监听属性的变化；而在事件总线中，可以用 <code>$fire</code> 来触发 <code>$watch</code> 的回调，那似乎用 <code>$fire</code> 来改变双绑属性的值也变得可以接受。但实际测试中，发现这样操作是不起作用的。如：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> demo = avalon.define(&#123;</span><br><span class="line">    $id: <span class="string">'demo'</span>,</span><br><span class="line">    a: <span class="number">1</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">demo.$fire(<span class="string">'a'</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">// nothing output</span></span><br></pre></td></tr></table></figure>
@@ -1547,10 +1551,10 @@ The pre-rebase hook refused to rebase.
     <entry>
       <title><![CDATA[JavaScript Promise 探微]]></title>
       <url>http://malcolmyu.github.io/2014/08/30/JavaScript-Promise-In-Wicked-Detail/</url>
-      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>原文链接：<a href="http://www.mattgreer.org/articles/promises-in-wicked-detail/" target="_blank" rel="noopener">JavaScript Promises … In Wicked Detail</a></p>
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>原文链接：<a href="http://www.mattgreer.org/articles/promises-in-wicked-detail/" target="_blank" rel="external">JavaScript Promises … In Wicked Detail</a></p>
 <p>我在 JavaScript 中使用 Promise 已经有一段时间了，目前我已经能高效的使用这一开始让我晕头转向的东西。但真要细说起来，我发现还是不能完全理解它的实现原理，这也正是本文写作的目的所在。如果诸位读者也处在一知半解的状态，那请读完这篇文章，相信你也会像我一样对 Promise 有更好的理解。</p>
 <a id="more"></a>
-<p>我们将会循序渐进的建立一个 Promise 的实现，最终这个实现会基本符合 <a href="http://promisesaplus.com/" target="_blank" rel="noopener">Promise/A+ 规范</a>，在此过程中你会逐步的了解到 Promise 是如何实现了异步编程的需求。本文假设你已经有了一定的 Promise 基础，如果你对此一无所知，请移步<a href="https://www.promisejs.org/" target="_blank" rel="noopener">官网</a>先了解学习一下。</p>
+<p>我们将会循序渐进的建立一个 Promise 的实现，最终这个实现会基本符合 <a href="http://promisesaplus.com/" target="_blank" rel="external">Promise/A+ 规范</a>，在此过程中你会逐步的了解到 Promise 是如何实现了异步编程的需求。本文假设你已经有了一定的 Promise 基础，如果你对此一无所知，请移步<a href="https://www.promisejs.org/" target="_blank" rel="external">官网</a>先了解学习一下。</p>
 <h2 id="为什么要写这篇文章？"><a href="#为什么要写这篇文章？" class="headerlink" title="为什么要写这篇文章？"></a>为什么要写这篇文章？</h2><p>有些童鞋会问：为啥我们要对 Promise 了解得这么细呢，会用不就好了么？其实理解了一个东西的实现机理，可以提升你使用它的能力和效率，同时在使用出错的时候能更有效地 debug —— 我之所以写这篇文章就是因为有一次和同事掉进一个关于 Promise 的奇怪的坑里去了。要是当年我就和现在这样了解得这么透彻，我就不会掉坑了~</p>
 <h2 id="最简单的例子"><a href="#最简单的例子" class="headerlink" title="最简单的例子"></a>最简单的例子</h2><p>让我们从最简单的例子开始实现我们的 Promise 实例，我想将这样的写法：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">doSomething(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Got a value:'</span> + value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
@@ -1654,19 +1658,19 @@ The pre-rebase hook refused to rebase.
 <h3 id="救世者-done"><a href="#救世者-done" class="headerlink" title="救世者 done()"></a>救世者 <code>done()</code></h3><p>大多数的 promise 库中都集成了 <code>done()</code> 方法。它与 <code>then()</code> 十分类似，但他避免了上述陷阱。</p>
 <p><code>done()</code> 函数可以和 <code>then()</code> 函数一样被调用，其差异之处在于它不会返回一个 promise 对象，且在 <code>done()</code> 中未经处理的异常不会被 promise 实例所捕获。换句话说，当整个 promise 链被完全解决时才会调用 <code>done()</code>。我们的 <code>getSomeJson()</code> 的例子可以使用 <code>done()</code> 来让之变得更加健壮。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">    getSomeJson().done(<span class="function"><span class="keyword">function</span>(<span class="params">json</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 当抛出异常时不会被吞没</span></span><br><span class="line">      <span class="keyword">var</span> obj = <span class="built_in">JSON</span>.parse(json);</span><br><span class="line">      <span class="built_in">console</span>.log(obj);</span><br><span class="line">    &#125;);</span><br><span class="line"> <span class="string">``</span><span class="string">`   </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span>done()<span class="string">` 函数也和 `</span>then()<span class="string">` 一样有一个错误回调， `</span>done(callback, errback)<span class="string">`，当整个 promise 链被执行完成后，你可以保证任何抛出的异常都在错误回调中被捕获。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">*`</span>done()<span class="string">` 目前为止还没有加入 promise/A+ 规范，所以某些 promise 库可能并不包含此功能。*</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">（**译者注：**实际上这里作者所叙述的 `</span>done()<span class="string">` 和我们熟悉的 jQuery 里面实现的 `</span>done()<span class="string">` 并不相同。jQuery 用 Callback 对象实现的 `</span>done()<span class="string">` 方法，只能传递一个成功回调函数，且其返回的不是一个新的 promise 对象，而是当前的 promise 对象。）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## Promise 解决程序需要异步调用</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">在文章的开始我们使用 `</span>setTimeout<span class="string">` 搞了一个毛招，当我们用“状态”这一概念解决掉这个毛招之后，我们就再未曾再见到过 `</span>setTimeout<span class="string">` 了呢。但实际上 Promise/A+ 规范要求 promise 的解决程序必须是异步的。为了符合这个小需求，我们只需简单的将 `</span>handle()<span class="string">` 方法中的大部分实现包裹在 `</span>setTimeout<span class="string">` 中即可。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">handler</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(state === <span class="string">'pending'</span>) &#123;</span><br><span class="line">        deferred = handler;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// ... 一切如前</span></span><br><span class="line">      &#125;, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>以上就是我们所需要做的事情。事实上真正的 promise 库不必非使用 <code>setTimeout</code>。如果 promise 库是基于 NodeJS 的，那可能会用到 <code>process.nextTick</code>；如果基于前端浏览器可能会用到最新的 <code>setImmediate</code> 或是 <a href="https://github.com/YuzuJS/setImmediate" target="_blank" rel="noopener">setImmediate shim</a> （因为迄今为止只有 IE 支持 <code>setImmediate</code>），或者可能是一个异步的函数库，如 Kris Kowal 的 <a href="https://github.com/kriskowal/asap" target="_blank" rel="noopener">asap</a>（此人还写了一个著名的 promise 库 —— <a href="https://github.com/kriskowal/q" target="_blank" rel="noopener">Q</a>）。</p>
+<p>以上就是我们所需要做的事情。事实上真正的 promise 库不必非使用 <code>setTimeout</code>。如果 promise 库是基于 NodeJS 的，那可能会用到 <code>process.nextTick</code>；如果基于前端浏览器可能会用到最新的 <code>setImmediate</code> 或是 <a href="https://github.com/YuzuJS/setImmediate" target="_blank" rel="external">setImmediate shim</a> （因为迄今为止只有 IE 支持 <code>setImmediate</code>），或者可能是一个异步的函数库，如 Kris Kowal 的 <a href="https://github.com/kriskowal/asap" target="_blank" rel="external">asap</a>（此人还写了一个著名的 promise 库 —— <a href="https://github.com/kriskowal/q" target="_blank" rel="external">Q</a>）。</p>
 <h3 id="为何在规范里要求异步调用？"><a href="#为何在规范里要求异步调用？" class="headerlink" title="为何在规范里要求异步调用？"></a>为何在规范里要求异步调用？</h3><p>这是为了保证一致性和可靠的执行流程，例如下面这个例子：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> promise = doAnOperation();</span><br><span class="line">invokeSomething();</span><br><span class="line">promise.then(wrapItAllUp);</span><br><span class="line">invokeSomethingElse();</span><br></pre></td></tr></table></figure>
 <p>这里的执行流程会是怎样的呢？根据函数命名我们猜测应该是这样<code>invokeSomething()</code> -&gt; <code>invokeSomethingElse()</code> -&gt; <code>wrapItAllUp</code>。但这其实完全取决于你当前实现的 promise 的解决方式是同步的还是异步的。如果 <code>doAnOperation()</code> 是异步的，那其执行顺序就和我们猜测的一样；如果它是同步执行的，实际的执行顺序就会是这样：<code>invokeSomething()</code> -&gt; <code>wrapItAllUp</code> -&gt; <code>invokeSomethingElse()</code>，这可能就会出现问题。</p>
 <p>为了处理这种情况， 即使异步不是必须的，但 <strong>promise 的解决程序也必须是异步的</strong>。这减少了不必要的困扰，也让使用者在使用过程中不必考率代码里的异步实现。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>能读到这里你也是挺给力的……本文涵盖了规范中所要求的 promise 的核心实现，但大多数的 promise 库都提供了更多的功能，如 <code>all()</code> 、<code>spread()</code> 、<code>race()</code> 、<code>denodeify()</code> 等等。如果想了解 promise 的更多功能，我建议诸位看看 Bluebird 函数库的 <a href="https://github.com/petkaantonov/bluebird/blob/master/API.md" target="_blank" rel="noopener">API</a>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>能读到这里你也是挺给力的……本文涵盖了规范中所要求的 promise 的核心实现，但大多数的 promise 库都提供了更多的功能，如 <code>all()</code> 、<code>spread()</code> 、<code>race()</code> 、<code>denodeify()</code> 等等。如果想了解 promise 的更多功能，我建议诸位看看 Bluebird 函数库的 <a href="https://github.com/petkaantonov/bluebird/blob/master/API.md" target="_blank" rel="external">API</a>。</p>
 <p>在我了解了 promise 的运作方式和可能的坑之后，我爱上了 promise =v=。她让我们的代码变得非常整洁和优雅。当然这篇文章仅仅是个开始，对于 promise 而言，能够讨论的东西还有太多太多。</p>
-<p>如果你喜欢这篇文章，你可以在我的 <a href="http://twitter.com/cityfortyone" target="_blank" rel="noopener">twitter</a> 上关注我一下，当我有别的更新的时候你也能及时发现~</p>
+<p>如果你喜欢这篇文章，你可以在我的 <a href="http://twitter.com/cityfortyone" target="_blank" rel="external">twitter</a> 上关注我一下，当我有别的更新的时候你也能及时发现~</p>
 <h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
-<li><a href="https://www.promisejs.org/" target="_blank" rel="noopener">promisejs.org</a> 文本中多次提到的 promises 教学</li>
-<li><a href="https://github.com/kriskowal/q/blob/v1/design/README.js" target="_blank" rel="noopener">Q  的基本设计原理</a> 形式上和本文差不多的一篇文章，但细节上更加深入。作者就是 Q 之父 Kris Kowal。</li>
-<li><a href="https://github.com/domenic/promises-unwrapping/issues/19" target="_blank" rel="noopener">有关 done() 大法好不好的争论</a></li>
-<li><a href="http://solutionoptimist.com/2013/12/27/javascript-promise-chains-2/" target="_blank" rel="noopener">扁平化的链式 Promise</a> 作者是 Thomas Burleson，一篇给力的文章探讨 promise 的进阶用法。如果本文主要讲了什么是 promise，那这篇文章就更多的围绕为什么这样实现来展开。</li>
+<li><a href="https://www.promisejs.org/" target="_blank" rel="external">promisejs.org</a> 文本中多次提到的 promises 教学</li>
+<li><a href="https://github.com/kriskowal/q/blob/v1/design/README.js" target="_blank" rel="external">Q  的基本设计原理</a> 形式上和本文差不多的一篇文章，但细节上更加深入。作者就是 Q 之父 Kris Kowal。</li>
+<li><a href="https://github.com/domenic/promises-unwrapping/issues/19" target="_blank" rel="external">有关 done() 大法好不好的争论</a></li>
+<li><a href="http://solutionoptimist.com/2013/12/27/javascript-promise-chains-2/" target="_blank" rel="external">扁平化的链式 Promise</a> 作者是 Thomas Burleson，一篇给力的文章探讨 promise 的进阶用法。如果本文主要讲了什么是 promise，那这篇文章就更多的围绕为什么这样实现来展开。</li>
 </ul>
 ]]></content>
       
