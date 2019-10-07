@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "theme": "git clone https://github.com/gaoryrt/hexo-theme-pln.git themes/pln",
     "build": "node-sass themes/pln/source/css/main.scss --output-style compressed > themes/pln/source/css/m.min.css && hexo g"
   },
   "hexo": {
@@ -26,6 +27,7 @@
     "hexo-renderer-less": "^0.2.0",
     "hexo-renderer-marked": "^0.2.11",
     "hexo-renderer-stylus": "^0.2.0",
-    "hexo-server": "^0.1.2"
+    "hexo-server": "^0.1.2",
+    "node-sass": "^4.12.0"
   }
 }
