@@ -5,7 +5,15 @@ node_js:
 
 sudo: false
 
-script:
+install:
   - npm install
+
+script:
+  - hexo c
   - hexo g
+
+after_script:
+  - git config user.name malcolmyu
+  - git config user.email minghao_yu@163.com
+  - sed -i "s/GH_TOKEN/${GH_TOKEN}/g" ./_config.yml
   - hexo d
