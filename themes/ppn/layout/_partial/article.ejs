@@ -1,0 +1,51 @@
+<% if(index){ %>
+<div>
+<li class="post-item">
+  <%- partial('post/title') %>
+  <div class="excerpt">
+  <% if (item.excerpt){ %>
+    <%- item.excerpt %>
+  <% } else { %>
+    <%- strip_html(item.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, theme.excerpt_num) %>
+  <% } %>
+  <a href="<%- config.root %><%- item.path %>">
+    <%= __("read_more") %>
+  </a>
+  </div>
+  <div class="index-meta">
+    <%- partial('post/meta', {item: item}) %>
+  </div>
+</li>
+</div>
+<hr>
+<% } else { %>
+
+  <article class="standard <%= item.layout %>">
+    <div class="title">
+      <%- partial('post/title') %>
+    </div>
+    <div class="meta center">
+      <%- partial('post/meta', {item: item}) %>
+    </div>
+    <hr>
+    <% if (theme.show_toc_bool) {  %>
+      <%- toc(page.content, {list_number: false}) %>
+    <% } %>
+    <div class="picture-container">
+      <% if (item.photos && item.photos.length){ %>
+        <%- partial('post/gallery', {item: item}) %>
+      <% } %>
+    </div>
+    <%- item.content %>
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    <%= __("page_read") %>:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    <%= __("site_read") %>:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    <%= __("site_visitor") %>:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+<% } %>
+<%- partial('post/comment') %>
