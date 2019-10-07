@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "theme": "git clone https://github.com/gaoryrt/hexo-theme-pln.git themes/pln",
-    "build": "node-sass themes/pln/source/css/main.scss --output-style compressed > themes/pln/source/css/m.min.css && hexo g"
+    "sass": "node-sass themes/pln/source/css/main.scss --output-style compressed > themes/pln/source/css/m.min.css && hexo g",
+    "build": "hexo g && hexo d"
   },
   "hexo": {
     "version": "3.2.2"
