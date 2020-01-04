@@ -80,7 +80,15 @@ archive_generator:
   daily: false
 
 # disques
-disqus_shortname: malcolmyu
+# disqus_shortname: malcolmyu
+
+# gitalk
+gitalk:
+  clientID: eae2bf62b3d29b61db92
+  clientSecret: 2a40b5b62cf2b58c31db81fc0f36ac6094d4a876
+  repo: malcolmyu.github.io
+  owner: malcolmyu
+  admin: malcolmyu
 
 # Deployment  站点部署到github要配置这里, 非常重要
 ## Docs: http://hexo.io/docs/deployment.html
