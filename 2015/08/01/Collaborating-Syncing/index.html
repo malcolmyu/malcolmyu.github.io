@@ -1,96 +1,181 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 协作同步 · malcolm-blog</title><meta name="description" content="协作同步 - malcolm yu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/sombiesombie" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/malcolmyu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">协作同步</h1><div class="post-info">2015年8月1日</div><div class="post-content"><p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-synchero.svg" alt="同步"></p>
-<p>SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协作的方式是开发者的工作副本与中央仓库互相发送变更记录。这与 Git 的协作模式有所不同，Git 中每个开发者都拥有仓库的副本，以及完整的本地历史和分支结构。用户通常只需要提供一系列的提交而不是单个的变更记录。Git 允许我们在仓库之间共享整个分支，而不是单单的从工作副本提交一个变更记录到中央仓库去。</p>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>协作同步</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="协作同步"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        协作同步
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2015-08-01T00:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2015-08-01
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/Git-魔导之路/">Git 魔导之路</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Git/">Git</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#git-remote"><span class="toc-text">git remote</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详述"><span class="toc-text">详述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#origin-远端"><span class="toc-text">origin 远端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#仓库-URLs"><span class="toc-text">仓库 URLs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-fetch"><span class="toc-text">git fetch</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-1"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详述-1"><span class="toc-text">详述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#远端分支"><span class="toc-text">远端分支</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-1"><span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-pull"><span class="toc-text">git pull</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-2"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详述-2"><span class="toc-text">详述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#拉取和衍合"><span class="toc-text">拉取和衍合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-2"><span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-push"><span class="toc-text">git push</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-3"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详述-3"><span class="toc-text">详述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#强制推送"><span class="toc-text">强制推送</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#只推送到裸仓库"><span class="toc-text">只推送到裸仓库</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-3"><span class="toc-text">示例</span></a></li></ol></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协作的方式是开发者的工作副本与中央仓库互相发送变更记录。这与 Git 的协作模式有所不同，Git 中每个开发者都拥有仓库的副本，以及完整的本地历史和分支结构。用户通常只需要提供一系列的提交而不是单个的变更记录。Git 允许我们在仓库之间共享整个分支，而不是单单的从工作副本提交一个变更记录到中央仓库去。</p>
 <p>下面介绍的命令可以帮助我们管理与其他仓库的连接：我们可以使用“推送”分支的方式将本地历史发布到其他仓库，也可以使用“拉取”分支的方式将别人贡献的代码获取到本地。</p>
 <a id="more"></a>
-<h1 id="git_remote">git remote</h1><p><code>git remote</code> 命令让我们可以创建、查看和删除与其他仓库的链接。远端链接不是直接连到别的仓库，它更像是一个书签一样的快捷方式：它并没有提供与其他仓库的实时连接，而是提供了一个方便好记的别名以指代那些不那么方便的 URL。</p>
+<h2 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a>git remote</h2><p><code>git remote</code> 命令让我们可以创建、查看和删除与其他仓库的链接。远端链接不是直接连到别的仓库，它更像是一个书签一样的快捷方式：它并没有提供与其他仓库的实时连接，而是提供了一个方便好记的别名以指代那些不那么方便的 URL。</p>
 <p>比如下图就展示了从我们本地仓库链接到中央仓库和其他开发者仓库的两个链接。我们可以不用 URLs 全称来表示，而只用给其他的 Git 命令传递诸如 origin 和 john 这样的缩写就行。</p>
-<p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync01.svg" alt="git remote 示例"></p>
-<h2 id="使用">使用</h2><pre><code><span class="title">git</span> remote
-</code></pre><p>展示你与其他仓库之间的全部远端链接（仅有别名）。</p>
-<pre><code><span class="title">git</span> remote -v
-</code></pre><p>与上条命令相同，不过带上了每个链接的 URL。</p>
-<pre><code>git remote add <span class="tag">&lt;<span class="title">name</span>&gt;</span> <span class="tag">&lt;<span class="title">url</span>&gt;</span>
-</code></pre><p>创建一个连接到新远端仓库的链接。添加链接之后，我们就可以在其他的 Git 命令中方便地使用 <code>&lt;name&gt;</code> 作为指代 url 的简写。</p>
-<pre><code>git remote rm &lt;<span class="property">name</span>&gt;
-</code></pre><p>删除名为 <code>&lt;name&gt;</code> 的远端链接。</p>
-<pre><code>git remote <span class="operator"><span class="keyword">rename</span> &lt;<span class="keyword">old</span>-<span class="keyword">name</span>&gt; &lt;<span class="keyword">new</span>-<span class="keyword">name</span>&gt;</span>
-</code></pre><p>将一个名为 <code>&lt;old-name&gt;</code> 的链接重命名为 <code>&lt;new-name&gt;</code></p>
-<h2 id="详述">详述</h2><p>Git 的设计初衷是给每一位开发者一个完整而独立的开发环境，这就意味着    信息不能自动的在库间传递。相反，开发者需要手动的将上游提交拉取到本地，或者手动的将本地提交推送会中央仓库。<code>git remote</code> 命令仅仅就是一个给那些带有“共享”性质的 Git 命令（<strong>译者注：</strong>如本文后面讲解的 <code>push</code> <code>pull</code> 命令等）传递 URL 的一个便捷方式。</p>
-<h3 id="origin_远端">origin 远端</h3><p>当你使用 <code>git clone</code> 命令克隆一个仓库时，Git 会自动创建一个叫做 origin 的远程链接指向被克隆的仓库。这对开发者来说十分有益：当我们在本地创建一个中央仓库的副本时，可以便捷的推动本地提交或拉取远端修改。这也是大多数基于 Git 的项目管中央仓库叫“origin”的原因。</p>
-<h3 id="仓库_URLs">仓库 URLs</h3><p>Git 提供了许多方式以作为远端仓库的引用。两个最常用的方式就是通过 HTTP 协议和 SSH 协议。HTTP 是对仓库进行匿名且只有只读权限的访问的一条便捷方式，例如：</p>
-<pre><code><span class="symbol">http:</span>/<span class="regexp">/host/path</span><span class="regexp">/to/repo</span>.git
-</code></pre><p>但是通常情况下给一个 HTTP 地址推送提交是不太可能的（我们应该也不会允许匿名用户推送提交）。我们应该使用 SSH 协议以获取读写权限：</p>
-<pre><code>ssh://user<span class="constant">@host</span>/path/<span class="keyword">to</span>/repo.git
-</code></pre><p>我们在主机上需要有一个可用的 SSH 账号，除此之外，Git 也支持带有权限校验的访问（SSH 自带的）。</p>
-<h3 id="示例">示例</h3><p>除了 origin 以外，连接同事的仓库也是十分方便的。例如你的好基友 John 维护着一个地址是 <code>dev.example.com/john.git</code> 公用仓库，你就可以这样添加一个链接：</p>
-<pre><code>git remote add john <span class="string">http:</span><span class="comment">//dev.example.com/john.git</span>
-</code></pre><p>通过这种到个人开发者仓库的连接方式，使中央仓库之外的协作成为可能。这对于小团队开发大项目来说十分有用。</p>
-<h1 id="git_fetch">git fetch</h1><p><code>git fetch</code> 命令从远端仓库将提交导入到本地。导入的提交已然存储在远端分支而非我们工作的本地分支。这让我们在将远端提交整合到本地之前可以有机会审核一下代码。</p>
-<h2 id="使用-1">使用</h2><pre><code>git fetch <span class="tag">&lt;<span class="title">remote</span>&gt;</span>
-</code></pre><p>拉取该仓库的全部分支，这一操作也会把所有必要的提交和文件都下载下来。</p>
-<pre><code>git fetch <span class="tag">&lt;<span class="title">remote</span>&gt;</span> <span class="tag">&lt;<span class="title">branch</span>&gt;</span>
-</code></pre><p>和上一命令类似，但仅拉取特定的分支。</p>
-<h2 id="详述-1">详述</h2><p>当我们想查看其他人的工作时，可以采用 fetch 操作。既然 fetch 的参数代表着一个远端分支，那这一操作就对本地开发工作完全没有影响。fetch 为我们提供了一种不整合、先审核的安全的审核提交的方式。这有点像 svn update，它让我们看到中央仓库的历史情况，却不强制我们实际将更改并入本地仓库。</p>
-<h3 id="远端分支">远端分支</h3><p>远端分支和本地分支很像，只不过远端包含了来自其他人仓库的提交。我们可以像查看本地分支一样查看远端分支，但是这会使我们的工程进入“分离头指针”的状态（正如检出到一个旧有提交的状态一样），我们可以将其当做一个只读的分支。想要查看远端分支，我们只需要给 <code>git branch</code> 命令加上一个 <code>-r</code> 参数。远端的分支会以远端的别名作为前缀，因此我们不会把它们和本地分支弄混。下面这个例子就展示了我们在获取 origin 的远端时可能看到的分支：</p>
-<pre><code>git branch -r
-<span class="preprocessor"># origin/master</span>
-<span class="preprocessor"># origin/develop</span>
-<span class="preprocessor"># origin/some-feature</span>
-</code></pre><p>然后我们可以通过 <code>git checkout</code> 和 <code>git log</code> 的命令来检视这些分支。如果我们觉得一个远端分支的更改靠谱，就可以使用 <code>git merge</code> 命令将它整合到一个本地分支。与 SVN 不同的是，同步远端分支到本地的操作是 fetch 和 merge 两个过程。但 Git 却可以方便的使用 <code>git pull</code> 命令来完成这两个过程。</p>
-<h2 id="示例-1">示例</h2><p>这一示例展示了同步中央仓库的 <code>master</code> 分支到本地仓库这一典型工作流程。</p>
-<pre><code><span class="title">git</span> fetch origin 
-</code></pre><p>这一步会展示已下载的分支们：</p>
-<pre><code>a1e8fb5..<span class="number">45</span>e66a4 <span class="keyword">master</span> <span class="title">-&gt; origin</span>/<span class="keyword">master</span>
-<span class="title">a1e8fb5</span>..<span class="number">9</span>e8ab1c develop -&gt; origin/develop
-* [new branch] some-feature -&gt; origin/some-feature
-</code></pre><p>从新的远端分支获取的提交们在下表中以方块显示，而之前在本地的提交以圆圈显示。如图所示， <code>git fetch</code> 使我们访问到另一个仓库的全部分支结构。</p>
-<p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync02.svg" alt="git fetch 获取远端分支结构">    </p>
+<p><img src="./git-coll-sync01.svg" alt="git remote 示例"></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git remote</div></pre></td></tr></table></figure>
+<p>展示你与其他仓库之间的全部远端链接（仅有别名）。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git remote -v</div></pre></td></tr></table></figure>
+<p>与上条命令相同，不过带上了每个链接的 URL。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git remote add &lt;name&gt; &lt;url&gt;</div></pre></td></tr></table></figure>
+<p>创建一个连接到新远端仓库的链接。添加链接之后，我们就可以在其他的 Git 命令中方便地使用 <code>&lt;name&gt;</code> 作为指代 url 的简写。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git remote rm &lt;name&gt;</div></pre></td></tr></table></figure>
+<p>删除名为 <code>&lt;name&gt;</code> 的远端链接。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git remote rename &lt;old-name&gt; &lt;new-name&gt;</div></pre></td></tr></table></figure>
+<p>将一个名为 <code>&lt;old-name&gt;</code> 的链接重命名为 <code>&lt;new-name&gt;</code></p>
+<h3 id="详述"><a href="#详述" class="headerlink" title="详述"></a>详述</h3><p>Git 的设计初衷是给每一位开发者一个完整而独立的开发环境，这就意味着    信息不能自动的在库间传递。相反，开发者需要手动的将上游提交拉取到本地，或者手动的将本地提交推送会中央仓库。<code>git remote</code> 命令仅仅就是一个给那些带有“共享”性质的 Git 命令（<strong>译者注：</strong>如本文后面讲解的 <code>push</code> <code>pull</code> 命令等）传递 URL 的一个便捷方式。</p>
+<h4 id="origin-远端"><a href="#origin-远端" class="headerlink" title="origin 远端"></a>origin 远端</h4><p>当你使用 <code>git clone</code> 命令克隆一个仓库时，Git 会自动创建一个叫做 origin 的远程链接指向被克隆的仓库。这对开发者来说十分有益：当我们在本地创建一个中央仓库的副本时，可以便捷的推动本地提交或拉取远端修改。这也是大多数基于 Git 的项目管中央仓库叫“origin”的原因。</p>
+<h4 id="仓库-URLs"><a href="#仓库-URLs" class="headerlink" title="仓库 URLs"></a>仓库 URLs</h4><p>Git 提供了许多方式以作为远端仓库的引用。两个最常用的方式就是通过 HTTP 协议和 SSH 协议。HTTP 是对仓库进行匿名且只有只读权限的访问的一条便捷方式，例如：</p>
+<blockquote>
+<p><a href="http://host/path/to/repo.git" target="_blank" rel="external">http://host/path/to/repo.git</a></p>
+</blockquote>
+<p>但是通常情况下给一个 HTTP 地址推送提交是不太可能的（我们应该也不会允许匿名用户推送提交）。我们应该使用 SSH 协议以获取读写权限：</p>
+<blockquote>
+<p>ssh://user@host/path/to/repo.git</p>
+</blockquote>
+<p>我们在主机上需要有一个可用的 SSH 账号，除此之外，Git 也支持带有权限校验的访问（SSH 自带的）。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>除了 origin 以外，连接同事的仓库也是十分方便的。例如你的好基友 John 维护着一个地址是 <code>dev.example.com/john.git</code> 公用仓库，你就可以这样添加一个链接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git remote add john http://dev.example.com/john.git</div></pre></td></tr></table></figure>
+<p>通过这种到个人开发者仓库的连接方式，使中央仓库之外的协作成为可能。这对于小团队开发大项目来说十分有用。</p>
+<h2 id="git-fetch"><a href="#git-fetch" class="headerlink" title="git fetch"></a>git fetch</h2><p><code>git fetch</code> 命令从远端仓库将提交导入到本地。导入的提交已然存储在远端分支而非我们工作的本地分支。这让我们在将远端提交整合到本地之前可以有机会审核一下代码。</p>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git fetch &lt;remote&gt;</div></pre></td></tr></table></figure>
+<p>拉取该仓库的全部分支，这一操作也会把所有必要的提交和文件都下载下来。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git fetch &lt;remote&gt; &lt;branch&gt;</div></pre></td></tr></table></figure>
+<p>和上一命令类似，但仅拉取特定的分支。</p>
+<h3 id="详述-1"><a href="#详述-1" class="headerlink" title="详述"></a>详述</h3><p>当我们想查看其他人的工作时，可以采用 fetch 操作。既然 fetch 的参数代表着一个远端分支，那这一操作就对本地开发工作完全没有影响。fetch 为我们提供了一种不整合、先审核的安全的审核提交的方式。这有点像 svn update，它让我们看到中央仓库的历史情况，却不强制我们实际将更改并入本地仓库。</p>
+<h4 id="远端分支"><a href="#远端分支" class="headerlink" title="远端分支"></a>远端分支</h4><p>远端分支和本地分支很像，只不过远端包含了来自其他人仓库的提交。我们可以像查看本地分支一样查看远端分支，但是这会使我们的工程进入“分离头指针”的状态（正如检出到一个旧有提交的状态一样），我们可以将其当做一个只读的分支。想要查看远端分支，我们只需要给 <code>git branch</code> 命令加上一个 <code>-r</code> 参数。远端的分支会以远端的别名作为前缀，因此我们不会把它们和本地分支弄混。下面这个例子就展示了我们在获取 origin 的远端时可能看到的分支：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git branch -r</div><div class="line"><span class="comment">## origin/master</span></div><div class="line"><span class="comment">## origin/develop</span></div><div class="line"><span class="comment">## origin/some-feature</span></div></pre></td></tr></table></figure>
+<p>然后我们可以通过 <code>git checkout</code> 和 <code>git log</code> 的命令来检视这些分支。如果我们觉得一个远端分支的更改靠谱，就可以使用 <code>git merge</code> 命令将它整合到一个本地分支。与 SVN 不同的是，同步远端分支到本地的操作是 fetch 和 merge 两个过程。但 Git 却可以方便的使用 <code>git pull</code> 命令来完成这两个过程。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>这一示例展示了同步中央仓库的 <code>master</code> 分支到本地仓库这一典型工作流程。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git fetch origin</div></pre></td></tr></table></figure>
+<p>这一步会展示已下载的分支们：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">a1e8fb5..45e66a4 master -&gt; origin/master</div><div class="line">a1e8fb5..9e8ab1c develop -&gt; origin/develop</div><div class="line">* [new branch] some-feature -&gt; origin/some-feature</div></pre></td></tr></table></figure>
+<p>从新的远端分支获取的提交们在下表中以方块显示，而之前在本地的提交以圆圈显示。如图所示， <code>git fetch</code> 使我们访问到另一个仓库的全部分支结构。</p>
+<p><img src="./git-coll-sync02.svg" alt="git fetch 获取远端分支结构">    </p>
 <p>想查看上游的 master 分支添加了哪些提交，我们可以使用 <code>git log</code> 命令，并添加 <code>origin/master</code> 的过滤器。</p>
-<pre><code>git <span class="command">log</span> <span class="comment">--oneline master..origin/master</span>
-</code></pre><p>使用如下的命令可以将我们认可的分支合并到我们本地的 <code>master</code> 分支上：</p>
-<pre><code>git checkout <span class="keyword">master</span>
-<span class="title">git</span> log origin/<span class="keyword">master</span>    <span class="title"></span>
-</code></pre><p>之后我们便可以使用 <code>git merge</code> 命令合并 <code>origin/master</code>：</p>
-<pre><code>git <span class="operator"><span class="keyword">merge</span> origin/<span class="keyword">master</span></span>
-</code></pre><p>现在 origin/master 和本地的 master 分支都指向了同一提交，我们已经完成了与上游开发内容的同步。</p>
-<h1 id="git_pull">git pull</h1><p>将上游更改合并到本地仓库在基于 Git 的协作工作流中是一个常见的操作。我们已经知道如何用 <code>git fetch</code> 和 <code>git merge</code> 来完成这一操作，但是 <code>git pull</code> 将这两部操作整合为一个命令。    </p>
-<h2 id="使用-2">使用</h2><pre><code>git pull <span class="tag">&lt;<span class="title">remote</span>&gt;</span>
-</code></pre><p>这一命令表示获取制定的当前分支的远端副本并将其立即合并到本地副本中。这一命令与先 <code>git fetch &lt;remote&gt;</code> 然后 <code>git merge origin/&lt;current-branch&gt;</code> 效用相同。</p>
-<pre><code>git pull <span class="comment">--rebase &lt;remote&gt;</span>
-</code></pre><p>和上一命令相同，不过不是使用 <code>git merge</code> 来整合远端分支，而是使用 <code>git rebase</code>。    </p>
-<h2 id="详述-2">详述</h2><p>我们可以把 <code>git pull</code> 理解成 <code>svn update</code> 的 Git 版本。这是一个将上游更改同步到本地仓库的快捷方式。下面的图解释了 pull 过程的每一步骤。</p>
-<p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync03.svg" alt="git pull 过程"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git <span class="built_in">log</span> --oneline master..origin/master</div></pre></td></tr></table></figure>
+<p>使用如下的命令可以将我们认可的分支合并到我们本地的 <code>master</code> 分支上：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git checkout master</div><div class="line">git <span class="built_in">log</span> origin/master</div></pre></td></tr></table></figure>
+<p>之后我们便可以使用 <code>git merge</code> 命令合并 <code>origin/master</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git merge origin/master</div></pre></td></tr></table></figure>
+<p>现在 origin/master 和本地的 master 分支都指向了同一提交，我们已经完成了与上游开发内容的同步。</p>
+<h2 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h2><p>将上游更改合并到本地仓库在基于 Git 的协作工作流中是一个常见的操作。我们已经知道如何用 <code>git fetch</code> 和 <code>git merge</code> 来完成这一操作，但是 <code>git pull</code> 将这两部操作整合为一个命令。    </p>
+<h3 id="使用-2"><a href="#使用-2" class="headerlink" title="使用"></a>使用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git pull &lt;remote&gt;</div></pre></td></tr></table></figure>
+<p>这一命令表示获取制定的当前分支的远端副本并将其立即合并到本地副本中。这一命令与先 <code>git fetch &lt;remote&gt;</code> 然后 <code>git merge origin/&lt;current-branch&gt;</code> 效用相同。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git pull --rebase &lt;remote&gt;</div></pre></td></tr></table></figure>
+<p>和上一命令相同，不过不是使用 <code>git merge</code> 来整合远端分支，而是使用 <code>git rebase</code>。    </p>
+<h3 id="详述-2"><a href="#详述-2" class="headerlink" title="详述"></a>详述</h3><p>我们可以把 <code>git pull</code> 理解成 <code>svn update</code> 的 Git 版本。这是一个将上游更改同步到本地仓库的快捷方式。下面的图解释了 pull 过程的每一步骤。</p>
+<p><img src="./git-coll-sync03.svg" alt="git pull 过程"></p>
 <p>本来我们以为我们本地的仓库处于已同步状态，但是呢通过 <code>git fetch</code> 我们发现 origin 上的 master 在我们上次检查之后又有新的提交。于是 <code>git merge</code> 命令直接将远端 master 上的新内容整合到了本地。</p>
-<h3 id="拉取和衍合">拉取和衍合</h3><p><code>--rebase</code> 参数可以用组织不必要提交的方式来保证线性提交历史。相比较合并，许多开发者更喜欢衍合一些，因为衍合的意思就像：“我想要将我的更改放在其他人的更改之上”。由于这个原因，在 <code>git pull</code> 时使用 <code>--rebase</code> 参数比不带衍合参数更像 <code>svn update</code> 一些。</p>
+<h4 id="拉取和衍合"><a href="#拉取和衍合" class="headerlink" title="拉取和衍合"></a>拉取和衍合</h4><p><code>--rebase</code> 参数可以用组织不必要提交的方式来保证线性提交历史。相比较合并，许多开发者更喜欢衍合一些，因为衍合的意思就像：“我想要将我的更改放在其他人的更改之上”。由于这个原因，在 <code>git pull</code> 时使用 <code>--rebase</code> 参数比不带衍合参数更像 <code>svn update</code> 一些。</p>
 <p>实际上，使用 <code>--rebase</code> 参数拉取实在是太常用了，因此都有一个专用的配置项来配置它：</p>
-<pre><code><span class="label">git</span> config --<span class="preprocessor">global</span> <span class="keyword">branch.autosetuprebase </span>always
-</code></pre><p>运行了上面的命令之后，所有的 <code>git pull</code> 命令就会自动通过 <code>git rebase</code> 而非 <code>git merge</code> 来进行分支整合。</p>
-<h2 id="示例-2">示例</h2><p>下例展示了如何从中央仓库的 master 分支上同步代码：</p>
-<pre><code>git checkout <span class="keyword">master</span>
-<span class="title">git</span> pull --rebase origin
-</code></pre><p>这就便捷的将我们本地的更改放在了其他人提交的代码的顶部。</p>
-<h1 id="git_push">git push</h1><p>推送就是我们将本地仓库的提交传送到远端仓库的方法。它是 <code>git fetch</code> 的反面：获取将提交引入本地分支，推送将提交导出到远端分支。推送本身可能会导致重写提交，因此我们在使用时还是要多加注意。这些内容下面会进行详细的讨论。</p>
-<h2 id="使用-3">使用</h2><pre><code>git push <span class="tag">&lt;<span class="title">remote</span>&gt;</span> <span class="tag">&lt;<span class="title">branch</span>&gt;</span>
-</code></pre><p>该命令表示将特定的分支 <code>&lt;branch&gt;</code> 中的所有必要的提交和内部对象推送到 <code>&lt;remote&gt;</code> 上。这一操作给目标仓库创造了一个本地分支。为了防止我们重写提交，当目标仓库处在<strong>非快进合并状态</strong><sup><a href="#note-1">注1</a></sup>时，Git 是不允许我们提交的。</p>
-<pre><code>git push &lt;remote&gt; <span class="comment">--force</span>
-</code></pre><p>和上面的命令相似，只不过即使没有处在快进合并状态时也可以强制提交。<strong>不要</strong>使用 <code>--force</code> 参数，除非你确切的知道自己在干啥。</p>
-<pre><code><span class="keyword">git</span> push &lt;remote&gt; --<span class="literal">all</span>
-</code></pre><p>将所有本地分支提交到指定远端上。</p>
-<pre><code>git push &lt;remote&gt; <span class="comment">--tags</span>
-</code></pre><p>在使用 <code>--all</code> 参数时也不会自动把<strong>标签</strong><sup><a href="#note-2">注2</a></sup>提交上去的。 <code>--tags</code> 参数会将我们本地所有的标签提交到远端仓库中。</p>
-<h2 id="详述-3">详述</h2><p><code>git push</code> 命令最常见的使用场景就是将本地的更改推送到中央仓库中。当我们已经积攒了一些本地提交并准备将其与团队中的其他同事分享这些提交时，我们可以先使用交互式的衍合修整我们的提交，然后将它们推送到中央仓库。</p>
-<p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-sync04.svg" alt="推送提交图解"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git config --global branch.autosetuprebase always</div></pre></td></tr></table></figure>
+<p>运行了上面的命令之后，所有的 <code>git pull</code> 命令就会自动通过 <code>git rebase</code> 而非 <code>git merge</code> 来进行分支整合。</p>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>下例展示了如何从中央仓库的 master 分支上同步代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git checkout master</div><div class="line">git pull --rebase origin</div></pre></td></tr></table></figure>
+<p>这就便捷的将我们本地的更改放在了其他人提交的代码的顶部。</p>
+<h2 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h2><p>推送就是我们将本地仓库的提交传送到远端仓库的方法。它是 <code>git fetch</code> 的反面：获取将提交引入本地分支，推送将提交导出到远端分支。推送本身可能会导致重写提交，因此我们在使用时还是要多加注意。这些内容下面会进行详细的讨论。</p>
+<h3 id="使用-3"><a href="#使用-3" class="headerlink" title="使用"></a>使用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git push &lt;remote&gt; &lt;branch&gt;</div></pre></td></tr></table></figure>
+<p>该命令表示将特定的分支 <code>&lt;branch&gt;</code> 中的所有必要的提交和内部对象推送到 <code>&lt;remote&gt;</code> 上。这一操作给目标仓库创造了一个本地分支。为了防止我们重写提交，当目标仓库处在<strong>非快进合并状态</strong><sup><a href="#note-1">注1</a></sup>时，Git 是不允许我们提交的。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git push &lt;remote&gt; --force</div></pre></td></tr></table></figure>
+<p>和上面的命令相似，只不过即使没有处在快进合并状态时也可以强制提交。<strong>不要</strong>使用 <code>--force</code> 参数，除非你确切的知道自己在干啥。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git push &lt;remote&gt; --all</div></pre></td></tr></table></figure>
+<p>将所有本地分支提交到指定远端上。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git push &lt;remote&gt; --tags</div></pre></td></tr></table></figure>
+<p>在使用 <code>--all</code> 参数时也不会自动把<strong>标签</strong><sup><a href="#note-2">注2</a></sup>提交上去的。 <code>--tags</code> 参数会将我们本地所有的标签提交到远端仓库中。</p>
+<h3 id="详述-3"><a href="#详述-3" class="headerlink" title="详述"></a>详述</h3><p><code>git push</code> 命令最常见的使用场景就是将本地的更改推送到中央仓库中。当我们已经积攒了一些本地提交并准备将其与团队中的其他同事分享这些提交时，我们可以先使用交互式的衍合修整我们的提交，然后将它们推送到中央仓库。</p>
+<p><img src="./git-coll-sync04.svg" alt="推送提交图解"></p>
 <p>上图展示了当我们运行 <code>git push origin master</code> 时本地 <code>master</code> 分支和中央仓库的 <code>master</code> 分支之间发生了什么。注意 <code>git push</code> 命令在本质上与在远端仓库运行 <code>git merge master</code> 所产生的效果一致。</p>
-<h3 id="强制推送">强制推送</h3><p>当中央仓库处在非快进合并状态时，Git 会阻止提交以防止我们覆盖中央仓库的历史记录。因此当远端历史与本地历史分离时，我们需要先拉取远端分支将其合并到本地上，然后再尝试推送。这与 SVN 在我们使用 <code>svn update</code> 提交变更集合之前先让我们与中央仓库同步的做法是一致的。</p>
+<h4 id="强制推送"><a href="#强制推送" class="headerlink" title="强制推送"></a>强制推送</h4><p>当中央仓库处在非快进合并状态时，Git 会阻止提交以防止我们覆盖中央仓库的历史记录。因此当远端历史与本地历史分离时，我们需要先拉取远端分支将其合并到本地上，然后再尝试推送。这与 SVN 在我们使用 <code>svn update</code> 提交变更集合之前先让我们与中央仓库同步的做法是一致的。</p>
 <p><code>--force</code> 参数改变了此行为而使远端仓库的分支匹配我们本地的分支，并会删除我们上次提交之后尚有分支的任何更改。我们唯一应该使用强制推送的场景是当我们意识到我们之前推送的提交是有问题的，并使用 <code>git commit --amend</code> 或交互式衍合来更改了这一提交。然而我们在进行强制推送之前，也必须确认这期间没有同事拉取了我们之前的提交。</p>
-<h3 id="只推送到裸仓库">只推送到裸仓库</h3><p>再就是我们应该仅往使用 <code>--bare</code> 参数创建的裸仓库进行推送。由于推送会弄乱远端分支结构，因此千万不要推送到其他开发者的仓库去。但是由于裸仓库没有工作目录，因此并不会扰乱其他人的开发。</p>
-<h2 id="示例-3">示例</h2><p>下例展示了一种将本地开发推送到中央仓库的一种标准方法。首先，要获取中央仓库的副本并将更改衍合到顶部，以确保我们本地 <code>master</code> 分支是<strong>最新的（up-to-date）</strong>。使用交互式衍也是在推送提交前进行清理的一个好选择。之后，使用 <code>git push</code> 命令将所有本地 <code>master</code> 分支上的提交推送到中央仓库。</p>
-<pre><code>git checkout <span class="keyword">master</span>
-<span class="title">git</span> fetch origin <span class="keyword">master</span>
-<span class="title">git</span> rebase -i origin/<span class="keyword">master</span>
-<span class="title"># 进行压缩提交，修改提交信息等工作
-git</span> push origin <span class="literal">master</span>
-</code></pre><p>由于我们已经确保本地 <code>master</code> 分支是最新的，因此推送会导致一个快进合并，使用 <code>git push</code> 命令也不必抱怨哪些之前提到的非快进合并状态的问题。</p>
+<h4 id="只推送到裸仓库"><a href="#只推送到裸仓库" class="headerlink" title="只推送到裸仓库"></a>只推送到裸仓库</h4><p>再就是我们应该仅往使用 <code>--bare</code> 参数创建的裸仓库进行推送。由于推送会弄乱远端分支结构，因此千万不要推送到其他开发者的仓库去。但是由于裸仓库没有工作目录，因此并不会扰乱其他人的开发。</p>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><p>下例展示了一种将本地开发推送到中央仓库的一种标准方法。首先，要获取中央仓库的副本并将更改衍合到顶部，以确保我们本地 <code>master</code> 分支是<strong>最新的（up-to-date）</strong>。使用交互式衍也是在推送提交前进行清理的一个好选择。之后，使用 <code>git push</code> 命令将所有本地 <code>master</code> 分支上的提交推送到中央仓库。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git checkout master</div><div class="line">git fetch origin master</div><div class="line">git rebase -i origin/master</div><div class="line"><span class="comment">## 进行压缩提交，修改提交信息等工作</span></div><div class="line">git push origin master</div></pre></td></tr></table></figure>
+<p>由于我们已经确保本地 <code>master</code> 分支是最新的，因此推送会导致一个快进合并，使用 <code>git push</code> 命令也不必抱怨哪些之前提到的非快进合并状态的问题。</p>
 <hr>
 <p><strong>译注</strong></p>
 <ul>
@@ -103,4 +188,85 @@ git</span> push origin <span class="literal">master</span>
 <ul>
 <li><b id="note-2">注2</b> <strong>标签</strong>：再发布版本的时候打上标签标记，是 VCS 的通用方法。详见 Git Pro <a href="http://iissnan.com/progit/html/zh/ch2_6.html" target="_blank" rel="external">打标签</a>一章。</li>
 </ul>
-</div></article></div></section><footer><div class="paginator"><a href="/2015/10/05/Using-Branches/" class="prev">上一篇</a><a href="/2015/06/12/Promises-A-Plus/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2016 <a href="http://malcolmyu.github.io">malcolm yu</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
+        <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
+
+        gitalk.render('gitalk-container')
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

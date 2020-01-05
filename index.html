@@ -1,8 +1,837 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> malcolm-blog</title><meta name="description" content="前端技术分享 读书笔记"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link active">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/sombiesombie" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/malcolmyu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><ul class="home post-list"><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/04/16/Redux-Zero-to-One/" class="post-title-link">Redux 从无到有</a></h2><div class="post-info">2016年4月16日</div><div class="post-content"><p><img src="http://7xinjg.com1.z0.glb.clouddn.com/redux-and-angularjs-redux-arch.jpg" alt="redux 图示"></p>
-<p>redux 自诞生之日就被冠以『学习曲线陡峭』之名，让学习者望而却步。然而由于工作需要，最近还是硬着头皮把 redux 的这一套研究了一番，发现传说中陡峭的学习曲线好像也没有那么夸张，我们甚至可以从零开始实现一个基础版本的 redux。</p></div><a href="/2016/04/16/Redux-Zero-to-One/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/04/02/Reaction-to-Soulstealers/" class="post-title-link">读《叫魂：1768年中国妖术大恐慌》</a></h2><div class="post-info">2016年4月2日</div><div class="post-content"><p>在弘历的这一任上，大清的盛世梦达到了最高潮。自17世纪开始，玉米、番薯、马铃薯等美洲粮食作物引入中国，战乱的平定和粮食产量的增长使得大清的人口数量翻了一番，从 1.5 亿达到了 3 亿之巨；由于西班牙人在南美的掠夺，导致白银大量流入，尽管带来的一定程度的通货膨胀，却也推动了贸易与土地交易的欣欣向荣。然而在这繁华盛世的背后，独坐龙椅的弘历叔叔却也感到了自己的中年危机。</p></div><a href="/2016/04/02/Reaction-to-Soulstealers/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/" class="post-title-link">读《人类简史》</a></h2><div class="post-info">2016年1月12日</div><div class="post-content"><p><img src="http://ww3.sinaimg.cn/mw1024/620233dbgw1evktg2xeg7j20i20hjmxk.jpg" alt="『人类，捡屎』"></p></div><a href="/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2015/11/18/Coroutine-and-Event-Loop/" class="post-title-link">协程与事件循环</a></h2><div class="post-info">2015年11月18日</div><div class="post-content"><p>最近研究了一下 es6 的生成器函数，以及传说中的 co。虽然网上关于协程、co 源码分析的文章数不胜数，但是将其与先前异步实现的事件队列结合起来说明的文章却很难寻觅。之前只知道协程是实现异步的一种方式，那其和之前的各种异步实现究竟有什么本质区别呢？本文将根据协程机制简要探讨一下<strong>引入协程之后的新的事件循环模型</strong>。由于笔者基础知识不够扎实，所以会先讲述一大堆协程产生的背景和原理，再进行模型变化的讲解。</p></div><a href="/2015/11/18/Coroutine-and-Event-Loop/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2015/10/16/Git-Hooks/" class="post-title-link">Git 钩子</a></h2><div class="post-info">2015年10月16日</div><div class="post-content"><p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-tips-hookhero.svg" alt="Git 钩子"></p>
-<p>Git 钩子是在一个 Git 仓库中，在每一次特定事件触发时自动运行的脚本。它允许我们自定义 Git 的内部行为，并在开发的生命周期的关键时间点触发自定义行为。</p></div><a href="/2015/10/16/Git-Hooks/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2015/10/05/Using-Branches/" class="post-title-link">使用分支</a></h2><div class="post-info">2015年10月5日</div><div class="post-content"><p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-brhero.svg" alt="使用分支"></p>
-<p>这篇教程对 Git 的分支进行了全面详尽的介绍。首先我们会研究下如何新建分支，其过程和获取一个新的项目历史有点类似；之后我们会了解到如何使用 <code>git checkout</code> 来选择分支；最后我们会学习到 <code>git merge</code> 命令是如何将几个相互独立的分支上进行整合的。</p>
-<p>在阅读文本时，请记住 Git 的分支与 SVN 分支的不同。SVN 的分支是用来处理偶尔会进行的大规模开发才使用的，而 Git 的分支确是我们日常工作流不可或缺的一部分。</p></div><a href="/2015/10/05/Using-Branches/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2015/08/01/Collaborating-Syncing/" class="post-title-link">协作同步</a></h2><div class="post-info">2015年8月1日</div><div class="post-content"><p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-coll-synchero.svg" alt="同步"></p>
-<p>SVN 使用一个单独的中心仓库以作为开发者的通信枢纽，其协作的方式是开发者的工作副本与中央仓库互相发送变更记录。这与 Git 的协作模式有所不同，Git 中每个开发者都拥有仓库的副本，以及完整的本地历史和分支结构。用户通常只需要提供一系列的提交而不是单个的变更记录。Git 允许我们在仓库之间共享整个分支，而不是单单的从工作副本提交一个变更记录到中央仓库去。</p>
-<p>下面介绍的命令可以帮助我们管理与其他仓库的连接：我们可以使用“推送”分支的方式将本地历史发布到其他仓库，也可以使用“拉取”分支的方式将别人贡献的代码获取到本地。</p></div><a href="/2015/08/01/Collaborating-Syncing/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2015/06/12/Promises-A-Plus/" class="post-title-link">Promise A+ 规范</a></h2><div class="post-info">2015年6月12日</div><div class="post-content"><p>英文原文：<a href="https://promisesaplus.com/">Promise/A+</a><br>图灵译文：<a href="http://www.ituring.com.cn/article/66566">【翻译】Promises/A+规范</a></p>
-<p><strong>译者序：</strong>一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。</p></div><a href="/2015/06/12/Promises-A-Plus/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2015/04/25/Introduction-of-Jsdoc/" class="post-title-link">JSDoc 配置使用概览</a></h2><div class="post-info">2015年4月25日</div><div class="post-content"><p>尽管一个好的项目文档能让项目增光添彩，但文档的作用始终是锦上添花而非雪中送炭，对于开发者来说，费尽心神的整理项目文档似乎也并非是一件令人愉快的事情。在使用题中所述的工具——jsdoc和编写本文的同时，笔者也是几度懊恼：这东西在项目中真的有用吗？是不是有点浪费时间？但随着项目体量的增大和开发人员的增多，使用并自动化维护一份好的文档所带来的优势也是逐渐显现。笔者也决心写一篇科普小文，说一说文档工具的使用注意要点。</p></div><a href="/2015/04/25/Introduction-of-Jsdoc/" class="read-more">...阅读全文</a></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2015/04/19/Avalon-Event-Bus/" class="post-title-link">avalon 事件总线与依赖调度系统</a></h2><div class="post-info">2015年4月19日</div><div class="post-content"><p>在工作中经常使用到<a href="http://www.cnblogs.com/rubylouvre/">司徒</a>的 <a href="https://github.com/RubyLouvre/avalon">avalon</a> ，由于坑点太多，有时需要经常查阅其源码实现。而 avalon 由于方兴未艾，网上对其进行源码解析的文章并不多，查了半天也就只有这篇 <a href="http://www.cnblogs.com/sskyy/p/3679572.html">MVVM 大比拼</a>，以及这篇 <a href="http://www.cnblogs.com/aaronjs/archive/2013/06/16/3138631.html">avalon 源码分析</a>。个人认为这两篇文章写得都并不算好，其一是成文较早，研究的源码还是 1.2.5 版本，而目前的新版本已经到了 1.4+，比之前不知道高到哪里去。其二是大比拼一文作者阅码无数，心中早已无码，写分析只观其大要，似乎在和原作者谈笑风生；而后者的分析仿佛又只是对源码的粗略通读，也没怎么经过实践，有些图样图森破。因此自己决定安下心来写点源码分析。</p></div><a href="/2015/04/19/Avalon-Event-Bus/" class="read-more">...阅读全文</a></article></li></ul></section><footer><div class="paginator"><a href="/page/2/" class="next">下一页</a></div><div class="copyright"><p>© 2015 - 2016 <a href="http://malcolmyu.github.io">malcolm yu</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>malcolm-blog</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      <nav class="navigator"><nav class="navbar navbar-default navbar-fixed-top">
+  <div class="nav-container">
+
+
+  
+  <ul class="nav navbar-nav navbar-left">
+    <li class="navbar-header">
+      <a href="/" class="navbar-brand">MALCOLM</a>
+    </li>
+    <li class="dropdown">
+      <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <svg class="i-tag" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+          <circle cx="24" cy="8" r="2"></circle>
+          <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+        </svg>
+      </span></a>
+      <ul class="dropdown-content">
+
+          
+           <li><a href="/categories/读书笔记/">读书笔记</a></li><li><a href="/categories/技术研究/">技术研究</a></li><li><a href="/categories/源码分析/">源码分析</a></li><li><a href="/categories/Git-魔导之路/">Git 魔导之路</a></li><li><a href="/categories/架构分析/">架构分析</a></li><li><a href="/categories/计算机网络/">计算机网络</a></li><li><a href="/categories/开发工具/">开发工具</a></li>
+
+      </ul>
+    </li>
+  </ul>
+  
+  <div id="site_search" class="">
+  <input type="text" id="local-search-input" name="q" placeholder="search" class="form-control"/>
+</div>
+<div id="local-search-result"></div>
+
+
+  <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+      <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <svg class="i-link" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+          <path d="M18 8 C18 8 24 2 27 5 30 8 29 12 24 16 19 20 16 21 14 17 M14 24 C14 24 8 30 5 27 2 24 3 20 8 16 13 12 16 11 18 15"></path>
+        </svg>
+      </a>
+      <ul class="dropdown-content">
+        
+          <li>
+            <a href="/links.html">
+        友情链接
+      </a>
+    </li>
+     
+          <li>
+            <a href="https://github.com/malcolmyu/">
+        Github
+      </a>
+    </li>
+     
+          <li>
+            <a href="http://weibo.com/sombiesombie">
+        微博
+      </a>
+    </li>
+     
+          <li>
+            <a href="https://www.zhihu.com/people/malcolm-yu/">
+        知乎
+      </a>
+    </li>
+     
+          <li>
+            <a href="/rss2.xml">
+        rss
+      </a>
+    </li>
+     
+          <li>
+            <a href="/">
+        关于我
+      </a>
+    </li>
+     
+    </ul>
+    </li>
+    <li class="archives"><a href="/archives">
+      <svg class="i-archive" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M4 10 L4 28 28 28 28 10 M2 4 L2 10 30 10 30 4 Z M12 15 L20 15"></path>
+      </svg>
+    </a></li>
+  </ul>
+  </div>
+</nav></nav>
+<ul class="posts">
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2019/07/24/Notes-of-Business-Intelligence/">
+            《智能商业》读书杂感
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <img src="/2019/07/24/Notes-of-Business-Intelligence/title.png" alt="redux" title="redux">
+<p>智能商业的作者是阿里巴巴的曾鸣教授，可以看做是作者执鞭阿里巴巴十年的经验总结。</p>
+  
+  <a href="/2019/07/24/Notes-of-Business-Intelligence/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2019-07-24T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  07-24
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/读书笔记/">读书笔记</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/智能商业/">智能商业</a>·<a href="/tags/读书笔记/">读书笔记</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2019/07/07/Tri-Color-Marking/">
+            V8 增量 GC 之三色标记
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <p>因为要做组内分享，最近看了一下<a href="https://book.douban.com/subject/26821357/">《垃圾回收算法与实现》</a>，发现其实垃圾回收的算法基调基本上世纪 60 年代就已经提出来了，后世的框架只是在给这些框架做组合和修补的工作。抛掉老生常谈的分代假设不谈，V8 官博今年新发了一篇<a href="https://v8.dev/blog/trash-talk#incremental">博文</a>介绍 V8 GC 新进展，讲到<a href="https://v8.js.cn/blog/concurrent-marking/">增量回收</a>的话题。本以为增量 GC 是什么新鲜东西，实际上早在 1975 年的一篇<a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD05xx/EWD520.html">论文</a>中，大宗师 Dijkstra 就已经提出了这个问题的解决方案——<a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection#Tri-color_marking">三色标记算法</a>。</p>
+  
+  <a href="/2019/07/07/Tri-Color-Marking/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2019-07-07T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  07-07
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/技术研究/">技术研究</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/V8/">V8</a>·<a href="/tags/GC/">GC</a>·<a href="/tags/Tri-Color-Marking/">Tri-Color Marking</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2018/09/09/Core-Concepts-of-Mobx/">
+            MobX 源码探究之一 —— 核心概念
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <blockquote>
+<p><strong>Anything that can be derived from the application state, should be derived. Automatically.</strong></p>
+<p>任何可以从应用状态中推导的东西，都应该被<strong>自动地</strong>推导出来。</p>
+</blockquote>
+<p>上面两句话是 MobX 中文官网关于 MobX 的总结，初读起来觉得逼格慢慢，但毫无诚意——因为这样上升到哲学高度的话对于你对它工作原理的理解实际上是毫无帮助的，甚至于你用了框架若干年之后，依然无法理解这其中的含义。但是，哲学层次的总结总是需要在读完代码之后再细细品味的，就像老话说的，『当你千辛万苦读完代码爬上山顶的时候，框架作者装逼的哲学总结已经在此等候多时了』。</p>
+  
+  <a href="/2018/09/09/Core-Concepts-of-Mobx/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2018-09-09T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  09-09
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/源码分析/">源码分析</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/MobX/">MobX</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2017/10/14/An-in-Depth-Explanation-of-MobX/">
+            【翻译】终极响应式编程：深入探究 MobX
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <img src="/2017/10/14/An-in-Depth-Explanation-of-MobX/title.jpg" alt="mobx" title="mobx">
+<p>鉴于广大人民群众的要求（并为了到时候能给我的孙子吹个 NB），我写了这篇 MobX 的内部工作原理。许多朋友震惊于 MobX 的性能和一致性，但请各位放心，这里没有什么黑科技！</p>
+  
+  <a href="/2017/10/14/An-in-Depth-Explanation-of-MobX/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2017-10-14T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  10-14
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/技术研究/">技术研究</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/MobX/">MobX</a>·<a href="/tags/Reactive/">Reactive</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2017/02/26/Dive-into-Charles-HTTPS-Proxying/">
+            细说 Charles 配置 HTTPS 代理的乱码问题
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <p>最近因工作需要，要用 Charles 来监听 HTTPS 的请求，然而好不容易按照网上的文章配置完成之后，却发现监听的内容居然是一坨乱码。随后进行了一个 SSL 代理配置，和手机证书的安装，才终于获取到了明文。虽然之前有了解 HTTPS 是使用大素数收到进行加密，也知道有一次非对称加密和对称加密，但是经过这次的配置发现对它的根本原理还不是很了解，于是专门研究了一下，才搞明白它的原委。</p>
+  
+  <a href="/2017/02/26/Dive-into-Charles-HTTPS-Proxying/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2017-02-26T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  02-26
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/计算机网络/">计算机网络</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/HTTPS/">HTTPS</a>·<a href="/tags/SSL/">SSL</a>·<a href="/tags/TLS/">TLS</a>·<a href="/tags/Charles/">Charles</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2017/02/02/Chat-about-Redux-2/">
+            闲聊 Redux（下）
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <img src="/2017/02/02/Chat-about-Redux-2/title.png" alt="redux" title="redux">
+<p><a href="/2016/12/03/Chat-about-Redux-1/">上文</a>里，我们剥茧抽丝，聊了聊 Redux 里面的各种烦人概念，以及这些概念是怎么来的；本文我们着重聊一聊，让 Redux 大行其道的『中间件』。</p>
+  
+  <a href="/2017/02/02/Chat-about-Redux-2/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2017-02-02T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  02-02
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/技术研究/">技术研究</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/Redux/">Redux</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2017/01/14/The-Evolution-of-Hybrid-Router/">
+            Hybrid 路由架构演进之路
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <p>经过近两年的发展，我们去哪儿内部的 hybrid 方案 hy，已经从 15 年年中的 hy 1.0 进一步完善和成熟，已于去年底推出了基于 react 的 hy2.0 解决方案。在框架升级的大背景下，他的路由架构体系也发生了不小的变化，希望能通过这篇文章，让大家了解到我们路由方案的选择变迁，与页面加载性能优化的手段。</p>
+  
+  <a href="/2017/01/14/The-Evolution-of-Hybrid-Router/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2017-01-14T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  01-14
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/架构分析/">架构分析</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Hybrid/">Hybrid</a>·<a href="/tags/webpack/">webpack</a>·<a href="/tags/react-router/">react-router</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2016/12/03/Chat-about-Redux-1/">
+            闲聊 Redux（上）
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <img src="/2016/12/03/Chat-about-Redux-1/title.png" alt="redux" title="redux">
+<p>Redux 算是 React 全家桶里最饱受争议的一个框架，就算是天天变 API 的 <a href="https://github.com/ReactTraining/react-router">React-Router</a>，也因为占据了意识形态的最高点 —— 便捷优雅的声明式路由、异步路由控制与加载，导致尽管骂声不断，却没有一个人说不用。反观 Redux，用不惯的说它夹杂了太多的私心，找遍业务线所有的代码，也找不到一个逻辑用到这么复杂的函数式；用的惯的也嫌它使用太复杂，凭空多出几个文件夹、丑陋的 <code>switch</code>、一遍一遍的常量声明，真是端起键盘开发，放下鼠标骂娘。与 React-Router 横行社区不同，Redux 从来不缺竞争者，前有 Reflux，后有 <a href="https://github.com/mobxjs/mobx">Mobx</a>；但似乎也没见有一个竞争者真正撼动 redux 的地位：完美适配服务端渲染，完善的调试工具与社区支持，都让 Redux 成为 React 学习者首选的数据流框架。</p>
+<p>今天就来简单聊聊这个可能是这两年最火的数据流框架：<a href="https://github.com/reactjs/redux">Redux</a>。</p>
+  
+  <a href="/2016/12/03/Chat-about-Redux-1/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2016-12-03T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  12-03
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/技术研究/">技术研究</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/Redux/">Redux</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2016/10/24/Create-React-Universal-App/">
+            前后端同构之路
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <p>公司内部的公用图标字体平台 iconfont 上线一年以来，运行良好，在内部承担起了客户端减容、提高前端开发效率的任务。但由于其臃肿的架构导致的运行效率底下和页面卡顿等问题也一直给使用者造成诸多不便。我们对项目老架构导致的许多问题进行了探索总结，并针对问题提出了 react 同构的解决方案。</p>
+  
+  <a href="/2016/10/24/Create-React-Universal-App/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2016-10-24T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  10-24
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/架构分析/">架构分析</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/react/">react</a>·<a href="/tags/universal/">universal</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+    
+<div>
+<li class="post-item">
+  
+  
+    <h1 class="index-title">
+        <a href="/2016/04/02/Reaction-to-Soulstealers/">
+            读《叫魂：1768年中国妖术大恐慌》
+        </a>
+    </h1>
+  
+
+
+  <div class="excerpt">
+  
+    <p>在弘历的这一任上，大清的盛世梦达到了最高潮。自17世纪开始，玉米、番薯、马铃薯等美洲粮食作物引入中国，战乱的平定和粮食产量的增长使得大清的人口数量翻了一番，从 1.5 亿达到了 3 亿之巨；由于西班牙人在南美的掠夺，导致白银大量流入，尽管带来的一定程度的通货膨胀，却也推动了贸易与土地交易的欣欣向荣。然而在这繁华盛世的背后，独坐龙椅的弘历叔叔却也感到了自己的中年危机。</p>
+  
+  <a href="/2016/04/02/Reaction-to-Soulstealers/">
+    更多
+  </a>
+  </div>
+  <div class="index-meta">
+    
+<time datetime="2016-04-02T00:00:00.000Z" itemprop="datePublished">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  04-02
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/读书笔记/">读书笔记</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/叫魂/">叫魂</a>
+
+
+  </div>
+</li>
+</div>
+<hr>
+
+
+
+
+
+  
+</ul>
+<ul class="pager">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next</a>
+</ul>
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

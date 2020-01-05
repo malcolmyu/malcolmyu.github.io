@@ -1,39 +1,130 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Git 钩子 · malcolm-blog</title><meta name="description" content="Git 钩子 - malcolm yu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/sombiesombie" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/malcolmyu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Git 钩子</h1><div class="post-info">2015年10月16日</div><div class="post-content"><p><img src="http://7xinjg.com1.z0.glb.clouddn.com/git-tips-hookhero.svg" alt="Git 钩子"></p>
-<p>Git 钩子是在一个 Git 仓库中，在每一次特定事件触发时自动运行的脚本。它允许我们自定义 Git 的内部行为，并在开发的生命周期的关键时间点触发自定义行为。</p>
-<a id="more"></a>
-<p><image src="http://7xinjg.com1.z0.glb.clouddn.com/git-tips-hook01.svg" alt="通过链接到版本控制的脚本维护钩子" width="80%"></image></p>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>Git 钩子</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="Git 钩子"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
 
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        Git 钩子
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2015-10-16T00:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2015-10-16
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/Git-魔导之路/">Git 魔导之路</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Git/">Git</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概念概述"><span class="toc-text">概念概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装钩子"><span class="toc-text">安装钩子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#脚本语言"><span class="toc-text">脚本语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#钩子的作用域"><span class="toc-text">钩子的作用域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地钩子"><span class="toc-text">本地钩子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#预提交钩子-Pre-Commit"><span class="toc-text">预提交钩子 Pre-Commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#准备提交信息钩子-Prepare-Commit-Message"><span class="toc-text">准备提交信息钩子 Prepare Commit Message</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交信息钩子-Commit-Message"><span class="toc-text">提交信息钩子 Commit Message</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交后钩子-Post-Commit"><span class="toc-text">提交后钩子 Post-Commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#切换后钩子-Post-Checkout"><span class="toc-text">切换后钩子 Post-Checkout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预衍合钩子-Pre-Rebase"><span class="toc-text">预衍合钩子 Pre-Rebase</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端钩子"><span class="toc-text">服务端钩子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#预接收钩子-Pre-Receive"><span class="toc-text">预接收钩子 Pre-Receive</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新钩子-Update"><span class="toc-text">更新钩子 Update</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接受后钩子-Post-Receive"><span class="toc-text">接受后钩子 Post-Receive</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-text">注释</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Git 钩子是在一个 Git 仓库中，在每一次特定事件触发时自动运行的脚本。它允许我们自定义 Git 的内部行为，并在开发的生命周期的关键时间点触发自定义行为。</p>
+<a id="more"></a>
+<p><img src="./git-tips-hook01.svg" alt="通过链接到版本控制的脚本维护钩子"></p>
 <p>Git 钩子通常的使用案例包含支持一个提交策略，根据仓库状态替换项目环境，以及实现连续集成的工作流。但由于脚本是可以任意指定的，所以我们几乎可以使用 Git 的钩子来自动化或优化我们开发工作流的方方面面。</p>
 <p>本文的一开始我们先从概念上概述一下 Git 钩子是怎么工作的；之后我们会研究一些使用在本地和服务端仓库的最流行的钩子的使用。</p>
-<h1 id="概念概述">概念概述</h1><p>所有的 Git 钩子都是普通的脚本，只是在仓库的特定时机会被 Git 执行。这是得钩子们的安装和配置十分容易。</p>
+<h2 id="概念概述"><a href="#概念概述" class="headerlink" title="概念概述"></a>概念概述</h2><p>所有的 Git 钩子都是普通的脚本，只是在仓库的特定时机会被 Git 执行。这是得钩子们的安装和配置十分容易。</p>
 <p>钩子可以放置在本地或服务端的仓库中，它们仅对各自的仓库行为做出相应并执行。我们会在下文中具体看一下钩子的类型。应用在本地和服务端的钩子的配置会在余下的章节中进行讨论。</p>
-<h2 id="安装钩子">安装钩子</h2><p>钩子存放在每个 Git 仓库的 <code>.git/hooks</code> 目录。当我们初始化仓库时，Git 会自动生成此目录并在里面放置一些示例脚本。如果你去看一眼 <code>.git/hooks</code> 目录的内容，就会看到如下的文件：</p>
-<pre><code>applypatch-msg<span class="class">.sample</span>       pre-push<span class="class">.sample</span>
-commit-msg<span class="class">.sample</span>           pre-rebase<span class="class">.sample</span>
-post-update<span class="class">.sample</span>          prepare-commit-msg<span class="class">.sample</span>
-pre-applypatch<span class="class">.sample</span>       update<span class="class">.sample</span>
+<h3 id="安装钩子"><a href="#安装钩子" class="headerlink" title="安装钩子"></a>安装钩子</h3><p>钩子存放在每个 Git 仓库的 <code>.git/hooks</code> 目录。当我们初始化仓库时，Git 会自动生成此目录并在里面放置一些示例脚本。如果你去看一眼 <code>.git/hooks</code> 目录的内容，就会看到如下的文件：</p>
+<pre><code>applypatch-msg.sample       pre-push.sample
+commit-msg.sample           pre-rebase.sample
+post-update.sample          prepare-commit-msg.sample
+pre-applypatch.sample       update.sample
 pre-commit.sample
 </code></pre><p>这里提供了许多可用的钩子，但是 <code>.simple</code> 的后缀使它们都不能默认执行。想要『安装』某一个钩子，我们所需要做的仅仅是移除 <code>.simple</code> 的扩展名。或者如果你动手撸了一个新脚本，那你可以将脚本添加到路径里，并用上面的文件名来命名你的脚本，记得去掉 <code>.simple</code> 后缀哟。</p>
 <p>我们安装一个简单的 <code>prepare-commit-msg</code> 钩子作为示例。删除文件的 <code>.simple</code> 后缀，并将下面的内容添加到文件中：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span><br><span class="line"></span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"# 请输入一条有用的提交信息！"</span> &gt; <span class="variable">$1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"## 请输入一条有用的提交信息！"</span> &gt; <span class="variable">$1</span></div></pre></td></tr></table></figure>
 <p>钩子文件必须可执行，因此如果我们是徒手撸的脚本，我们需要更改文件的权限。例如，如果想要使 <code>prepare-commit-msg</code> 文件可执行，就需要运行下面的命令：</p>
-<pre><code>chmod +x <span class="operator"><span class="keyword">prepare</span>-<span class="keyword">commit</span>-msg</span>
+<pre><code>chmod +x prepare-commit-msg
 </code></pre><p>现在我们应该能在每次运行 <code>git commit</code> 的时候看到默认的提交信息（就是上文脚本里的『请输入一条有用的提交信息』）。我们将在 <strong>准备提交信息</strong> 一章仔细研究其工作机制；而现在我们只需要臭美一下：我们已经能自定义 Git 内部的方法啦！</p>
 <p>内置的样例脚本是非常有用的参考，它们展示了传递给每个钩子的参数详情（这些参数在钩子之间顺序传递）。</p>
-<h2 id="脚本语言">脚本语言</h2><p>内置的脚本多是 shell 或 perl 脚本，但是只要我们编写的脚本能够执行，就可以使用任何喜欢的脚本语言。每个脚本文件的 <strong>事务行（shebang line）</strong> 定义了该文件的解释方式。因此想要使用其他的脚本语言，我们只需要改变事务行中解释器的路径就可以了。</p>
+<h3 id="脚本语言"><a href="#脚本语言" class="headerlink" title="脚本语言"></a>脚本语言</h3><p>内置的脚本多是 shell 或 perl 脚本，但是只要我们编写的脚本能够执行，就可以使用任何喜欢的脚本语言。每个脚本文件的 <strong>事务行（shebang line）</strong> 定义了该文件的解释方式。因此想要使用其他的脚本语言，我们只需要改变事务行中解释器的路径就可以了。</p>
 <p>举例来说，我们可以在 <code>prepare-commit-msg</code> 文件中编写一个可执行的 Python 脚本来替代 shell 脚本。下面的钩子和上一节的 shell 脚本的执行效果完全一致。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys, os</span><br><span class="line"></span><br><span class="line">commit_msg_filepath = sys.argv[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">with</span> open(commit_msg_filepath, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">"# Please include a useful commit message!"</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys, os</div><div class="line"></div><div class="line">commit_msg_filepath = sys.argv[<span class="number">1</span>]</div><div class="line"><span class="keyword">with</span> open(commit_msg_filepath, <span class="string">'w'</span>) <span class="keyword">as</span> f:</div><div class="line">    f.write(<span class="string">"## Please include a useful commit message!"</span>)</div></pre></td></tr></table></figure>
 <p>留心一下文件的第一行指到了 Python 的解释器；同时，我们使用 <code>sys.argv[1]</code> 来代替 <code>$1</code> 来指代传入脚本的第一个参数（我们会在稍后对此进行详述）。</p>
 <p>这是 Git 钩子的一个非常给力的特性，使得我们可以使用我们喜欢用的的任何脚本语言来编程。</p>
-<h2 id="钩子的作用域">钩子的作用域</h2><p>钩子在存在于每一个 Git 仓库，且当我们运行 <code>git clone</code> 时它们 <strong>不会</strong> 被复制到新仓库中。而且由于钩子是本地的，它们就可以被任何有仓库访问权限的人修改。</p>
+<h3 id="钩子的作用域"><a href="#钩子的作用域" class="headerlink" title="钩子的作用域"></a>钩子的作用域</h3><p>钩子在存在于每一个 Git 仓库，且当我们运行 <code>git clone</code> 时它们 <strong>不会</strong> 被复制到新仓库中。而且由于钩子是本地的，它们就可以被任何有仓库访问权限的人修改。</p>
 <p>这对于一个团队的开发者进行钩子的配置有着重要影响。首先，我们需要找到一种方式来确保钩子在我们的团队成员之间实时更新；其次，我们不能强迫开发者来都用特定的方式来提交，顶多只能鼓励大家这么做。</p>
 <p>维护一个开发团队的钩子可是有点棘手，因为 <code>.git/hooks</code> 目录不会随着项目的其他部分复制的，也不会被版本控制。对上面俩问题的最简单的解决方案就是把钩子存在实际的项目目录中（<code>.git</code> 目录之外），这就可以让我们像任何其他版本控制文件一样来编辑钩子。为了安装钩子，我们可以创造一个链接将其链接到 <code>.git/hooks</code>；或者是当有更新的时候，简单的将其复制粘贴到 <code>.git/hooks</code> 目录中。</p>
-<p><image src="http://7xinjg.com1.z0.glb.clouddn.com/git-tips-hook02.svg" alt="在提交创建的过程执行钩子" width="80%"></image></p>
+<p><image src="./git-tips-hook02.svg" alt="在提交创建的过程执行钩子" width="80%"></image></p>
 
 <p>另外，Git 还提供一个<a href="http://git-scm.com/docs/git-init#_template_directory" target="_blank" rel="external">模板目录</a>的机制来更加便捷的自动安装钩子。模板目录的所有文件和目录在每次使用 <code>git init</code> 和 <code>git clone</code> 时都会被复制进 <code>.git</code> 目录里。</p>
 <p>下文所述的所有本地钩子都可以被仓库管理员替换或删除，这完全取决于每个团队成员是否实际使用钩子。我们最好记住这一点，把 Git 钩子当做一个方便的开发者工具而非一个严格执行的开发政策。</p>
 <p>即便如此，我们也可以用服务端钩子来拒绝那些不符合标准的提交。我们会在稍后讨论这一点。</p>
-<h1 id="本地钩子">本地钩子</h1><p>本地钩子只影响它们所在的仓库。当我们读到这一节时，要记住每位开发者都可以替换其本地的钩子，我们不能使用钩子作为一种强制提交策略。然钩子却使得开发人员更容易坚持既定的开发方针。</p>
+<h2 id="本地钩子"><a href="#本地钩子" class="headerlink" title="本地钩子"></a>本地钩子</h2><p>本地钩子只影响它们所在的仓库。当我们读到这一节时，要记住每位开发者都可以替换其本地的钩子，我们不能使用钩子作为一种强制提交策略。然钩子却使得开发人员更容易坚持既定的开发方针。</p>
 <p>在这一节里，我们将展示6个最常用的本地钩子：</p>
 <ul>
 <li><code>pre-commit</code></li>
@@ -46,13 +137,13 @@ pre-commit.sample
 <p>前四个钩子允许我们在整个提交的生命周期中插入，后面两个允许我们分别为 <code>git checkout</code> 和 <code>git rebase</code> 执行一些额外的行为或者安全检查。</p>
 <p>所有的以 <code>pre-</code> 为前缀的钩子都允许我们在后缀的行为 <strong>即将发生</strong> 的时候改变这些行为；而以 <code>post-</code> 为前缀的钩子 <strong>仅用于通知</strong>。</p>
 <p>我们也会看到一些实用的技术来解析钩子参数，以及实用底层 Git 命令请求仓库信息。</p>
-<h2 id="预提交钩子_Pre-Commit">预提交钩子 Pre-Commit</h2><p><code>pre-commit</code> 的脚本在每次运行 <code>git commit</code> 命令时，在 Git 要求开发者填写提交信息和生成提交对象之前执行。我们可以用这个钩子在快照将要被提交的时刻对其进行检查。比方说，我们也许想要在此时运行一些自动测试，以防止本次提交破坏现有功能。</p>
+<h3 id="预提交钩子-Pre-Commit"><a href="#预提交钩子-Pre-Commit" class="headerlink" title="预提交钩子 Pre-Commit"></a>预提交钩子 Pre-Commit</h3><p><code>pre-commit</code> 的脚本在每次运行 <code>git commit</code> 命令时，在 Git 要求开发者填写提交信息和生成提交对象之前执行。我们可以用这个钩子在快照将要被提交的时刻对其进行检查。比方说，我们也许想要在此时运行一些自动测试，以防止本次提交破坏现有功能。</p>
 <p><code>pre-commit</code> 脚本没有传入参数，并且以非零状态退出<sup><a href="#note-1">注1</a></sup>会终止整个提交。让我们看一下一个简化的内置 <code>pre-commit</code> 钩子。这个脚本在发现有空白符的错误时会终止整个提交，空白符错误在 <code>git diff-index</code> 命令的 <code>--check</code> 参数里有详细定义（行尾空白符、仅有空白符的行、行首缩进的 tab 后面有空格等格式在默认情况下都会被认为是错误的）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span><br><span class="line"></span></span><br><span class="line"><span class="comment"># 检测是否为初始提交</span></span><br><span class="line"><span class="keyword">if</span> git rev-parse --verify HEAD &gt;/dev/null <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: About to create a new commit..."</span></span><br><span class="line">    against=HEAD</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: About to create the first commit..."</span></span><br><span class="line">    against=<span class="number">4</span>b825dc642cb6eb9a060e54bf8d69288fbee4904</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 git diff-index 来检测空白符错误</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"pre-commit: Testing for whitespace errors..."</span></span><br><span class="line"><span class="keyword">if</span> ! git diff-index --check --cached <span class="variable">$against</span></span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: Aborting commit due to whitespace errors"</span></span><br><span class="line">    <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: No whitespace errors :)"</span></span><br><span class="line">    <span class="built_in">exit</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"></div><div class="line"><span class="comment">## 检测是否为初始提交</span></div><div class="line"><span class="keyword">if</span> git rev-parse --verify HEAD &gt;/dev/null 2&gt;&amp;1</div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: About to create a new commit..."</span></div><div class="line">    against=HEAD</div><div class="line"><span class="keyword">else</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: About to create the first commit..."</span></div><div class="line">    against=4b825dc642cb6eb9a060e54bf8d69288fbee4904</div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="comment">## 使用 git diff-index 来检测空白符错误</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"pre-commit: Testing for whitespace errors..."</span></div><div class="line"><span class="keyword">if</span> ! git diff-index --check --cached <span class="variable">$against</span></div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: Aborting commit due to whitespace errors"</span></div><div class="line">    <span class="built_in">exit</span> 1</div><div class="line"><span class="keyword">else</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit: No whitespace errors :)"</span></div><div class="line">    <span class="built_in">exit</span> 0</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
 <p>为了使用 <code>git diff-index</code>，我们需要指出需要用来做比较的提交引用。这个引用通常来说是 <code>HEAD</code>，但是在初始提交的时候不存在 <code>HEAD</code> 指针，因此我们的第一个任务就是处理这个边界值。我们使用 <a href="https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="_blank" rel="external"><code>git rev-parse --verify</code></a> 命令，该命令可以检查参数是否是一个可用引用。<code>&gt;/dev/null 2&gt;&amp;1</code> 的部分表示不显示所有 <code>git rev-parse</code> 命令的输出。将 HEAD 或是初始提交的空提交对象存放在 <code>against</code> 变量中来给 <code>git diff-index</code> 使用，而 <code>4b825d...</code> 这个哈希值是一个魔术提交 ID，表示一个空提交。</p>
 <p><code>git diff-index --cached</code> 命令将当前暂存区与一个提交进行对比，传入 <code>--check</code> 选项表示我们要求在改动包含空白符错误时给出警告。如果存在空白符错误，我们终止提交并返回退出状态 <code>1</code>，否则我们以 <code>0</code> 退出，且提交工作流正常工作。</p>
 <p>这仅仅是 <code>pre-commit</code> 钩子的一个简单例子：使用 Git 命令来在由请求提交引入的更改上运行测试。我们同样可以在 <code>pre-commit</code> 钩子中通过执行其他脚本来做任何想做的事情，例如运行一个第三方测试组件，或者使用 Lint 来检查代码格式。</p>
-<h2 id="准备提交信息钩子_Prepare_Commit_Message">准备提交信息钩子 Prepare Commit Message</h2><p><code>prepare-commit-msg</code> 钩子在 <code>pre-commit</code> 钩子之后调用，用于给提交的文本编辑器填充提交信息。这是一个替换压缩提交和合并提交时自动生成提交信息的一个好时机。</p>
+<h3 id="准备提交信息钩子-Prepare-Commit-Message"><a href="#准备提交信息钩子-Prepare-Commit-Message" class="headerlink" title="准备提交信息钩子 Prepare Commit Message"></a>准备提交信息钩子 Prepare Commit Message</h3><p><code>prepare-commit-msg</code> 钩子在 <code>pre-commit</code> 钩子之后调用，用于给提交的文本编辑器填充提交信息。这是一个替换压缩提交和合并提交时自动生成提交信息的一个好时机。</p>
 <p>有 1 到 3 个参数会被传递给 <code>prepare-commit-msg</code> 脚本：</p>
 <ol>
 <li>包含提交信息的临时文件名。我们通过替换这个文件来更改提交信息。</li>
@@ -61,22 +152,22 @@ pre-commit.sample
 </ol>
 <p>和 <code>pre-commit</code> 一样，如果脚本以非零状态退出会中止提交。</p>
 <p>在上一节我们已经看到了一个简单的编辑提交信息的例子，但是还是让我们看一下一个更加有用的脚本。当使用 issue 来跟踪问题时，惯例是在一个单独的分支里解决一个对应的问题。如果我们在分支名称上包含了 issue 号，我们就可以编写一个 <code>prepare-commit-msg</code> 脚本来在这一分支的每一个提交上都自动导入 issue 号。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys, os, re</span><br><span class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> check_output</span><br><span class="line"></span><br><span class="line"><span class="comment"># 收集参数</span></span><br><span class="line">commit_msg_filepath = sys.argv[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">if</span> len(sys.argv) &gt; <span class="number">2</span>:</span><br><span class="line">    commit_type = sys.argv[<span class="number">2</span>]</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    commit_type = <span class="string">''</span></span><br><span class="line"><span class="keyword">if</span> len(sys.argv) &gt; <span class="number">3</span>:</span><br><span class="line">    commit_hash = sys.argv[<span class="number">3</span>]</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    commit_hash = <span class="string">''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"prepare-commit-msg: File: %s\nType: %s\nHash: %s"</span> % (commit_msg_filepath, commit_type, commit_hash)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找出当前所在分支</span></span><br><span class="line">branch = check_output([<span class="string">'git'</span>, <span class="string">'symbolic-ref'</span>, <span class="string">'--short'</span>, <span class="string">'HEAD'</span>]).strip()</span><br><span class="line"><span class="keyword">print</span> <span class="string">"prepare-commit-msg: On branch '%s'"</span> % branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果存在 issue 号，则生成带有 issue # 的提交信息</span></span><br><span class="line"><span class="keyword">if</span> branch.startswith(<span class="string">'issue-'</span>):</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"prepare-commit-msg: Oh hey, it's an issue branch."</span></span><br><span class="line">    result = re.match(<span class="string">'issue-(.*)'</span>, branch)</span><br><span class="line">    issue_number = result.group(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> open(commit_msg_filepath, <span class="string">'r+'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        content = f.read()</span><br><span class="line">        f.seek(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">        f.write(<span class="string">"ISSUE-%s %s"</span> % (issue_number, content))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys, os, re</div><div class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> check_output</div><div class="line"></div><div class="line"><span class="comment">## 收集参数</span></div><div class="line">commit_msg_filepath = sys.argv[<span class="number">1</span>]</div><div class="line"><span class="keyword">if</span> len(sys.argv) &gt; <span class="number">2</span>:</div><div class="line">    commit_type = sys.argv[<span class="number">2</span>]</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    commit_type = <span class="string">''</span></div><div class="line"><span class="keyword">if</span> len(sys.argv) &gt; <span class="number">3</span>:</div><div class="line">    commit_hash = sys.argv[<span class="number">3</span>]</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    commit_hash = <span class="string">''</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">"prepare-commit-msg: File: %s\nType: %s\nHash: %s"</span> % (commit_msg_filepath, commit_type, commit_hash)</div><div class="line"></div><div class="line"><span class="comment">## 找出当前所在分支</span></div><div class="line">branch = check_output([<span class="string">'git'</span>, <span class="string">'symbolic-ref'</span>, <span class="string">'--short'</span>, <span class="string">'HEAD'</span>]).strip()</div><div class="line"><span class="keyword">print</span> <span class="string">"prepare-commit-msg: On branch '%s'"</span> % branch</div><div class="line"></div><div class="line"><span class="comment">## 如果存在 issue 号，则生成带有 issue ## 的提交信息</span></div><div class="line"><span class="keyword">if</span> branch.startswith(<span class="string">'issue-'</span>):</div><div class="line">    <span class="keyword">print</span> <span class="string">"prepare-commit-msg: Oh hey, it's an issue branch."</span></div><div class="line">    result = re.match(<span class="string">'issue-(.*)'</span>, branch)</div><div class="line">    issue_number = result.group(<span class="number">1</span>)</div><div class="line"></div><div class="line">    <span class="keyword">with</span> open(commit_msg_filepath, <span class="string">'r+'</span>) <span class="keyword">as</span> f:</div><div class="line">        content = f.read()</div><div class="line">        f.seek(<span class="number">0</span>, <span class="number">0</span>)</div><div class="line">        f.write(<span class="string">"ISSUE-%s %s"</span> % (issue_number, content))</div></pre></td></tr></table></figure>
 <p>首先，上面的 <code>prepare-commit-msg</code> 钩子展示了我们怎么获取传入脚本的所有参数。之后，它调用了 <code>git symbolic-ref --short HEAD</code> 来获取当前分支。如果分支名字以 <code>issue-</code> 开头，脚本就会重写提交信息文件的内容，在开头的一行引入 issue 号。因此，如果你的分支名是 <code>issue-224</code>，运行脚本就会生成下列提交信息：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ISSUE-<span class="number">224</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># Please enter the commit message for your changes. Lines starting </span></span><br><span class="line"><span class="comment"># with '#' will be ignored, and an empty message aborts the commit. </span></span><br><span class="line"><span class="comment"># On branch issue-224 </span></span><br><span class="line"><span class="comment"># Changes to be committed: </span></span><br><span class="line"><span class="comment">#   modified:   test.txt</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ISSUE-224 </div><div class="line"></div><div class="line"><span class="comment">## Please enter the commit message for your changes. Lines starting </span></div><div class="line"><span class="comment">## with '#' will be ignored, and an empty message aborts the commit. </span></div><div class="line"><span class="comment">## On branch issue-224 </span></div><div class="line"><span class="comment">## Changes to be committed: </span></div><div class="line"><span class="comment">##   modified:   test.txt</span></div></pre></td></tr></table></figure>
 <p>在使用 <code>pre-commit-msg</code> 钩子时，需要记住的一点是在使用者通过 <code>-m</code> 参数运行 <code>git commit</code> 命令时本钩子依然会被执行。这就意味着在使用 <code>-m</code> 输入提交信息的时候，上面的脚本会在提交信息里直接加入 <code>ISSUE-[#]</code> 的内容，用户也没法编辑它。我们可以通过判断第二个参数（<code>commit_type</code>）是否等于 <code>message</code> 的方式来处理这个特殊情况。</p>
 <p>然后，在不带 <code>-m</code> 参数的情况下，<code>prepare-commit-msg</code> 钩子也会允许用户编辑自动生成的信息，所以这更多的是一个提供便利的脚本而非强制执行的提交政策。如果想要强制性的政策，我们需要在下一节讨论的 <code>commit-msg</code> 钩子。</p>
-<h2 id="提交信息钩子_Commit_Message">提交信息钩子 Commit Message</h2><p><code>commit-msg</code> 钩子与 <code>prepare-commit-msg</code> 很相似，但是这个钩子在用户输入提交信息 <strong>之后</strong> 调用。这个钩子适宜用于警告开发者他们的提交信息不符合我们团队的标准。</p>
+<h3 id="提交信息钩子-Commit-Message"><a href="#提交信息钩子-Commit-Message" class="headerlink" title="提交信息钩子 Commit Message"></a>提交信息钩子 Commit Message</h3><p><code>commit-msg</code> 钩子与 <code>prepare-commit-msg</code> 很相似，但是这个钩子在用户输入提交信息 <strong>之后</strong> 调用。这个钩子适宜用于警告开发者他们的提交信息不符合我们团队的标准。</p>
 <p>传递给这个钩子的唯一参数就是包含提交信息的临时文件名，如果钩子不喜欢用户输入的信息，它就会将改文件替换（与 <code>prepare-commit-msg</code> 的行为一样）或者以非零状态退出从而终止整个提交。</p>
 <p>举例来说，下面的脚本检查并确保用户不能删除上一节所述的 <code>prepare-commit-msg</code> 钩子自动生成的 issue 号 <code>ISSUE-[#]</code>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys, os, re</span><br><span class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> check_output</span><br><span class="line"></span><br><span class="line"><span class="comment"># 收集参数</span></span><br><span class="line">commit_msg_filepath = sys.argv[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找出当前所在分支</span></span><br><span class="line">branch = check_output([<span class="string">'git'</span>, <span class="string">'symbolic-ref'</span>, <span class="string">'--short'</span>, <span class="string">'HEAD'</span>]).strip()</span><br><span class="line"><span class="keyword">print</span> <span class="string">"commit-msg: On branch '%s'"</span> % branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果我们在 issue 分支上，进行提交信息的检查</span></span><br><span class="line"><span class="keyword">if</span> branch.startswith(<span class="string">'issue-'</span>):</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"commit-msg: Oh hey, it's an issue branch."</span></span><br><span class="line">    result = re.match(<span class="string">'issue-(.*)'</span>, branch)</span><br><span class="line">    issue_number = result.group(<span class="number">1</span>)</span><br><span class="line">    required_message = <span class="string">"ISSUE-%s"</span> % issue_number</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> open(commit_msg_filepath, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        content = f.read()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> content.startswith(required_message):</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"commit-msg: ERROR! The commit message must start with '%s'"</span> % required_message</span><br><span class="line">            sys.exit(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys, os, re</div><div class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> check_output</div><div class="line"></div><div class="line"><span class="comment">## 收集参数</span></div><div class="line">commit_msg_filepath = sys.argv[<span class="number">1</span>]</div><div class="line"></div><div class="line"><span class="comment">## 找出当前所在分支</span></div><div class="line">branch = check_output([<span class="string">'git'</span>, <span class="string">'symbolic-ref'</span>, <span class="string">'--short'</span>, <span class="string">'HEAD'</span>]).strip()</div><div class="line"><span class="keyword">print</span> <span class="string">"commit-msg: On branch '%s'"</span> % branch</div><div class="line"></div><div class="line"><span class="comment">## 如果我们在 issue 分支上，进行提交信息的检查</span></div><div class="line"><span class="keyword">if</span> branch.startswith(<span class="string">'issue-'</span>):</div><div class="line">    <span class="keyword">print</span> <span class="string">"commit-msg: Oh hey, it's an issue branch."</span></div><div class="line">    result = re.match(<span class="string">'issue-(.*)'</span>, branch)</div><div class="line">    issue_number = result.group(<span class="number">1</span>)</div><div class="line">    required_message = <span class="string">"ISSUE-%s"</span> % issue_number</div><div class="line"></div><div class="line">    <span class="keyword">with</span> open(commit_msg_filepath, <span class="string">'r'</span>) <span class="keyword">as</span> f:</div><div class="line">        content = f.read()</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> content.startswith(required_message):</div><div class="line">            <span class="keyword">print</span> <span class="string">"commit-msg: ERROR! The commit message must start with '%s'"</span> % required_message</div><div class="line">            sys.exit(<span class="number">1</span>)</div></pre></td></tr></table></figure>
 <p>由于用户每创建一个提交时，该脚本就会被调用，所以我们还是应该避免对提交信息进行过多的检查。如果在有新提交时，需要通知其他服务，那么我们应该使用下面的 <code>post-commit</code> 钩子。</p>
-<h2 id="提交后钩子_Post-Commit">提交后钩子 Post-Commit</h2><p><code>post-commit</code> 钩子在 <code>commit-msg</code> 钩子之后立即出发。其可以改变 <code>git commit</code> 命令的输出，因此主要被用作通知提醒。</p>
+<h3 id="提交后钩子-Post-Commit"><a href="#提交后钩子-Post-Commit" class="headerlink" title="提交后钩子 Post-Commit"></a>提交后钩子 Post-Commit</h3><p><code>post-commit</code> 钩子在 <code>commit-msg</code> 钩子之后立即出发。其可以改变 <code>git commit</code> 命令的输出，因此主要被用作通知提醒。</p>
 <p>本脚本没有参数传入，且它的退出状态也不会影响到提交。对于大多数 <code>post-commit</code> 钩子来说，我们都希望能够访问刚刚创建的那个提交。我们可以使用 <code>git rev-parse HEAD</code> 来获取最新提交的 SHA1 哈希值，或者使用 <code>git log -l</code> 来获取它的所有信息。</p>
 <p>举个例子，如果我们想要在每次提交快照时给我们的领导发个邮件（但如果这样做可能会被领导揍一顿……），就可以添加下面的 <code>post-commit</code> 钩子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> check_output</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get the git log --stat entry of the new commit</span></span><br><span class="line">log = check_output([<span class="string">'git'</span>, <span class="string">'log'</span>, <span class="string">'-1'</span>, <span class="string">'--stat'</span>, <span class="string">'HEAD'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a plaintext email message</span></span><br><span class="line">msg = MIMEText(<span class="string">"Look, I'm actually doing some work:\n\n%s"</span> % log)</span><br><span class="line"></span><br><span class="line">msg[<span class="string">'Subject'</span>] = <span class="string">'Git post-commit hook notification'</span></span><br><span class="line">msg[<span class="string">'From'</span>] = <span class="string">'mary@example.com'</span></span><br><span class="line">msg[<span class="string">'To'</span>] = <span class="string">'boss@example.com'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Send the message</span></span><br><span class="line">SMTP_SERVER = <span class="string">'smtp.example.com'</span></span><br><span class="line">SMTP_PORT = <span class="number">587</span></span><br><span class="line"></span><br><span class="line">session = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)</span><br><span class="line">session.ehlo()</span><br><span class="line">session.starttls()</span><br><span class="line">session.ehlo()</span><br><span class="line">session.login(msg[<span class="string">'From'</span>], <span class="string">'secretPassword'</span>)</span><br><span class="line"></span><br><span class="line">session.sendmail(msg[<span class="string">'From'</span>], msg[<span class="string">'To'</span>], msg.as_string())</span><br><span class="line">session.quit()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> smtplib</div><div class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</div><div class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> check_output</div><div class="line"></div><div class="line"><span class="comment">## Get the git log --stat entry of the new commit</span></div><div class="line">log = check_output([<span class="string">'git'</span>, <span class="string">'log'</span>, <span class="string">'-1'</span>, <span class="string">'--stat'</span>, <span class="string">'HEAD'</span>])</div><div class="line"></div><div class="line"><span class="comment">## Create a plaintext email message</span></div><div class="line">msg = MIMEText(<span class="string">"Look, I'm actually doing some work:\n\n%s"</span> % log)</div><div class="line"></div><div class="line">msg[<span class="string">'Subject'</span>] = <span class="string">'Git post-commit hook notification'</span></div><div class="line">msg[<span class="string">'From'</span>] = <span class="string">'mary@example.com'</span></div><div class="line">msg[<span class="string">'To'</span>] = <span class="string">'boss@example.com'</span></div><div class="line"></div><div class="line"><span class="comment">## Send the message</span></div><div class="line">SMTP_SERVER = <span class="string">'smtp.example.com'</span></div><div class="line">SMTP_PORT = <span class="number">587</span></div><div class="line"></div><div class="line">session = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)</div><div class="line">session.ehlo()</div><div class="line">session.starttls()</div><div class="line">session.ehlo()</div><div class="line">session.login(msg[<span class="string">'From'</span>], <span class="string">'secretPassword'</span>)</div><div class="line"></div><div class="line">session.sendmail(msg[<span class="string">'From'</span>], msg[<span class="string">'To'</span>], msg.as_string())</div><div class="line">session.quit()</div></pre></td></tr></table></figure>
 <p>可以使用 <code>post-commit</code> 来触发一个本地 <strong>持续集成系统</strong> <sup><a href="#note-2">注2</a></sup>，但是大多数时间我们会把这件事放在 <code>post-receive</code> 钩子里。这个钩子跑在服务端而非本地，且 <strong>每当</strong> 有开发者提交代码的时候都会运行，因此这里更加适合部署我们的持续集成系统。</p>
-<h2 id="切换后钩子_Post-Checkout">切换后钩子 Post-Checkout</h2><p><code>post-checkout</code> 钩子工作机制与 <code>post-commit</code> 钩子很像，其触发时机是每次我们使用 <code>git checkout</code> 切换到一个新引用上。它大可用在清理你工作目录生成的文件，尽管这么用可能会让人困惑。</p>
+<h3 id="切换后钩子-Post-Checkout"><a href="#切换后钩子-Post-Checkout" class="headerlink" title="切换后钩子 Post-Checkout"></a>切换后钩子 Post-Checkout</h3><p><code>post-checkout</code> 钩子工作机制与 <code>post-commit</code> 钩子很像，其触发时机是每次我们使用 <code>git checkout</code> 切换到一个新引用上。它大可用在清理你工作目录生成的文件，尽管这么用可能会让人困惑。</p>
 <p>这个钩子接受三个参数，它的退出状态不会影响到 <code>git checkout</code> 命令。</p>
 <ol>
 <li>之前 <code>HEAD</code> 的引用</li>
@@ -84,18 +175,18 @@ pre-commit.sample
 <li>一个标志，告诉我们切换的是分支还是文件，分支是 1，文件是 0。</li>
 </ol>
 <p>通常 Python 开发者们都会遇到一个蛋疼的问题：在切换分支的时候，之前生成的各种 <code>.pyc</code> 文件依然留在工作区内。解释器有时使用 <code>.pyc</code> 而非 <code>.py</code> 作为源文件。为了避免混乱，我们可以使用下面的钩子在每次切换新分支的时候清理所有的 <code>.pyc</code> 文件：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys, os, re</span><br><span class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> check_output</span><br><span class="line"></span><br><span class="line"><span class="comment"># Collect the parameters</span></span><br><span class="line">previous_head = sys.argv[<span class="number">1</span>]</span><br><span class="line">new_head = sys.argv[<span class="number">2</span>]</span><br><span class="line">is_branch_checkout = sys.argv[<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> is_branch_checkout == <span class="string">"0"</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"post-checkout: This is a file checkout. Nothing to do."</span></span><br><span class="line">    sys.exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"post-checkout: Deleting all '.pyc' files in working directory"</span></span><br><span class="line"><span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(<span class="string">'.'</span>):</span><br><span class="line">    <span class="keyword">for</span> filename <span class="keyword">in</span> files:</span><br><span class="line">        ext = os.path.splitext(filename)[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> ext == <span class="string">'.pyc'</span>:</span><br><span class="line">            os.unlink(os.path.join(root, filename))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys, os, re</div><div class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> check_output</div><div class="line"></div><div class="line"><span class="comment">## Collect the parameters</span></div><div class="line">previous_head = sys.argv[<span class="number">1</span>]</div><div class="line">new_head = sys.argv[<span class="number">2</span>]</div><div class="line">is_branch_checkout = sys.argv[<span class="number">3</span>]</div><div class="line"></div><div class="line"><span class="keyword">if</span> is_branch_checkout == <span class="string">"0"</span>:</div><div class="line">    <span class="keyword">print</span> <span class="string">"post-checkout: This is a file checkout. Nothing to do."</span></div><div class="line">    sys.exit(<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">"post-checkout: Deleting all '.pyc' files in working directory"</span></div><div class="line"><span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(<span class="string">'.'</span>):</div><div class="line">    <span class="keyword">for</span> filename <span class="keyword">in</span> files:</div><div class="line">        ext = os.path.splitext(filename)[<span class="number">1</span>]</div><div class="line">        <span class="keyword">if</span> ext == <span class="string">'.pyc'</span>:</div><div class="line">            os.unlink(os.path.join(root, filename))</div></pre></td></tr></table></figure>
 <p>对于钩子脚本来说，当前工作目录永远被设定为仓库根目录，因此 <code>os.walk(&#39;.&#39;)</code> 可以遍历仓库中的每一个文件。然后我们就可以删掉哪些后缀名是 <code>.pyc</code> 的文件啦。</p>
 <p>我们也可以使用 <code>post-checkout</code> 钩子基于已经切换到的分支来改变工作目录。例如我们可能使用一个叫做 <code>plugins</code> 的分支来存储核心代码之外的各种插件。如果这些插件体积不小，且其他的分支并不需要，我们就可以仅在切换到 <code>plugins</code> 分支时才有选择的进行插件构建。</p>
-<h2 id="预衍合钩子_Pre-Rebase">预衍合钩子 Pre-Rebase</h2><p><code>pre-rebase</code> 钩子在使用 <code>git rebase</code> 命令做任何改变之前触发，本钩子可以很好的确保一些糟糕情况的发生。</p>
+<h3 id="预衍合钩子-Pre-Rebase"><a href="#预衍合钩子-Pre-Rebase" class="headerlink" title="预衍合钩子 Pre-Rebase"></a>预衍合钩子 Pre-Rebase</h3><p><code>pre-rebase</code> 钩子在使用 <code>git rebase</code> 命令做任何改变之前触发，本钩子可以很好的确保一些糟糕情况的发生。</p>
 <p>钩子有两个参数：分岔起点的上游分支和正在被衍合的分支。当衍合当前分支时，第二个参数为空。脚本以非零状态退出会终止衍合。</p>
 <p>例如，如果我们在项目中完全不允许衍合，可以使用下面的钩子：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span><br><span class="line"></span></span><br><span class="line"><span class="comment"># Disallow all rebasing</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"pre-rebase: Rebasing is dangerous. Don't do it."</span></span><br><span class="line"><span class="built_in">exit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"></div><div class="line"><span class="comment">## Disallow all rebasing</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"pre-rebase: Rebasing is dangerous. Don't do it."</span></div><div class="line"><span class="built_in">exit</span> 1</div></pre></td></tr></table></figure>
 <p>现在每当我们运行 <code>git rebase</code> 都会看到下面的信息：</p>
-<pre><code>pre-rebase: Rebasing <span class="keyword">is</span> dangerous. Don't do <span class="keyword">it</span>.
-The pre-rebase hook refused <span class="keyword">to</span> rebase.
+<pre><code>pre-rebase: Rebasing is dangerous. Don&apos;t do it.
+The pre-rebase hook refused to rebase.
 </code></pre><p>如果想看更深入一点的例子，推荐研究自带的 <code>pre-rebase.sample</code> 脚本。这个脚本更加睿智一点，会在特定的情况下拒绝衍合。它会严查你准备衍合的分支是否已经合并到主线分支上。如果已合并，再进行衍合就会产生混乱，因此脚本就会拒绝衍合。</p>
-<h1 id="服务端钩子">服务端钩子</h1><p>服务端钩子和本地钩子的工作机制相同，区别仅在于其部署在服务端仓库（例如中央仓库或开发者的公共仓库）。由于部署在这种官方仓库，一些服务端钩子可以作为一种强制政策来拒绝一些特定提交。</p>
+<h2 id="服务端钩子"><a href="#服务端钩子" class="headerlink" title="服务端钩子"></a>服务端钩子</h2><p>服务端钩子和本地钩子的工作机制相同，区别仅在于其部署在服务端仓库（例如中央仓库或开发者的公共仓库）。由于部署在这种官方仓库，一些服务端钩子可以作为一种强制政策来拒绝一些特定提交。</p>
 <p>下文中我们将讨论三种服务端钩子：</p>
 <ul>
 <li><code>pre-receive</code></li>
@@ -104,14 +195,14 @@ The pre-rebase hook refused <span class="keyword">to</span> rebase.
 </ul>
 <p>所有的这些钩子都是为了让我们能够在 Git 推送的不同阶段做出反应。</p>
 <p>服务端钩子的输出会显示在客户端控制台上，因此将信息返回给开发者十分容易。但是我们应该记住这些脚本在结束执行之前不会返回终端的控制权，因此我们应该慎重处理那些运行时间较长的操作。</p>
-<h2 id="预接收钩子_Pre-Receive">预接收钩子 Pre-Receive</h2><p><code>pre-receive</code> 钩子在每次有用户执行 <code>git push</code> 来推送提交到仓库中时都会被执行。其仅能存在于那些作为推送目标的 <strong>远端仓库</strong>，而非在原始仓库。</p>
+<h3 id="预接收钩子-Pre-Receive"><a href="#预接收钩子-Pre-Receive" class="headerlink" title="预接收钩子 Pre-Receive"></a>预接收钩子 Pre-Receive</h3><p><code>pre-receive</code> 钩子在每次有用户执行 <code>git push</code> 来推送提交到仓库中时都会被执行。其仅能存在于那些作为推送目标的 <strong>远端仓库</strong>，而非在原始仓库。</p>
 <p>钩子在每次引用被更新之前都会运行，因此适合按照我们的意愿做成强制执行的开发政策。如果我们不希望某人进行推送，或者不喜欢某些提交信息的格式和提交内容，我们都可以使用这个钩子拒绝推送。尽管我们不能阻止开发者搞出一些乱七八糟的提交，但至少能使用 <code>pre-receive</code> 阻挡这些难看的提交进入中央仓库。</p>
 <p>本脚本不传入参数，但是每个正在被推送的引用都通过标准输入的方式分行传入脚本，格式如下：</p>
-<pre><code>&lt;old-value&gt; &lt;new-value&gt; &lt;<span class="keyword">ref</span>-name&gt;
+<pre><code>&lt;old-value&gt; &lt;new-value&gt; &lt;ref-name&gt;
 </code></pre><p>我们可以通过最基本的 <code>pre-receive</code> 脚本来看到本钩子是怎么工作的，下面的脚本仅仅是读入了引用内容并进行了输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> fileinput</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read in each ref that the user is trying to update</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fileinput.input():</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"pre-receive: Trying to push ref: %s"</span> % line</span><br><span class="line"></span><br><span class="line"><span class="comment"># Abort the push</span></span><br><span class="line"><span class="comment"># sys.exit(1)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> fileinput</div><div class="line"></div><div class="line"><span class="comment">## Read in each ref that the user is trying to update</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fileinput.input():</div><div class="line">    <span class="keyword">print</span> <span class="string">"pre-receive: Trying to push ref: %s"</span> % line</div><div class="line"></div><div class="line"><span class="comment">## Abort the push</span></div><div class="line"><span class="comment">## sys.exit(1)</span></div></pre></td></tr></table></figure>
 <p>不过，这里还是跟其他的钩子略有不同，因为信息是通过标准输入而非命令行参数传入的。当将本钩子防止到远端仓库的 <code>.git/hooks</code> 中，并对 <code>master</code> 分支进行推送时，我们就会看到如下信息出现在控制台上：</p>
-<pre><code>b<span class="number">6b36c697</span>eb<span class="number">2d24302f89</span>aa22d9170dfe609855b 85baa88c22b52ddd24d71f05db<span class="number">31f4e46d57</span>9095 refs/heads/master
+<pre><code>b6b36c697eb2d24302f89aa22d9170dfe609855b 85baa88c22b52ddd24d71f05db31f4e46d579095 refs/heads/master
 </code></pre><p>我们可以使用这些 SHA1 哈希值和一些底层 Git 命令，来检查即将生成的改动，通常有以下的用法：</p>
 <ul>
 <li>拒绝包含衍合了上游分支的提交；</li>
@@ -119,21 +210,102 @@ The pre-rebase hook refused <span class="keyword">to</span> rebase.
 <li>检查用户是否有权限来进行某些修改（多用于中央化的 Git 工作流）</li>
 </ul>
 <p>如果多个引用被提交，返回非零状态会取消全部的引用。如果我们想按照具体提交来接受或拒绝分支，就需要使用 <code>update</code> 钩子。</p>
-<h2 id="更新钩子_Update">更新钩子 Update</h2><p><code>update</code> 钩子在 <code>pre-receive</code> 之后被调用，工作原理差不多。其也会在所有东西被真实提交之前执行，但却分别为每一个推送的引用而调用。意思是说如果用户尝试推送四个分支，<code>update</code> 钩子就会尝试执行四次。与 <code>pre-receive</code> 不同的是，该钩子不需要读入标准输入，想法其接受如下的三个参数：</p>
+<h3 id="更新钩子-Update"><a href="#更新钩子-Update" class="headerlink" title="更新钩子 Update"></a>更新钩子 Update</h3><p><code>update</code> 钩子在 <code>pre-receive</code> 之后被调用，工作原理差不多。其也会在所有东西被真实提交之前执行，但却分别为每一个推送的引用而调用。意思是说如果用户尝试推送四个分支，<code>update</code> 钩子就会尝试执行四次。与 <code>pre-receive</code> 不同的是，该钩子不需要读入标准输入，想法其接受如下的三个参数：</p>
 <ul>
 <li>正在更新的引用名称；</li>
 <li>分支引用中存储的旧提交对象；</li>
 <li>分支引用中存储的新提交对象。</li>
 </ul>
 <p>这与传递给 <code>pre-receive</code> 钩子的信息相同，但是由于 <code>update</code> 在每一个分支更新时都会被触发，我们可以拒绝一部分分支而允许其他的分支提交。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">branch = sys.argv[<span class="number">1</span>]</span><br><span class="line">old_commit = sys.argv[<span class="number">2</span>]</span><br><span class="line">new_commit = sys.argv[<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"Moving '%s' from %s to %s"</span> % (branch, old_commit, new_commit)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Abort pushing only this branch</span></span><br><span class="line"><span class="comment"># sys.exit(1)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line">branch = sys.argv[<span class="number">1</span>]</div><div class="line">old_commit = sys.argv[<span class="number">2</span>]</div><div class="line">new_commit = sys.argv[<span class="number">3</span>]</div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">"Moving '%s' from %s to %s"</span> % (branch, old_commit, new_commit)</div><div class="line"></div><div class="line"><span class="comment">## Abort pushing only this branch</span></div><div class="line"><span class="comment">## sys.exit(1)</span></div></pre></td></tr></table></figure>
 <p>上面的 <code>update</code> 钩子仅仅输出了分支名和新旧提交哈希值。当给远端的仓库推送多个分支时，我们可以看到每个分支都执行了一次 <code>print</code> 语句。</p>
-<h2 id="接受后钩子_Post-Receive">接受后钩子 Post-Receive</h2><p><code>post-receive</code> 钩子在成功推送之后调用，适宜用作进行消息提示。对许多工作流来说，本钩子比 <code>post-commit</code> 更适合触发通知，因为钩子放在公共服务器上改起来方便，分发给每一个用户放在本地机器上改都没法改。在持续集成系统里，经常使用 <code>post-receive</code> 钩子给其他开发者发邮件。</p>
+<h3 id="接受后钩子-Post-Receive"><a href="#接受后钩子-Post-Receive" class="headerlink" title="接受后钩子 Post-Receive"></a>接受后钩子 Post-Receive</h3><p><code>post-receive</code> 钩子在成功推送之后调用，适宜用作进行消息提示。对许多工作流来说，本钩子比 <code>post-commit</code> 更适合触发通知，因为钩子放在公共服务器上改起来方便，分发给每一个用户放在本地机器上改都没法改。在持续集成系统里，经常使用 <code>post-receive</code> 钩子给其他开发者发邮件。</p>
 <p>本钩子没有参数，但是会从标准输入接入与 <code>pre-receive</code> 一样的输入参数。</p>
-<h1 id="总结">总结</h1><p>通过本文我们学习了如何使用 Git 钩子改变内部行为以及项目中特定事件触发时进行通知。钩子就是放置在 <code>.git/hooks</code> 路径下的普通脚本，这使得他们易于安装和制定。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过本文我们学习了如何使用 Git 钩子改变内部行为以及项目中特定事件触发时进行通知。钩子就是放置在 <code>.git/hooks</code> 路径下的普通脚本，这使得他们易于安装和制定。</p>
 <p>我们也研究了一些最普通的本地及服务端钩子，这使得我们可以在整个开发的生命周期中插入操作。我们现在知道了如何在提交创建、推送过程的每一步中执行自定义操作。只需要懂一点脚本知识，我们就可以对 Git 仓库做很多想做的事情。</p>
-<h1 id="注释">注释</h1><ul>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><ul>
 <li><b id="note-1">注1：</b>exit 命令一般用于结束一个脚本，能返回一个值给父进程，执行成功的话这个值会是 0，因此非零退出表示脚本执行失败。如果一个脚本以不带参数的 exit 命令结束，脚本的退出状态码将会是执行 exit 命令前的最后一个命令的退出码（用 <code>$?</code> 表示），详见：<a href="http://shouce.jb51.net/shell/exit-status.html" target="_blank" rel="external">退出和退出状态</a>。</li>
 <li><b id="note-2">注2：</b>持续集成是一种软件项目管理方法，依据资产库（源码，类库等）的变更自动完成编译、测试、部署和反馈，详见阮老师的博文：<a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="external">什么是持续集成系统？</a></li>
 </ul>
-</div></article></div></section><footer><div class="paginator"><a href="/2015/11/18/Coroutine-and-Event-Loop/" class="prev">上一篇</a><a href="/2015/10/05/Using-Branches/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2016 <a href="http://malcolmyu.github.io">malcolm yu</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
+        <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
+
+        gitalk.render('gitalk-container')
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

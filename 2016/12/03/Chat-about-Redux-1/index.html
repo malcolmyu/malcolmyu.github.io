@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>闲聊 Redux（上）</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="闲聊 Redux（上）"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        闲聊 Redux（上）
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2016-12-03T00:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2016-12-03
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/技术研究/">技术研究</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/Redux/">Redux</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#烦人的概念"><span class="toc-text">烦人的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dispatch：更新状态、触发回调"><span class="toc-text">dispatch：更新状态、触发回调</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#subscriber：注册回调、做好清理"><span class="toc-text">subscriber：注册回调、做好清理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#精神内核"><span class="toc-text">精神内核</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#action：仅仅是个对象"><span class="toc-text">action：仅仅是个对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reducer：可以自由组合的调度器"><span class="toc-text">reducer：可以自由组合的调度器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#compose：函数式编程的私货"><span class="toc-text">compose：函数式编程的私货</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2016/12/03/Chat-about-Redux-1/title.png" alt="redux" title="redux">
+<p>Redux 算是 React 全家桶里最饱受争议的一个框架，就算是天天变 API 的 <a href="https://github.com/ReactTraining/react-router" target="_blank" rel="external">React-Router</a>，也因为占据了意识形态的最高点 —— 便捷优雅的声明式路由、异步路由控制与加载，导致尽管骂声不断，却没有一个人说不用。反观 Redux，用不惯的说它夹杂了太多的私心，找遍业务线所有的代码，也找不到一个逻辑用到这么复杂的函数式；用的惯的也嫌它使用太复杂，凭空多出几个文件夹、丑陋的 <code>switch</code>、一遍一遍的常量声明，真是端起键盘开发，放下鼠标骂娘。与 React-Router 横行社区不同，Redux 从来不缺竞争者，前有 Reflux，后有 <a href="https://github.com/mobxjs/mobx" target="_blank" rel="external">Mobx</a>；但似乎也没见有一个竞争者真正撼动 redux 的地位：完美适配服务端渲染，完善的调试工具与社区支持，都让 Redux 成为 React 学习者首选的数据流框架。</p>
+<p>今天就来简单聊聊这个可能是这两年最火的数据流框架：<a href="https://github.com/reactjs/redux" target="_blank" rel="external">Redux</a>。</p>
+<a id="more"></a>
+<p>本文将分为上下两部分，在第一部分中我们会聊一聊 Redux 那些烦人的概念，在第二部分中我们会聊一聊『中间件』这一使 Redux 获得社区广泛支持的大杀器。</p>
+<h2 id="烦人的概念"><a href="#烦人的概念" class="headerlink" title="烦人的概念"></a>烦人的概念</h2><p>没用过 Redux 的开发者打开它的文档，扑面而来就是难懂的概念，什么 <code>compose</code>、<code>applyMiddleware</code>、<code>reducer</code> 之类，引得大家都尴尬了起来，关了网页翻身又刷知乎去了。实际上我个人认为，把这些繁杂的概念丢到 Redux 的首页介绍上简直就是一个败笔，这些东西实际上都是在后来的开发过程中，高度抽象的业务逻辑，根本没有必要直接介绍给用户。</p>
+<p>那 Redux 到底是个啥咧？我们抛去这些复杂的概念不看，先看看我们开发中最常用到的，也是最核心的概念：<a href="https://cn.redux.js.org/docs/basics/Store.html" target="_blank" rel="external">store</a>。这个 store 顾名思义，就是一个数据存储的结构，我们可以自己先自己脑补一下，实现一个数据存储需要写什么功能呢？大概不外乎就是『获取数据』、『存储数据』，但是 Redux 的 store 显然不是这么简单，因为在修改数据之余，我们还需要监听数据变化，以便进行一些其他的操作：比如跟着修改组件监听的 <code>props</code>；而这个数据监听的行为，实际上是由使用者定义的，因此还需要接入一套事件管理的机制：『订阅事件』、『取消订阅』、『事件发布』。</p>
+<p>简单来说，Redux 的 store 就是<strong>数据管理与事件订阅的组合</strong>，实际上，这个基本的内核也并非 Redux 的原创，而是 Facebook 最早提出来的 <a href="https://facebook.github.io/flux/" target="_blank" rel="external">Flux</a> 的概念。翻一下它的<a href="https://github.com/reactjs/redux/blob/master/src/createStore.js#L247" target="_blank" rel="external">源码</a>，可以明显的看到它对外提供了三个方法：<code>dispatch</code>，<code>subscribe</code> 和 <code>getState</code>，翻译一下就是『调度』、『订阅』和『状态获取』。这个 <code>getState</code> 就不多说了，就是获取一份 store 的当前数据，我们重点聊一聊 <code>dispatch</code> 和 <code>subscribe</code>。</p>
+<h3 id="dispatch：更新状态、触发回调"><a href="#dispatch：更新状态、触发回调" class="headerlink" title="dispatch：更新状态、触发回调"></a>dispatch：更新状态、触发回调</h3><p>我们说 store 是数据管理与事件订阅的组合，那么 <code>dispatch</code> 方法就是 store 最核心的功能。看一下它代码的精简版：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">dispatch</span>(<span class="params">action</span>) </span>&#123;</div><div class="line">  <span class="comment">// 1. 通过 Reducer 遍历 action，更新 state</span></div><div class="line">  currentState = currentReducer(currentState, action)</div><div class="line"></div><div class="line">  <span class="comment">// 2. 触发通过 subscribe 订阅的回调</span></div><div class="line">  <span class="keyword">var</span> listeners = currentListeners = nextListeners</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; listeners.length; i++) &#123;</div><div class="line">    <span class="keyword">var</span> listener = listeners[i]</div><div class="line">    listener()</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 3. 返回 action</span></div><div class="line">  <span class="keyword">return</span> action</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>是不是简洁明了？基本上就干了两件事：<strong>更新当前状态</strong>，<strong>触发监听回调</strong>。读者也许会问，这里的 <code>currentReducer</code> 方法是个啥，<code>listeners</code> 又是哪里注册的？我们按下不表，只简单的说一下：前者跟 <code>reducer</code> 这个概念有关，我们随后会讲到；后者就是 <code>subscribe</code> 方法注册的，等下也会细说。</p>
+<p>注意到，<code>dispatch</code> 函数的参数是 action，这个东西的含义我们会在讲 reducer 的时候<a href="#核心的思想">简单说明</a>。</p>
+<p>其实笔者个人认为，最需要注意的一点是上面注释中的第三点：<strong><code>dispatch</code> 方法的返回值是 action</strong>。也就是说，对于没有使用中间件，或中间件也遵守这一原则的情况下，是可以利用 <code>dispatch</code> 方法的返回值，来处理一些贴近业务的耦合代码，例如使用了 <a href="https://github.com/acdlite/redux-promise" target="_blank" rel="external">redux-promise</a> 中间件时，我们可以获取 <code>dispatch</code> 的返回值的 <code>payload</code> 属性（它是那个处理中的 promise），然后等这个 <code>payload</code> 处理完成后进行一些业务逻辑操作。</p>
+<h3 id="subscriber：注册回调、做好清理"><a href="#subscriber：注册回调、做好清理" class="headerlink" title="subscriber：注册回调、做好清理"></a>subscriber：注册回调、做好清理</h3><p>我们再来看下 <code>subscriber</code> 代码的精简版，同样是非常的好理解：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">subscribe</span>(<span class="params">listener</span>) </span>&#123;</div><div class="line">  <span class="comment">// 1. 注册回调</span></div><div class="line">  nextListeners.push(listener)</div><div class="line"></div><div class="line">  <span class="comment">// 2. 返回清理函数</span></div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">unsubscribe</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> index = nextListeners.indexOf(listener)</div><div class="line">    nextListeners.splice(index, <span class="number">1</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总共又是干了两件事，第一是把回调注册到 <code>nextListeners</code> 中，供 <code>dispatch</code> 时调用；第二是返回一个清理注册函数的函数，便于用户进行注册函数的清理。这里要注意的，就是第二步清理函数。react 初心者应该都会遇到下面的这行错误提示：</p>
+<p><img src="https://ww1.sinaimg.cn/large/7921624bgw1fb55pktexgj21kw01qdhl.jpg" alt="setState 错误"></p>
+<p>导致这个错误的原因，就是异步调用 <code>setState</code>，结果执行的时候，由于异步的关系，代码所在的组件都被销毁了。当你使用 redux 时，你会发现基本不会出现这样的提示，那就是因为 redux <strong>在组件销毁的时候调用了清理函数</strong>，因此所有能导致状态发生变化的操作都会在组件移除时被清理。</p>
+<h2 id="精神内核"><a href="#精神内核" class="headerlink" title="精神内核"></a>精神内核</h2><p>说完 redux 跟 flux 相关的内核，再说下 redux 独有的特性：reducer。reducer 是传入给 <code>createStore</code> 的参数，是创建 store 的最基本依赖。先说下 reducer 是什么，这东西基本等于 flux 中 <a href="https://facebook.github.io/flux/docs/dispatcher.html" target="_blank" rel="external">dispatcher</a> 的升级版。dispatcher 翻译过来就是『调度器』，我们知道 <code>dispatch</code> 是『进行调度』，<code>subscribe</code> 是『监听调度』，那 reducer 就是处理『怎么调度』。</p>
+<p>如要实现下面这个简单的功能：</p>
+<p><img src="https://ww1.sinaimg.cn/large/7921624bgw1fb5blrrg9vg204101pwed.gif" alt="简单的例子"></p>
+<p>就需要编写这样一个 reducer：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> reducer = <span class="function">(<span class="params">state = <span class="number">0</span>, action</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">switch</span> (action.type) &#123;</div><div class="line">    <span class="keyword">case</span> <span class="string">'INCREMENT'</span>:</div><div class="line">      <span class="keyword">return</span> state + <span class="number">1</span></div><div class="line">    <span class="keyword">case</span> <span class="string">'DECREMENT'</span>:</div><div class="line">      <span class="keyword">return</span> state - <span class="number">1</span></div><div class="line">    <span class="keyword">default</span>:</div><div class="line">      <span class="keyword">return</span> state</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>它的作用就是根据 action 的类型来处理对 <code>state</code> 的改变，既然多次提到了 action，我们先解释一下它。</p>
+<h3 id="action：仅仅是个对象"><a href="#action：仅仅是个对象" class="headerlink" title="action：仅仅是个对象"></a>action：仅仅是个对象</h3><p>它是一个<strong>纯对象</strong>，且必须带一个 <code>type</code> 属性。</p>
+<p>为什么要这样设计呢？想象一下上面的例子：我们对数字进行修改，点左边减少、点右边增加，那么每一次点击就会触发一次 action —— 因为每点击一次状态肯定会发生改变；但是左边的点击和右边的点击触发的肯定是<strong>不同的 action</strong> —— 因为改变状态的方式不同。区分 action 的就是它的 <code>type</code> 属性（在这个例子里就是 <code>&#39;INCREMENT&#39;</code> 和 <code>&#39;DECREMENT&#39;</code>）；而不同 action 对应的不同操作就是由 reducer 来处理（如上面的 <code>state + 1</code> 和 <code>state - 1</code>）。</p>
+<p>根据 action，Redux 还衍生出一个 <code>actionCreator</code> 的概念 —— 其实这个概念也很无聊，它指代一个 action 的创造函数，毕竟从用户行为转换到 action 对象还需要一些过程，比如下面这样：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">incrementIfOdd</span>(<span class="params">num</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">dispatch</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (num % <span class="number">2</span> === <span class="number">0</span>) &#123;</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    dispatch(&#123;</div><div class="line">      <span class="attr">type</span>: <span class="string">'INCREMENT'</span>,</div><div class="line">      <span class="attr">payload</span>: num</div><div class="line">    &#125;);</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个例子，对 action 进行了逻辑处理，只有奇数才会触发 <code>dispatch</code> 行为。这里你可能会注意到，它返回的并非一个纯对象，这是因为使用了 <a href="https://github.com/gaearon/redux-thunk" target="_blank" rel="external">redux-thunk</a> 中间件，action 的形态就从纯对象变为函数，这在下篇中会有所讲述。</p>
+<h3 id="reducer：可以自由组合的调度器"><a href="#reducer：可以自由组合的调度器" class="headerlink" title="reducer：可以自由组合的调度器"></a>reducer：可以自由组合的调度器</h3><p>从上面的例子中，我们可以看到 reducer 的主要功能是进行状态的改变的调度控制。但这并非 reducer 的特色，其实它最大的特色正如其名，是进行状态树的<strong>缩减合并</strong>。这是什么意思呢，我们先看一段 js 数组 reducer 的用法：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> arr = [ &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;, &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;, &#123; <span class="attr">c</span>: <span class="number">3</span> &#125; ];</div><div class="line">arr.reduce(<span class="function">(<span class="params">prev, next</span>) =&gt;</span> (&#123; ...next, <span class="attr">child</span>: prev &#125;), &#123;&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 会变成这样的对象：</span></div><div class="line"><span class="comment">// &#123; c: 3, child: &#123; b: 2, child: &#123; a: 1, child: &#123;&#125; &#125; &#125; &#125;</span></div></pre></td></tr></table></figure>
+<p>那么，redux 的 reducer 也起到了类似的作用（尽管它的源码没有一行用到 <code>reduce</code> 函数😂），它可以将我们编写的调度器 reducer 集合起来，最终集合成一个调度器树。这样做的意义在于，在保证了<strong>唯一状态树的前提</strong>之下，我们在编码时还能只关注状态调度的某一细节。那么集合 reducer 的方法呢，就叫做 <a href="https://redux.js.org/docs/api/combineReducers.html" target="_blank" rel="external"><code>combineReducers</code></a>。</p>
+<p><img src="https://7xinjg.com1.z0.glb.clouddn.com/combined-redux.png" alt="combineReducer"></p>
+<p>这里我们就不对具体的 API 进行讲解了，综合来说，reducer 带给 redux 最大的特性就在于：<strong>编码时关心单个 reducer，但最终生成统一调度器，调度生成单一的状态树</strong>。</p>
+<h2 id="compose：函数式编程的私货"><a href="#compose：函数式编程的私货" class="headerlink" title="compose：函数式编程的私货"></a>compose：函数式编程的私货</h2><p>Redux 有一个单独的概念，叫做 compose，这其实是函数式编程里面的一个套路，可以单拿出来说一说。</p>
+<p>前一阵阮老师翻译过一本《黑客与画家》，曾经掀起过一阵 lisp 学习小高潮。lisp 是一门函数是一等公民的语言，万物皆函数，要处理一个顺序逻辑，基本上就得这么写：<code>a(b(c(d(e()))))</code>，所以打开你的 lisp 代码，最后几行基本是这样的：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">        ))))))))))))</div><div class="line">      ))))))))</div><div class="line">    )))))</div><div class="line">  ))</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>这简直就是阻碍函数式编程普及的恶魔啊！不过没关系，这里要将的 <code>compose</code> 方法，就是起到代码美化作用的：它可以把上面的 <code>a(b(c(d(e(123)))))</code> 改成：<code>compose(a,b,c,d,e)(123)</code>。是不是瞬间有了活下去的动力？</p>
+<p>我们来考虑考虑，在 ES6 里，这个函数应该怎么写：</p>
+<ol>
+<li>首先我们应该把传入的一坨函数改造成数组，这个 ES6 里面的 <a href="https://es6.ruanyifeng.com/#docs/function#rest参数" target="_blank" rel="external">rest 参数</a>已经帮我们很好的搞定了；</li>
+<li>其次我们需要<strong>逆序</strong>执行函数，这就可以用到 <code>reduceRight</code>。</li>
+</ol>
+<p>我们来实现一下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span>(<span class="params">...funcs</span>) </span>&#123;</div><div class="line">   <span class="keyword">let</span> last = funcs.pop();</div><div class="line">   <span class="keyword">let</span> rest = funcs;</div><div class="line">   </div><div class="line">   <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> rest.reduceRight(<span class="function">(<span class="params">compose, f</span>) =&gt;</span> f(compose), last(...args));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有了这个函数，就可以进行函数的连接操作了。当然，在上篇介绍的基本概念里并没有用到它的地方，它真正的用处还是在于下篇的中间件。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文介绍了 Redux 一些基本理念，剥去 Redux 神秘的面纱，我们发现它就是一个 flux 内核加 reducer 缩减组合的套路，后面这个套路好像还是从 Elm 里面抄的。下篇我们会对 Redux 的扩展手段『中间件』进行详细的讲解，这才是令 Redux 大行其道的最重要原因。</p>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
+        <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
+
+        gitalk.render('gitalk-container')
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

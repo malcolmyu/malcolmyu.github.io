@@ -1,4 +1,97 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Promise A+ 规范 · malcolm-blog</title><meta name="description" content="Promise A+ 规范 - malcolm yu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/sombiesombie" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/malcolmyu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Promise A+ 规范</h1><div class="post-info">2015年6月12日</div><div class="post-content"><p>英文原文：<a href="https://promisesaplus.com/" target="_blank" rel="external">Promise/A+</a><br>图灵译文：<a href="http://www.ituring.com.cn/article/66566" target="_blank" rel="external">【翻译】Promises/A+规范</a></p>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>Promise A+ 规范</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="Promise A+ 规范"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        Promise A+ 规范
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2015-06-12T00:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2015-06-12
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/技术研究/">技术研究</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/翻译/">翻译</a>·<a href="/tags/Promise/">Promise</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#术语"><span class="toc-text">术语</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise"><span class="toc-text">Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#thenable"><span class="toc-text">thenable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#值（value）"><span class="toc-text">值（value）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异常（exception）"><span class="toc-text">异常（exception）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#据因（reason）"><span class="toc-text">据因（reason）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#要求"><span class="toc-text">要求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-的状态"><span class="toc-text">Promise 的状态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#等待态（Pending）"><span class="toc-text">等待态（Pending）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#执行态（Fulfilled）"><span class="toc-text">执行态（Fulfilled）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拒绝态（Rejected）"><span class="toc-text">拒绝态（Rejected）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Then-方法"><span class="toc-text">Then 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参数可选"><span class="toc-text">参数可选</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#onFulfilled-特性"><span class="toc-text">onFulfilled 特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#onRejected-特性"><span class="toc-text">onRejected 特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调用时机"><span class="toc-text">调用时机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调用要求"><span class="toc-text">调用要求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多次调用"><span class="toc-text">多次调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#返回"><span class="toc-text">返回</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-解决过程"><span class="toc-text">Promise 解决过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#x-与-promise-相等"><span class="toc-text">x 与 promise 相等</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#x-为-Promise"><span class="toc-text">x 为 Promise</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#x-为对象或函数"><span class="toc-text">x 为对象或函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-text">注释</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>英文原文：<a href="https://promisesaplus.com/" target="_blank" rel="external">Promise/A+</a><br>图灵译文：<a href="http://www.ituring.com.cn/article/66566" target="_blank" rel="external">【翻译】Promises/A+规范</a></p>
 <p><strong>译者序：</strong>一年前曾译过 Promise/A+ 规范，适时完全不懂 Promise 的思想，纯粹将翻译的过程当作学习，旧文译下来诘屈聱牙，读起来十分不顺畅。谁知这样一篇拙译，一年之间竟然点击数千，成为谷歌搜索的头条。今日在理解之后重译此规范，以飨读者。</p>
 <a id="more"></a>
 <p><strong>一个开放、健全且通用的 JavaScript Promise 标准。由开发者制定，供开发者参考。</strong></p>
@@ -15,58 +108,58 @@
 <p>本规范详细列出了 <code>then</code> 方法的执行过程，所有遵循 Promises/A+ 规范实现的 promise 均可以本标准作为参照基础来实施 <code>then</code> 方法。因而本规范是十分稳定的。尽管 Promise/A+ 组织有时可能会修订本规范，但主要是为了处理一些特殊的边界情况，且这些改动都是微小且向下兼容的。如果我们要进行大规模不兼容的更新，我们一定会在事先进行谨慎地考虑、详尽的探讨和严格的测试。</p>
 <p>从历史上说，本规范实际上是把之前 <a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">Promise/A 规范</a> 中的建议明确成为了行为标准：我们一方面扩展了原有规范约定俗成的行为，一方面删减了原规范的一些特例情况和有问题的部分。</p>
 <p>最后，核心的 Promises/A+ 规范不设计如何创建、解决和拒绝 promise，而是专注于提供一个通用的 <code>then</code> 方法。上述对于 promises 的操作方法将来在其他规范中可能会提及。</p>
-<h1 id="术语">术语</h1><hr>
-<h2 id="Promise">Promise</h2><p>promise 是一个拥有 <code>then</code> 方法的对象或函数，其行为符合本规范；</p>
-<h2 id="thenable">thenable</h2><p>是一个定义了 <code>then</code> 方法的对象或函数，文中译作“拥有 <code>then</code> 方法”；</p>
-<h2 id="值（value）">值（value）</h2><p>指任何 JavaScript 的合法值（包括 <code>undefined</code> , thenable 和 promise）；</p>
-<h2 id="异常（exception）">异常（exception）</h2><p>是使用 <code>throw</code> 语句抛出的一个值。</p>
-<h2 id="据因（reason）">据因（reason）</h2><p>表示一个 promise 的拒绝原因。</p>
-<h1 id="要求">要求</h1><hr>
-<h2 id="Promise_的状态">Promise 的状态</h2><p>一个 Promise 的当前状态必须为以下三种状态中的一种：<strong>等待态（Pending）</strong>、<strong>执行态（Fulfilled）</strong>和<strong>拒绝态（Rejected）</strong>。</p>
-<h3 id="等待态（Pending）">等待态（Pending）</h3><p>处于等待态时，promise 需满足以下条件：</p>
+<h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><hr>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>promise 是一个拥有 <code>then</code> 方法的对象或函数，其行为符合本规范；</p>
+<h3 id="thenable"><a href="#thenable" class="headerlink" title="thenable"></a>thenable</h3><p>是一个定义了 <code>then</code> 方法的对象或函数，文中译作“拥有 <code>then</code> 方法”；</p>
+<h3 id="值（value）"><a href="#值（value）" class="headerlink" title="值（value）"></a>值（value）</h3><p>指任何 JavaScript 的合法值（包括 <code>undefined</code> , thenable 和 promise）；</p>
+<h3 id="异常（exception）"><a href="#异常（exception）" class="headerlink" title="异常（exception）"></a>异常（exception）</h3><p>是使用 <code>throw</code> 语句抛出的一个值。</p>
+<h3 id="据因（reason）"><a href="#据因（reason）" class="headerlink" title="据因（reason）"></a>据因（reason）</h3><p>表示一个 promise 的拒绝原因。</p>
+<h2 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h2><hr>
+<h3 id="Promise-的状态"><a href="#Promise-的状态" class="headerlink" title="Promise 的状态"></a>Promise 的状态</h3><p>一个 Promise 的当前状态必须为以下三种状态中的一种：<strong>等待态（Pending）</strong>、<strong>执行态（Fulfilled）</strong>和<strong>拒绝态（Rejected）</strong>。</p>
+<h4 id="等待态（Pending）"><a href="#等待态（Pending）" class="headerlink" title="等待态（Pending）"></a>等待态（Pending）</h4><p>处于等待态时，promise 需满足以下条件：</p>
 <ul>
 <li>可以迁移至执行态或拒绝态</li>
 </ul>
-<h3 id="执行态（Fulfilled）">执行态（Fulfilled）</h3><p>处于执行态时，promise 需满足以下条件：</p>
+<h4 id="执行态（Fulfilled）"><a href="#执行态（Fulfilled）" class="headerlink" title="执行态（Fulfilled）"></a>执行态（Fulfilled）</h4><p>处于执行态时，promise 需满足以下条件：</p>
 <ul>
 <li>不能迁移至其他任何状态</li>
 <li>必须拥有一个<strong>不可变</strong>的终值</li>
 </ul>
-<h3 id="拒绝态（Rejected）">拒绝态（Rejected）</h3><p>处于拒绝态时，promise 需满足以下条件：</p>
+<h4 id="拒绝态（Rejected）"><a href="#拒绝态（Rejected）" class="headerlink" title="拒绝态（Rejected）"></a>拒绝态（Rejected）</h4><p>处于拒绝态时，promise 需满足以下条件：</p>
 <ul>
 <li>不能迁移至其他任何状态</li>
 <li>必须拥有一个<strong>不可变</strong>的据因</li>
 </ul>
 <p>这里的不可变指的是恒等（即可用 <code>===</code> 判断相等），而不是意味着更深层次的不可变（<strong>译者注：</strong> 盖指当 value 或 reason 不是基本值时，只要求其引用地址相等，但属性值可被更改）。</p>
-<h2 id="Then_方法"><strong>Then 方法</strong></h2><p>一个 promise 必须提供一个 <code>then</code> 方法以访问其当前值、终值和据因。</p>
+<h3 id="Then-方法"><a href="#Then-方法" class="headerlink" title="Then 方法"></a><strong>Then 方法</strong></h3><p>一个 promise 必须提供一个 <code>then</code> 方法以访问其当前值、终值和据因。</p>
 <p>promise 的 <code>then</code> 方法接受两个参数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise.then(onFulfilled, onRejected)</span><br></pre></td></tr></table></figure>
-<h3 id="参数可选">参数可选</h3><p><code>onFulfilled</code> 和 <code>onRejected</code> 都是可选参数。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">promise.then(onFulfilled, onRejected)</div></pre></td></tr></table></figure>
+<h4 id="参数可选"><a href="#参数可选" class="headerlink" title="参数可选"></a>参数可选</h4><p><code>onFulfilled</code> 和 <code>onRejected</code> 都是可选参数。</p>
 <ul>
 <li>如果 <code>onFulfilled</code> 不是函数，其必须被忽略</li>
 <li>如果 <code>onRejected</code> 不是函数，其必须被忽略</li>
 </ul>
-<h3 id="onFulfilled_特性"><code>onFulfilled</code> 特性</h3><p>如果 <code>onFulfilled</code> 是函数：</p>
+<h4 id="onFulfilled-特性"><a href="#onFulfilled-特性" class="headerlink" title="onFulfilled 特性"></a><code>onFulfilled</code> 特性</h4><p>如果 <code>onFulfilled</code> 是函数：</p>
 <ul>
 <li>当 <code>promise</code> 执行结束后其必须被调用，其第一个参数为 <code>promise</code> 的终值</li>
 <li>在 <code>promise</code> 执行结束前其不可被调用</li>
 <li>其调用次数不可超过一次</li>
 </ul>
-<h3 id="onRejected_特性"><code>onRejected</code> 特性</h3><p>如果 <code>onRejected</code> 是函数：</p>
+<h4 id="onRejected-特性"><a href="#onRejected-特性" class="headerlink" title="onRejected 特性"></a><code>onRejected</code> 特性</h4><p>如果 <code>onRejected</code> 是函数：</p>
 <ul>
 <li>当 <code>promise</code> 被拒绝执行后其必须被调用，其第一个参数为 <code>promise</code> 的据因</li>
 <li>在 <code>promise</code> 被拒绝执行前其不可被调用</li>
 <li>其调用次数不可超过一次</li>
 </ul>
-<h3 id="调用时机">调用时机</h3><p><code>onFulfilled</code> 和 <code>onRejected</code> 只有在<a href="http://es5.github.io/#x10.3" target="_blank" rel="external">执行环境</a>堆栈仅包含<strong>平台代码</strong>时才可被调用<a href="#note-1">注1</a></p>
-<h3 id="调用要求">调用要求</h3><p><code>onFulfilled</code> 和 <code>onRejected</code> 必须被作为函数调用（即没有 <code>this</code> 值）<sup><a href="#note-2">注2</a></sup></p>
-<h3 id="多次调用">多次调用</h3><p><code>then</code> 方法可以被同一个 <code>promise</code> 调用多次</p>
+<h4 id="调用时机"><a href="#调用时机" class="headerlink" title="调用时机"></a>调用时机</h4><p><code>onFulfilled</code> 和 <code>onRejected</code> 只有在<a href="http://es5.github.io/#x10.3" target="_blank" rel="external">执行环境</a>堆栈仅包含<strong>平台代码</strong>时才可被调用<a href="#note-1">注1</a></p>
+<h4 id="调用要求"><a href="#调用要求" class="headerlink" title="调用要求"></a>调用要求</h4><p><code>onFulfilled</code> 和 <code>onRejected</code> 必须被作为函数调用（即没有 <code>this</code> 值）<sup><a href="#note-2">注2</a></sup></p>
+<h4 id="多次调用"><a href="#多次调用" class="headerlink" title="多次调用"></a>多次调用</h4><p><code>then</code> 方法可以被同一个 <code>promise</code> 调用多次</p>
 <ul>
 <li>当 <code>promise</code> 成功执行时，所有 <code>onFulfilled</code> 需按照其注册顺序依次回调</li>
 <li>当 <code>promise</code> 被拒绝执行时，所有的 <code>onRejected</code> 需按照其注册顺序依次回调</li>
 </ul>
-<h3 id="返回">返回</h3><p><code>then</code> 方法必须返回一个 <code>promise</code> 对象 <sup><a href="#note-3">注3</a></sup></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise2 = promise1.then(onFulfilled, onRejected);</span><br></pre></td></tr></table></figure>
+<h4 id="返回"><a href="#返回" class="headerlink" title="返回"></a>返回</h4><p><code>then</code> 方法必须返回一个 <code>promise</code> 对象 <sup><a href="#note-3">注3</a></sup></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">promise2 = promise1.then(onFulfilled, onRejected);</div></pre></td></tr></table></figure>
 <ul>
 <li>如果 <code>onFulfilled</code> 或者 <code>onRejected</code> 返回一个值 <code>x</code> ，则运行下面的 <strong>Promise 解决过程</strong>：<code>[[Resolve]](promise2, x)</code></li>
 <li>如果 <code>onFulfilled</code> 或者 <code>onRejected</code> 抛出一个异常 <code>e</code> ，则 <code>promise2</code> 必须拒绝执行，并返回拒因 <code>e</code></li>
@@ -74,17 +167,17 @@
 <li>如果 <code>onRejected</code> 不是函数且 <code>promise1</code> 拒绝执行， <code>promise2</code> 必须拒绝执行并返回相同的据因</li>
 </ul>
 <p><strong>译者注：</strong> 理解上面的“返回”部分非常重要，即：<strong>不论 <code>promise1</code> 被 reject 还是被 resolve 时 <code>promise2</code> 都会被 resolve，只有出现异常时才会被 rejected</strong>。</p>
-<h2 id="Promise_解决过程"><strong>Promise 解决过程</strong></h2><p><strong>Promise 解决过程</strong> 是一个抽象的操作，其需输入一个 <code>promise</code> 和一个值，我们表示为 <code>[[Resolve]](promise, x)</code>，如果 <code>x</code> 有 <code>then</code> 方法且看上去像一个 Promise ，解决程序即尝试使 <code>promise</code> 接受 <code>x</code> 的状态；否则其用 <code>x</code> 的值来执行 <code>promise</code> 。</p>
+<h3 id="Promise-解决过程"><a href="#Promise-解决过程" class="headerlink" title="Promise 解决过程"></a><strong>Promise 解决过程</strong></h3><p><strong>Promise 解决过程</strong> 是一个抽象的操作，其需输入一个 <code>promise</code> 和一个值，我们表示为 <code>[[Resolve]](promise, x)</code>，如果 <code>x</code> 有 <code>then</code> 方法且看上去像一个 Promise ，解决程序即尝试使 <code>promise</code> 接受 <code>x</code> 的状态；否则其用 <code>x</code> 的值来执行 <code>promise</code> 。</p>
 <p>这种 <em>thenable</em> 的特性使得 Promise 的实现更具有通用性：只要其暴露出一个遵循 Promise/A+ 协议的 <code>then</code> 方法即可；这同时也使遵循 Promise/A+ 规范的实现可以与那些不太规范但可用的实现能良好共存。</p>
 <p>运行 <code>[[Resolve]](promise, x)</code> 需遵循以下步骤：</p>
-<h3 id="x_与_promise_相等"><code>x</code> 与 <code>promise</code> 相等</h3><p>如果 <code>promise</code> 和 <code>x</code> 指向同一对象，以 <code>TypeError</code> 为据因拒绝执行 <code>promise</code></p>
-<h3 id="x_为_Promise"><code>x</code> 为 Promise</h3><p>如果 <code>x</code> 为 Promise ，则使 <code>promise</code> 接受 <code>x</code> 的状态 <sup><a href="#note-4">注4</a></sup>：</p>
+<h4 id="x-与-promise-相等"><a href="#x-与-promise-相等" class="headerlink" title="x 与 promise 相等"></a><code>x</code> 与 <code>promise</code> 相等</h4><p>如果 <code>promise</code> 和 <code>x</code> 指向同一对象，以 <code>TypeError</code> 为据因拒绝执行 <code>promise</code></p>
+<h4 id="x-为-Promise"><a href="#x-为-Promise" class="headerlink" title="x 为 Promise"></a><code>x</code> 为 Promise</h4><p>如果 <code>x</code> 为 Promise ，则使 <code>promise</code> 接受 <code>x</code> 的状态 <sup><a href="#note-4">注4</a></sup>：</p>
 <ul>
 <li>如果 <code>x</code> 处于等待态， <code>promise</code> 需保持为等待态直至 <code>x</code> 被执行或拒绝</li>
 <li>如果 <code>x</code> 处于执行态，用相同的值执行 <code>promise</code></li>
 <li>如果 <code>x</code> 处于拒绝态，用相同的据因拒绝 <code>promise</code></li>
 </ul>
-<h3 id="x_为对象或函数"><code>x</code> 为对象或函数</h3><p>如果 <code>x</code> 为对象或者函数：</p>
+<h4 id="x-为对象或函数"><a href="#x-为对象或函数" class="headerlink" title="x 为对象或函数"></a><code>x</code> 为对象或函数</h4><p>如果 <code>x</code> 为对象或者函数：</p>
 <ul>
 <li>把 <code>x.then</code> 赋值给 <code>then</code> <sup><a href="#note-5">注5</a></sup></li>
 <li>如果取 <code>x.then</code> 的值时抛出错误 <code>e</code> ，则以 <code>e</code> 为据因拒绝 <code>promise</code></li>
@@ -103,7 +196,7 @@
 <li>如果 <code>x</code> 不为对象或者函数，以 <code>x</code> 为参数执行 <code>promise</code></li>
 </ul>
 <p>如果一个 promise 被一个循环的 <em>thenable</em> 链中的对象解决，而 <code>[[Resolve]](promise, thenable)</code> 的递归性质又使得其被再次调用，根据上述的算法将会陷入无限递归之中。算法虽不强制要求，但也鼓励施者检测这样的递归是否存在，若检测到存在则以一个可识别的 <code>TypeError</code> 为据因来拒绝 <code>promise</code> <sup><a href="#note-6">注6</a></sup>。</p>
-<h1 id="注释">注释</h1><hr>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><hr>
 <ul>
 <li><p><b id="note-1">注1</b> 这里的<strong>平台代码</strong>指的是引擎、环境以及 promise 的实施代码。实践中要确保 <code>onFulfilled</code> 和 <code>onRejected</code> 方法异步执行，且应该在 <code>then</code> 方法被调用的那一轮事件循环之后的新执行栈中执行。这个事件队列可以采用“宏任务（macro-task）”机制或者“微任务（micro-task）”机制来实现。由于 promise 的实施代码本身就是平台代码（<strong>译者注：</strong> 即都是 JavaScript），故代码自身在处理在处理程序时可能已经包含一个任务调度队列或<a href="https://en.wikipedia.org/wiki/Trampoline_(computing" target="_blank" rel="external">『跳板』</a>)。</p>
 <p>  <strong>译者注：</strong> 这里提及了 macrotask 和 microtask 两个概念，这表示异步任务的两种分类。在挂起任务时，JS 引擎会将所有任务按照类别分到这两个队列中，首先在 macrotask 的队列（这个队列也被叫做 task queue）中取出第一个任务，执行完毕后取出 microtask 队列中的所有任务顺序执行；之后再取 macrotask 任务，周而复始，直至两个队列的任务都取完。</p>
@@ -126,4 +219,85 @@
 <li><p><b id="note-6">注6</b> 实现不应该对 <em>thenable</em> 链的深度设限，并假定超出本限制的递归就是无限循环。只有真正的循环递归才应能导致 <code>TypeError</code> 异常；如果一条无限长的链上 <em>thenable</em> 均不相同，那么递归下去永远是正确的行为。</p>
 </li>
 </ul>
-</div></article></div></section><footer><div class="paginator"><a href="/2015/08/01/Collaborating-Syncing/" class="prev">上一篇</a><a href="/2015/04/25/Introduction-of-Jsdoc/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2016 <a href="http://malcolmyu.github.io">malcolm yu</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
+        <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
+
+        gitalk.render('gitalk-container')
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

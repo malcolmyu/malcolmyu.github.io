@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>闲聊 Redux（下）</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="闲聊 Redux（下）"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        闲聊 Redux（下）
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2017-02-02T00:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2017-02-02
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/技术研究/">技术研究</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Javascript/">Javascript</a>·<a href="/tags/Redux/">Redux</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是中间件"><span class="toc-text">什么是中间件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中间件的使用探索"><span class="toc-text">中间件的使用探索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#官方中间件实现方式"><span class="toc-text">官方中间件实现方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步中间件"><span class="toc-text">异步中间件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2017/02/02/Chat-about-Redux-2/title.png" alt="redux" title="redux">
+<p><a href="/2016/12/03/Chat-about-Redux-1/">上文</a>里，我们剥茧抽丝，聊了聊 Redux 里面的各种烦人概念，以及这些概念是怎么来的；本文我们着重聊一聊，让 Redux 大行其道的『中间件』。</p>
+<a id="more"></a>
+<h2 id="什么是中间件"><a href="#什么是中间件" class="headerlink" title="什么是中间件"></a>什么是中间件</h2><p>宏观意义上的中间件（middleware），定义十分模糊，只要能弥合底层操作系统之间差异，对不同顶层应用提供支持的软件，都算是中间件。按照笔者自己的理解，传统意义的中间件更像是一层封装，掩盖了底层的实现细节、提升了开发效率，例如游戏引擎、<a href="https://en.wikipedia.org/wiki/Java_Database_Connectivity" target="_blank" rel="external">JDBC</a>，甚至 jQuery 也算是广泛意义上的中间件。然而自动 TJ 大神搞了 Express 之后，中间件这个概念在前端的语境下也产生了一些变化，它逐渐的变成了一种<strong>对框架的扩展方式</strong>，成为一种开放接口，用户可以通过自行编写中间件，控制数据在框架内部的流动方式、数据的内容，或者是函数的应用方式。</p>
+<p>拿 Express 来说，它的中间件实现的就是<strong>数据与控制的集合</strong>，它可以对 https 请求的请求（request）和相应（response）数据进行更改，并通过 <code>next</code> 方法进行对中间件的控制，让中间件的编写者有能力控制中间件的<strong>进入与错误终止</strong>。React-Router 的中间件技术也主要是一套异步控制手段，在 <code>onEnter</code> 生命周期中加入了对异步行为的支持，异步的中间件可以通过调用 <code>next</code> 方法，自行控制进入到下一个中间件的时间点。</p>
+<p><img src="https://ww1.sinaimg.cn/large/7921624bjw1fccmekzhe7j207805e74j.jpg" alt="著名的中间件洋葱示意图"></p>
+<p>在 Redux 这里呢，中间件的含义又发生了变化，Redux 官方文档这样说道：</p>
+<blockquote>
+<p>Redux 中间件与 Express 和 Koa 的中间件解决的问题并不相同，但二者在概念上却高度一致。<strong>从一个 action 被调度（dispatch），到这个 action 到达 reducer，中间件在这两个时刻中间提供了一个第三方扩展的植入点</strong>。</p>
+</blockquote>
+<p>Redux 的中间件确实与 Express 和 Koa 的中间件神似，它处理了 action 的流动，并使用 next 控制下层中间件的进入，并提供了中间件的中断功能。我们就来看一下它是怎么实现这些功能的吧。</p>
+<h2 id="中间件的使用探索"><a href="#中间件的使用探索" class="headerlink" title="中间件的使用探索"></a>中间件的使用探索</h2><p>既然 Redux 中间件的作用就是处理 action 的流动，那我们就先来看下，不使用中间件的时候，action 是怎样流动的。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 业务代码中调度 action</span></div><div class="line">store.dispatch(action)</div><div class="line"></div><div class="line"><span class="comment">// reducer 中处理 action，返回 state</span></div><div class="line"><span class="keyword">const</span> reducer = <span class="function">(<span class="params">state, action</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">switch</span> (action.type) &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，Redux 内部是隐藏了 action 流动细节的，但是我们在之前的<a href="/2016/12/03/Chat-about-Redux-1/#dispatch：更新状态、触发回调">精简代码</a>中有看到，在执行 <code>dispatch</code> 之后，就会通过 <code>currentReducer</code> 来获取最新的状态。也就是说，执行 dispatch，遍历 reducer 是一个<strong>同步的过程</strong>。这一点非常重要，不过目前仅仅是进行日志记录，我们还并不关系它是同步还是异步。</p>
+<p>我们接着就上面的代码来看，如果要实现 action 的日志记录，应该怎么办呢？当然，最快速也最耦合的办法，就是在业务代码中写：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="string">'dispatching'</span>, action)</div><div class="line">store.dispatch(action)</div><div class="line"><span class="comment">// dispatch 是个同步的过程，dispatch 之后 state 就会发生改变</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'next state'</span>, store.getState())</div></pre></td></tr></table></figure>
+<p>这样的写法当然很不友好，总不能在每次书写业务代码的时候，都写上这样一坨内容吧。那我们来想一下，我们期望用户在业务里书写的方式是什么呢？实际上就只要写一个 <code>store.dispatch(action)</code> 就可以了，不希望还有多余的操作；而这个日志记录，应该是作为顶层中间件，注入到这个 store 当中。这也就等于说，用户在执行 <code>store.dispatch</code> 的时候，实际上应该依次执行我们顶层注入的中间件的逻辑。</p>
+<p>换句话说，<strong>Redux 中间件实际上是对 <code>store.dispatch</code> 方法的劫持</strong>。</p>
+<p>意识到这一点，我们的程序也好写了，可以先通过 hack 的方式劫持一下 <code>dispatch</code> 方法：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">patchLog</span>(<span class="params">store</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> dispatch = store.dispatch</div><div class="line">  store.dispatch = <span class="function"><span class="keyword">function</span>(<span class="params">action</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'dispatching'</span>, action)</div><div class="line">    <span class="keyword">const</span> result = dispatch(action)</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'next state'</span>, store.getState())</div><div class="line">    <span class="keyword">return</span> result</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的写法虽然可行，但显然扩展性不强，一个扩展的场景还勉强够用，多个中间件同时存在就没法写了。有的童鞋也许会说，其实还是可以写的啊，比如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">patchLog(store)</div><div class="line">patchSomething(store)</div></pre></td></tr></table></figure>
+<p>但是通过赋值修改 <code>dispatch</code> 的方式有个两个非常严重的问题：</p>
+<ol>
+<li>传给第后面中间件的 store，它的 <code>dispatch</code> 方法已经被劫持了，这也就意味着通过这种方式无法给后续的中间件传递原始的 <code>store.dispatch</code> 方法。显然，这一点我们是无法接受的，因为原始的 <code>store.dispatch</code> 方法的调用，意味着中间件执行的<strong>结束</strong>；后续的中间件无法调用它，就失去了中断中间件执行的能力。</li>
+<li>用户在中间件里调用 <code>store.dispatch</code>，直接导致栈溢出；</li>
+</ol>
+<p>我们来看一下 Redux 官方都是怎样应用中间件的，且怎样解决了以上两个问题。</p>
+<h2 id="官方中间件实现方式"><a href="#官方中间件实现方式" class="headerlink" title="官方中间件实现方式"></a>官方中间件实现方式</h2><p>中间件的编写，官方是这样实现的：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> patchLog = <span class="function"><span class="params">store</span> =&gt;</span> next =&gt; <span class="function"><span class="params">action</span> =&gt;</span> &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'dispatching'</span>, action)</div><div class="line">  <span class="keyword">const</span> result = next(action)</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'next state'</span>, store.getState())</div><div class="line">  <span class="keyword">return</span> result</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>中间件的应用，官方是这样实现的：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">applyMiddleware(patchLog, patchSomething)(store);</div></pre></td></tr></table></figure>
+<p>我们先来看下 Redux <code>applyMiddleware</code> 方法的精简实现：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">applyMiddleware</span>(<span class="params">...middlewares</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">store</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 使用 reduceRight 确保先应用的中间件先执行</span></div><div class="line">    <span class="keyword">const</span> dispatch = middlewares.reduceRight(</div><div class="line">      <span class="function">(<span class="params">next, middleware</span>) =&gt;</span> middleware(store)(next),</div><div class="line">      store.dispatch</div><div class="line">    );</div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123; ...store, dispatch &#125;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实际上，Redux 的 <code>applyMiddleware</code> 通过一个技巧很好的解决了上面两个问题：<strong>返回全新的 store 对象</strong>。这确保原有 store 的 <code>dipatch</code> 方法没有被覆盖，且很好的保留了原始 <code>dispatch</code> 对象（就是 <code>store.dispatch</code>）。用户在中间件中可以自行选择调用 <code>store.dispatch(action)</code> 或是 <code>next(action)</code>：前者表示终止后续中间件的执行，直接将 action 送给 reducer；后者表示将 action 送给后续的中间件并继续执行。</p>
+<h2 id="异步中间件"><a href="#异步中间件" class="headerlink" title="异步中间件"></a>异步中间件</h2><p>介绍完官方中间件的实现与使用方式，我们再来看一下业务中必然会用到的<strong>异步中间件</strong>。在上文中我们说过：执行 dispatch 之后遍历 reducer 是一个<strong>同步的过程</strong>，那怎么执行异步操作呢？这也好办，因为上文我们也说过，<strong>Redux 中间件实际上是对 <code>store.dispatch</code> 方法的劫持</strong>，所以只要在异步的时间点去执行 <code>dispatch</code> 就行了。</p>
+<p>我们来看一下著名的 <a href="https://github.com/gaearon/redux-thunk" target="_blank" rel="external">redux-thunk</a> 中间件的源码与用法：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 源码</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createThunkMiddleware</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">&#123; dispatch, getState &#125;</span>) =&gt;</span> next =&gt; <span class="function"><span class="params">action</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> action === <span class="string">'function'</span>) &#123;</div><div class="line">      <span class="keyword">return</span> action(dispatch, getState);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> next(action);</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 使用</span></div><div class="line">store.dispatch(<span class="function"><span class="params">dispatch</span> =&gt;</span> &#123;</div><div class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 异步触发 dispatch 打到异步效果</span></div><div class="line">    dispatch(&#123; <span class="attr">type</span>: <span class="string">'AN_ANCTION'</span> &#125;);</div><div class="line">  &#125;, <span class="number">1000</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>这里我们看到，该中间件会检测 action 是否是函数，如果是函数则将原始 <code>dispatch</code> 方法当做函数的参数传入并调用函数（这意味后面的中间件会被当前中间件阻断）；否则将 action 丢给下一个中间件。</p>
+<p>从这里我们可以看出，实际上所有的异步中间件实现，本质上都是因为 Redux 的中间件机制提供了一个切入点，让用户可以自行控制 action 流向 reducer 的时机和 action 的内容；控制的方式就是实现一个 wrapper 来接替原始的 <code>dispatch</code> 方法，并在 wrapper 中可以异步执行原始 <code>dispatch</code>。</p>
+<p>至于异步中间件的选型，本文不会详细介绍，可以参考这篇文章：<a href="https://zhuanlan.zhihu.com/p/24337401" target="_blank" rel="external">Redux 异步方案选型</a>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>尽管 Redux 框架与 15 年刚刚问世的盛极一时相比已经风光不再，但它精巧的设计、良好的解耦与扩展性，以及中间件的扩展方式，都值得我们在进行设计框架时效仿学习。</p>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
+        <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
+
+        gitalk.render('gitalk-container')
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

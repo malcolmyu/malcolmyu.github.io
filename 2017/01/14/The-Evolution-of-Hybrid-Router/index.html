@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>Hybrid 路由架构演进之路</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="Hybrid 路由架构演进之路"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        Hybrid 路由架构演进之路
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2017-01-14T00:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2017-01-14
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/架构分析/">架构分析</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Hybrid/">Hybrid</a>·<a href="/tags/webpack/">webpack</a>·<a href="/tags/react-router/">react-router</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hy-1-0-架构"><span class="toc-text">Hy 1.0 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hy-2-0-架构"><span class="toc-text">Hy 2.0 架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#异步加载"><span class="toc-text">异步加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#按需加载"><span class="toc-text">按需加载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#拆分粒度问题"><span class="toc-text">拆分粒度问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#离线包打包问题"><span class="toc-text">离线包打包问题</span></a></li></ol></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>经过近两年的发展，我们去哪儿内部的 hybrid 方案 hy，已经从 15 年年中的 hy 1.0 进一步完善和成熟，已于去年底推出了基于 react 的 hy2.0 解决方案。在框架升级的大背景下，他的路由架构体系也发生了不小的变化，希望能通过这篇文章，让大家了解到我们路由方案的选择变迁，与页面加载性能优化的手段。</p>
+<a id="more"></a>
+<h2 id="Hy-1-0-架构"><a href="#Hy-1-0-架构" class="headerlink" title="Hy 1.0 架构"></a>Hy 1.0 架构</h2><p>我们来看一下这样一个页面，它是我们 YMFE Conf 的邀请函：</p>
+<p><img src="https://ww3.sinaimg.cn/large/7921624bjw1fbagpi7541g20aa0ickbe.gif" alt="邀请函"></p>
+<p>这个页面效果非常的炫，但是有一个显著的问题，『慢』。看到这个图片，我的脑海中就浮现出三个大字：<strong>SPA</strong>。相比大家对此都深有感触，一方面，在当时 SPA 代表着 h5 应用的尖端水准，它利用 h5 的 history-api，让前端能自由的控制浏览器历史，从而脱离后端，自主掌控路由；另一方面，由于一个页面要加载全部的静态资源，页面渲染完成之前漫长的 loading 动画成为了用户对 SPA 应用最深刻的印象。</p>
+<p>而我们的 Hy 1.0 架构，就是基于 SPA 实现的路由系统，我们所有的页面都是单页应用，在一进入首页时加载所有资源。</p>
+<p>为什么我们要采用这一套系统呢？这个跟当时的环境与我们的解决方案有很大的关系。在两年前，许多安卓手机的浏览器性能还比较差，在页面回退的时候没有页面缓存，需要重新刷新，在这种场景下，显然使用 SPA 来进行开发，用户的体验会更接近原生应用；我们在客户端上采用离线包机制，用户在打开 app 时会自动更新离线包，这样很大程度上也可以避免首页加载时间过长的问题。</p>
+<p>Hy 1.0 架构体系如下：</p>
+<p><img src="https://7xnghq.com1.z0.glb.clouddn.com/1.0.png" alt="Hy 1.0"></p>
+<p>然而，随着安卓手机性能的提升，现在很多浏览器都会进行页面缓存，实现页面切换的动画，所以单页和多页给用户的体验差不多；在 iOS 上，SPA 的动画与原生的手势回退动画会产生冲突；更重要的是，在 hybrid 环境下，我们采用的是多 webview 的解决方案，这一方案本身就是多页的 —— 这是在 hy 1.0 里始终无法逾越的一个问题：每次打开一个新 webview，实际我们只显示众多页面中的一个页面，但实际展示却要<strong>加载全部的资源</strong>，这实际是很不合理的。</p>
+<p>针对这一问题，我们进行过很多讨论，既然现在 touch 的多页跟单页在手机上的体验差距也没有那么大，而且每页加载的资源体积更少，那是不是直接回归到之前的多页开发就行呢？</p>
+<p>这种方式也有一定的优势：至少我们前端的开发量变少了 —— 不用控制路由逻辑，甚至依赖的代码体积还能更少一点。但这样带来的弊端也十分明显：灵活性变差了，往简单来说，如果一个 app 在某种场景下必须是 spa，比如整个应用可能会被离线保存为 file 协议，那这种依赖纯后端路由的手段就难以实现；往大了说，前端失去了对路由的控制权，以后增减页面可能都需要后端配合，或者修改后端工程。这种不便给我们带来的问题，显然是多于给我们节省的那点开发量的。</p>
+<p>那么到底有没有一种方案，可以使我们的路由能够在单页/多页之间自由转换，而且还能让单页和多页应用都能实现资源的按需加载呢？</p>
+<h2 id="Hy-2-0-架构"><a href="#Hy-2-0-架构" class="headerlink" title="Hy 2.0 架构"></a>Hy 2.0 架构</h2><p>我们 Hy2.0 架构选择的是使用 webpack 代码分割实现资源异步加载，使用 react-router 实现资源按需加载，我们通过这样的技术选型，打到了上面既要有性能，又要有自由的目标。</p>
+<h3 id="异步加载"><a href="#异步加载" class="headerlink" title="异步加载"></a>异步加载</h3><p>我们先来看一下，js 资源异步加载的原理，将代码分割为首屏渲染需要的逻辑 A，与其他页面所需的静态资源逻辑 B，在入口页面引入 A，然后在 A 内向页面插入带有 async 属性的 script 标签，引入静态资源 B。</p>
+<p><img src="https://7xnghq.com1.z0.glb.clouddn.com/async-load.png" alt="异步引入资源"></p>
+<p>但是我们的 js 文件通常不是单独工作的，每个文件之间可能复杂的互相依赖的模块关系，因此在将文件拆分之后，还需要使用一种类似 jsonp 的方式，让被拆分的文件调用一个挂载在 window 上的函数，获取入口文件的模块依赖，并将自己的模块注入到全局模块中。</p>
+<p>通过这样的手段，我们就可以实现代码的异步加载，并能很好的处理模块间的依赖关系，那么还有一个问题没有解决，那就是怎么控制代码的分割点呢？</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'A.js'</span>);</div><div class="line"></div><div class="line"><span class="built_in">require</span>.ensure([], <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">require</span>(<span class="string">'B.js'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>webpack 给我们提供了一个非常简易的方式，使用 <code>require.ensure</code> 关键字，就可以区分文件是否被分片打包。如果正常书写 <code>require(&#39;A.js&#39;)</code>，这个 js 文件就会和入口文件一起打到一个文件中；但是如果使用 <code>require.ensure</code> 关键字，在回调中调用 <code>require(&#39;B.js&#39;)</code> 那么这个文件就在打包的时候打成一个独立的分块。webpack 会在 <code>require.ensure</code> 执行的时候，在页面异步加载这个独立的分块。</p>
+<h3 id="按需加载"><a href="#按需加载" class="headerlink" title="按需加载"></a>按需加载</h3><p>我们想一想，按需加载，那应该需是什么呢？我们想 spa，又想能顺利过渡多页，其实是一个单页应用，每次打开新页面重新加载，且仅加载本页面所需的资源。这样才能做到所以与后端控制路由的多页没有本质的区别。因此最大的需求，就是按页面加载，而路由正是按页面加载最好的分割点。</p>
+<p>react-router 本身提供了强大的异步支持，它的核心方法 <code>match</code> 方法本身就是通过回调层层传递的，因此通过 react-router 来支持异步按需加载也十分的容易。</p>
+<p>我们来看一下 react-router 同步配置的方式：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&lt;Route path=<span class="string">"/"</span>&gt;</div><div class="line">    &lt;IndexRoute component=&#123;HomePage&#125;/&gt;</div><div class="line">    &lt;Route path="list" component=&#123;List&#125; /&gt;</div><div class="line">    &lt;Route path="detail" component=&#123;Detail&#125;/&gt;</div><div class="line">&lt;/Route&gt;</div></pre></td></tr></table></figure>
+<p>那么将它修改为异步的方式，只需要将 <code>Route</code> 的配置组件的属性 <code>component</code> 修改为 <code>getComponent</code> 即可，如下所示：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&lt;Route path=<span class="string">"list"</span> getComponent=&#123;(_, cb) =&gt; &#123;</div><div class="line">    <span class="built_in">require</span>.ensure([], () =&gt; &#123;</div><div class="line">        cb(<span class="literal">null</span>, <span class="built_in">require</span>(<span class="string">'./List'</span>))</div><div class="line">    &#125;)</div><div class="line">&#125;&#125;/&gt;</div></pre></td></tr></table></figure>
+<p>但是由于 react-router 本身有一套复杂的异步配置流程，加上 <code>require.ensure</code> 语法本身也是比较繁琐，因此整个配置流程对用户来说很不友好，我们在自己的 Hy 框架中，使用 babel 插件的方式对代码进行解析，提供了便捷的语法糖 <code>requre.async</code>，让异步引用变得更加简洁：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> List = <span class="built_in">require</span>.async(<span class="string">'./list'</span>);</div><div class="line"></div><div class="line">&lt;Route path="list" getComponent=&#123;List&#125; /&gt;</div></pre></td></tr></table></figure>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>那么采用这套新架构体系，有没有遇到什么问题呢？确实也遇到一些问题，其中最主要的就是拆分粒度和离线包打包的问题。</p>
+<h3 id="拆分粒度问题"><a href="#拆分粒度问题" class="headerlink" title="拆分粒度问题"></a>拆分粒度问题</h3><p>既然我们选择了资源异步加载的方案，那么是不是必须严格按照页面来进行资源拆分呢？答案是不确定的，因为毕竟每次新开请求也有额外的资源消耗，我们给定一个公式，认为 <strong>体积 &gt; 网速 * TTFB（首字节响应时间）</strong> 的资源无需进行拆分。比如 4G 网 TTFB 0.02s，网速 800k/s，那么体积小于 800k/s * 0.02s = 16k 的资源就不应该进行拆分，因为新开请求的消耗大于加载资源的消耗。</p>
+<h3 id="离线包打包问题"><a href="#离线包打包问题" class="headerlink" title="离线包打包问题"></a>离线包打包问题</h3><p>还有一个比较棘手的问题是离线包的打包的问题，因为我们之前的离线包打包方案是采用入口文件进行打包的，使用 webpack 生成的 chunk 是非入口文件，按照原有的逻辑就不会被打到离线包里，因此我们修改了离线包打包工具的逻辑，并在发布的时候支持打出一个入口 json，让离线包读取这个 json 来进行非入口文件的打包，这样才解决的了这个问题。</p>
+<p>新架构体系如下：</p>
+<p><img src="https://7xnghq.com1.z0.glb.clouddn.com/2.0.png" alt="Hy 2.0"></p>
+<p>通过这套新架构，我们 app 的首屏渲染性能得到了显著的提高，最主要的是，我们编写的 app 能够自由的在单页、多页和 hybrid 场景下进行切换，这样就涵盖了业务在不同场景下、适应不同情况的需求。</p>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
+        <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
+
+        gitalk.render('gitalk-container')
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

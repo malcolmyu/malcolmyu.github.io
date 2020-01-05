@@ -2,79 +2,128 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://malcolmyu.github.io/2016/04/16/Redux-Zero-to-One/</loc>
+    <loc>http://malcolmyu.github.io/2019/07/07/Tri-Color-Marking/</loc>
     
-    <lastmod>2016-05-29T06:45:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://malcolmyu.github.io/2015/06/12/Promises-A-Plus/</loc>
-    
-    <lastmod>2016-05-08T08:43:01.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.675Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://malcolmyu.github.io/2016/04/02/Reaction-to-Soulstealers/</loc>
     
-    <lastmod>2016-04-02T12:18:19.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.675Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2015/06/12/Promises-A-Plus/</loc>
+    
+    <lastmod>2020-01-05T05:00:28.675Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://malcolmyu.github.io/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/</loc>
     
-    <lastmod>2016-02-06T16:50:14.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.675Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2014/08/30/JavaScript-Promise-In-Wicked-Detail/</loc>
+    <loc>http://malcolmyu.github.io/2017/01/14/The-Evolution-of-Hybrid-Router/</loc>
     
-    <lastmod>2015-11-30T02:39:27.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.675Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://malcolmyu.github.io/2015/11/18/Coroutine-and-Event-Loop/</loc>
     
-    <lastmod>2015-11-27T07:32:13.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2015/10/16/Git-Hooks/</loc>
+    <loc>http://malcolmyu.github.io/2017/02/02/Chat-about-Redux-2/</loc>
     
-    <lastmod>2015-11-27T07:32:04.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://malcolmyu.github.io/2015/08/01/Collaborating-Syncing/</loc>
     
-    <lastmod>2015-11-27T07:32:00.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/</loc>
+    <loc>http://malcolmyu.github.io/2018/09/09/Core-Concepts-of-Mobx/</loc>
     
-    <lastmod>2015-11-27T07:31:47.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2019/07/24/Notes-of-Business-Intelligence/</loc>
+    
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2016/10/24/Create-React-Universal-App/</loc>
+    
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2017/02/26/Dive-into-Charles-HTTPS-Proxying/</loc>
+    
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://malcolmyu.github.io/2015/04/25/Introduction-of-Jsdoc/</loc>
     
-    <lastmod>2015-11-27T07:31:43.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2015/10/05/Using-Branches/</loc>
+    <loc>http://malcolmyu.github.io/2015/10/16/Git-Hooks/</loc>
     
-    <lastmod>2015-10-11T10:26:10.000Z</lastmod>
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/</loc>
+    
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2016/12/03/Chat-about-Redux-1/</loc>
+    
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2014/08/30/JavaScript-Promise-In-Wicked-Detail/</loc>
+    
+    <lastmod>2020-01-05T05:00:28.671Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2017/10/14/An-in-Depth-Explanation-of-MobX/</loc>
+    
+    <lastmod>2020-01-05T05:00:28.667Z</lastmod>
     
   </url>
   

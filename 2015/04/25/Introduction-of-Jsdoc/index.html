@@ -1,10 +1,103 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> JSDoc 配置使用概览 · malcolm-blog</title><meta name="description" content="JSDoc 配置使用概览 - malcolm yu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/sombiesombie" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/malcolmyu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">JSDoc 配置使用概览</h1><div class="post-info">2015年4月25日</div><div class="post-content"><p>尽管一个好的项目文档能让项目增光添彩，但文档的作用始终是锦上添花而非雪中送炭，对于开发者来说，费尽心神的整理项目文档似乎也并非是一件令人愉快的事情。在使用题中所述的工具——jsdoc和编写本文的同时，笔者也是几度懊恼：这东西在项目中真的有用吗？是不是有点浪费时间？但随着项目体量的增大和开发人员的增多，使用并自动化维护一份好的文档所带来的优势也是逐渐显现。笔者也决心写一篇科普小文，说一说文档工具的使用注意要点。</p>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>JSDoc 配置使用概览</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="JSDoc 配置使用概览"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;膜法师学徒
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        JSDoc 配置使用概览
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2015-04-25T00:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2015-04-25
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/开发工具/">开发工具</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/jsdoc/">jsdoc</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSDoc-命令行使用方法"><span class="toc-text">JSDoc 命令行使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过-npm-生成"><span class="toc-text">通过 npm 生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过-grunt-生成"><span class="toc-text">通过 grunt 生成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSDoc-注释规范"><span class="toc-text">JSDoc 注释规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单个文件注释"><span class="toc-text">单个文件注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块化注释"><span class="toc-text">模块化注释</span></a></li></ol></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>尽管一个好的项目文档能让项目增光添彩，但文档的作用始终是锦上添花而非雪中送炭，对于开发者来说，费尽心神的整理项目文档似乎也并非是一件令人愉快的事情。在使用题中所述的工具——jsdoc和编写本文的同时，笔者也是几度懊恼：这东西在项目中真的有用吗？是不是有点浪费时间？但随着项目体量的增大和开发人员的增多，使用并自动化维护一份好的文档所带来的优势也是逐渐显现。笔者也决心写一篇科普小文，说一说文档工具的使用注意要点。</p>
 <a id="more"></a>
-<h1 id="JSDoc_命令行使用方法">JSDoc 命令行使用方法</h1><p>通过命令行来生成 JSDoc 有两种适合前端的方式：一种是通过 npm 来安装 jsdoc 来生成文档，需要学习相关的命令行参数与配置文件的编写；另一种是使用 grunt 来生成 jsdoc，这种方法配置起来比较简单，等于将各种配置参数写在了 Gruntfile.js 的配置项里，然后可以自定义各种操作命令，十分灵活。下面就分别就这两种方法介绍一下。</p>
-<h2 id="通过_npm_生成">通过 npm 生成</h2><p>通过 npm 的生成方式主要包含安装、配置和生成三步。安装的方式如下所示：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install jsdoc -g</span><br></pre></td></tr></table></figure>  
+<h2 id="JSDoc-命令行使用方法"><a href="#JSDoc-命令行使用方法" class="headerlink" title="JSDoc 命令行使用方法"></a>JSDoc 命令行使用方法</h2><p>通过命令行来生成 JSDoc 有两种适合前端的方式：一种是通过 npm 来安装 jsdoc 来生成文档，需要学习相关的命令行参数与配置文件的编写；另一种是使用 grunt 来生成 jsdoc，这种方法配置起来比较简单，等于将各种配置参数写在了 Gruntfile.js 的配置项里，然后可以自定义各种操作命令，十分灵活。下面就分别就这两种方法介绍一下。</p>
+<h3 id="通过-npm-生成"><a href="#通过-npm-生成" class="headerlink" title="通过 npm 生成"></a>通过 npm 生成</h3><p>通过 npm 的生成方式主要包含安装、配置和生成三步。安装的方式如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">npm install jsdoc -g</div></pre></td></tr></table></figure>
 <p>然后去指定文件（如 <code>test.js</code>）的路径下运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsdoc test.js</span><br></pre></td></tr></table></figure>      
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">jsdoc test.js</div></pre></td></tr></table></figure>
 <p>文档即可被生成在根目录下的 out 文件夹中。</p>
 <p>上面的过程看上去十分简便，但我们省略了配置这一步，如果我们不想生成在 out 文件夹下怎么办？我们想针对一个项目工程生成文档怎么办？觉得原有文档模板太丑想换个风格怎么办（<em>说句实话个人感觉默认模板是目前见过所有模板中最好看的……</em>）？这就需要在配置这一步中进行繁杂的个性化指定。对于项目的个性化指定可以通过<strong>配置文件</strong>和<strong>命令行参数</strong>两种方式来设置，先说一下命令行参数的配置。</p>
 <p>有关命令行参数的配置可以参考<a href="http://usejsdoc.org/about-commandline.html" target="_blank" rel="external">官网文档</a>的详细说明，这里只列出几个重要的参数：</p>
@@ -50,10 +143,10 @@
 </tbody>
 </table>
 <p>举个例子，比如我们要将 <code>./src</code> 路径下的所有 js 文件生成文档，然后存放在 <code>./docs</code> 文件夹中，操作如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsdoc src -r <span class="operator">-d</span> docs</span><br></pre></td></tr></table></figure>  
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">jsdoc src -r <span class="_">-d</span> docs</div></pre></td></tr></table></figure>
 <p>但是这样感觉还是不方便，如何对特定文件进行文档解析呢？如果有一些文件不想进行文档解析如何从中间剔除呢？而且每次都要输入如此复杂的命令行参数也十分不方便。要解决这些问题，就需要用到配置文件 <code>conf.json</code> 了。</p>
 <p>对于配置文件的详细解释可以参见<a href="http://usejsdoc.org/about-configuring-jsdoc.html" target="_blank" rel="external">官方文档</a>的说明，这里也是举一个简单的例子：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">tags</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">allowUnknownTags</span>": <span class="value"><span class="literal">true</span></span><br><span class="line">    </span>&#125;</span>,</span><br><span class="line">    "<span class="attribute">source</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">include</span>": <span class="value">[<span class="string">"./src/lib"</span>, <span class="string">"./src/util"</span>]</span>,</span><br><span class="line">        "<span class="attribute">exclude</span>": <span class="value">[<span class="string">"./src/lib/demo"</span>]</span>,</span><br><span class="line">        "<span class="attribute">includePattern</span>": <span class="value"><span class="string">".+\\.js$"</span></span>,</span><br><span class="line">        "<span class="attribute">excludePattern</span>": <span class="value"><span class="string">"(^|\\/|\\\\)_"</span></span><br><span class="line">    </span>&#125;</span>,</span><br><span class="line">    "<span class="attribute">opts</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">recurse</span>": <span class="value"><span class="literal">true</span></span><br><span class="line">    </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"tags"</span>: &#123;</div><div class="line">        <span class="attr">"allowUnknownTags"</span>: <span class="literal">true</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"source"</span>: &#123;</div><div class="line">        <span class="attr">"include"</span>: [<span class="string">"./src/lib"</span>, <span class="string">"./src/util"</span>],</div><div class="line">        <span class="attr">"exclude"</span>: [<span class="string">"./src/lib/demo"</span>],</div><div class="line">        <span class="attr">"includePattern"</span>: <span class="string">".+\\.js$"</span>,</div><div class="line">        <span class="attr">"excludePattern"</span>: <span class="string">"(^|\\/|\\\\)_"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"opts"</span>: &#123;</div><div class="line">        <span class="attr">"recurse"</span>: <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li><code>tags.allowUnknownTags</code> 表示允许使用为定义的 tag 标签，不然使用未知标签会报错；</li>
 <li><code>source.include</code> 表示需要进行文档解析的文件（夹）路径；</li>
@@ -63,21 +156,21 @@
 <li><code>opts.recurse</code> 表示是否递归解析文件夹，上文表示继续拧递归解析，即使用 <code>-r</code> 参数。</li>
 </ul>
 <p>这里的 <code>opts</code> 里面的内容与上表中命令行参数配置的内容一致，即也可以在此处配置各种参数，详情官网文档中有叙述。将上文保存为一个 json 格式的文件，然后使用 <code>-c</code> 参数引入，就可以按照设定好的规则直接批量生成文档了。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsdoc -c conf.json</span><br></pre></td></tr></table></figure>
-<h2 id="通过_grunt_生成">通过 grunt 生成</h2><p>在项目中如果使用了 grunt 工具，也可以将 jsdoc 集成到 grunt 中去。这种方式十分的简便，在其 <a href="https://github.com/krampstudio/grunt-jsdoc" target="_blank" rel="external">github 地址</a>上也有详尽的介绍，具体流程与其他的 grunt 模块差别不大，使用如下命令进行安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install grunt-jsdoc --save-dev</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">jsdoc -c conf.json</div></pre></td></tr></table></figure>
+<h3 id="通过-grunt-生成"><a href="#通过-grunt-生成" class="headerlink" title="通过 grunt 生成"></a>通过 grunt 生成</h3><p>在项目中如果使用了 grunt 工具，也可以将 jsdoc 集成到 grunt 中去。这种方式十分的简便，在其 <a href="https://github.com/krampstudio/grunt-jsdoc" target="_blank" rel="external">github 地址</a>上也有详尽的介绍，具体流程与其他的 grunt 模块差别不大，使用如下命令进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">npm install grunt-jsdoc --save-dev</div></pre></td></tr></table></figure>
 <p>然后在 <code>Gruntfile.js</code> 文件中进行配置，就可以在命令行中使用了：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">    jsdoc: &#123;</span><br><span class="line">        dist: &#123;</span><br><span class="line">            <span class="comment">// 必填项，需要生成文档的路径数组，也可以将 README.md 文件加入其中</span></span><br><span class="line">            src: [<span class="string">'src/*.js'</span>, <span class="string">'test/*.js'</span>],</span><br><span class="line">            <span class="comment">// 可选项，jsdoc bin 文件路径，一般不写，会自己在 node_modules 中寻找</span></span><br><span class="line">            jsdoc: <span class="string">''</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">                <span class="comment">// 必填项，生成文件的路径</span></span><br><span class="line">                destination: <span class="string">'./docs/'</span>,</span><br><span class="line">                <span class="comment">// 可选项，conf 文件的路径</span></span><br><span class="line">                configure: <span class="string">'conf.json'</span>,</span><br><span class="line">                <span class="comment">// 可选项，模板路径</span></span><br><span class="line">                template: <span class="string">''</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">grunt.task.loadNpmTasks(<span class="string">'grunt-jsdoc'</span>);</span><br><span class="line">grunt.task.registerTask(<span class="string">'doc'</span>, [<span class="string">'jsdoc'</span>]);</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grunt doc</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">grunt.initConfig(&#123;</div><div class="line">    <span class="attr">jsdoc</span>: &#123;</div><div class="line">        <span class="attr">dist</span>: &#123;</div><div class="line">            <span class="comment">// 必填项，需要生成文档的路径数组，也可以将 README.md 文件加入其中</span></div><div class="line">            src: [<span class="string">'src/*.js'</span>, <span class="string">'test/*.js'</span>],</div><div class="line">            <span class="comment">// 可选项，jsdoc bin 文件路径，一般不写，会自己在 node_modules 中寻找</span></div><div class="line">            jsdoc: <span class="string">''</span>,</div><div class="line">            <span class="attr">options</span>: &#123;</div><div class="line">                <span class="comment">// 必填项，生成文件的路径</span></div><div class="line">                destination: <span class="string">'./docs/'</span>,</div><div class="line">                <span class="comment">// 可选项，conf 文件的路径</span></div><div class="line">                configure: <span class="string">'conf.json'</span>,</div><div class="line">                <span class="comment">// 可选项，模板路径</span></div><div class="line">                template: <span class="string">''</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">grunt.task.loadNpmTasks(<span class="string">'grunt-jsdoc'</span>);</div><div class="line">grunt.task.registerTask(<span class="string">'doc'</span>, [<span class="string">'jsdoc'</span>]);</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">grunt doc</div></pre></td></tr></table></figure>
 <p>需要注意的是，配置项中的 <code>options</code> 内容与 <code>conf.json</code> 中 <code>opts</code> 的内容也一致。</p>
-<h1 id="JSDoc_注释规范">JSDoc 注释规范</h1><p>上面的一堆其实都是虚的，最主要的还是在代码中按照 JSDoc 要求的注释规范详尽的写清楚注释。JSDoc 的注释有一条很重要的规范就是：</p>
+<h2 id="JSDoc-注释规范"><a href="#JSDoc-注释规范" class="headerlink" title="JSDoc 注释规范"></a>JSDoc 注释规范</h2><p>上面的一堆其实都是虚的，最主要的还是在代码中按照 JSDoc 要求的注释规范详尽的写清楚注释。JSDoc 的注释有一条很重要的规范就是：</p>
 <blockquote>
 <p> It must start with a <code>/**</code> sequence in order to be recognized by the JSDoc parser. Comments beginning with <code>/*</code>, <code>/***</code>, or more than 3 stars will be ignored. This is a feature to allow you to suppress parsing of comment blocks.</p>
 <p>必须以 <code>/**</code> 开头才能被 JSDoc 的解析器识别。 以 <code>/*</code>、<code>/***</code>、 或者超过三个 <code>*</code> 开头的注释我们都不管。这可是我们做的一个 feature 哟~它可以帮助你避免解析你不想解析的注释。</p>
 </blockquote>
 <p>使用 <code>/**</code> 开始注释之后，就需要研究一下注释的标签（Tags），JSDoc 提供了几十种标签，满足我们各种稀奇古怪的需求。我们先从单个文件的注释说起，对 JSDoc 的注释规范进行说明。</p>
-<h2 id="单个文件注释">单个文件注释</h2><p>提到单个文件注释，首先要说到 JSDoc 里面的一个概念，换做<strong>块级标签（Block Tag）</strong>与<strong>行内标签（Block Tag）</strong>，整的这么玄乎，无非就是说有些标签是用 <code>@</code> 打头起一行，叫做块级；有些标签是用 <code>{}</code> 包裹放在行内，最常见的就是 <code>@type</code> 和 <code>@link</code> 标签，可以放在行内对变量进行类型说明与解释。如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 大哥大嫂过年好</span><br><span class="line"> * @param &#123;string&#125; parent - 你是我的爷</span><br><span class="line"> * @param &#123;string&#125; child - 我是你的儿</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">happyNewYear</span>(<span class="params">parent, child</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="单个文件注释"><a href="#单个文件注释" class="headerlink" title="单个文件注释"></a>单个文件注释</h3><p>提到单个文件注释，首先要说到 JSDoc 里面的一个概念，换做<strong>块级标签（Block Tag）</strong>与<strong>行内标签（Block Tag）</strong>，整的这么玄乎，无非就是说有些标签是用 <code>@</code> 打头起一行，叫做块级；有些标签是用 <code>{}</code> 包裹放在行内，最常见的就是 <code>@type</code> 和 <code>@link</code> 标签，可以放在行内对变量进行类型说明与解释。如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 大哥大嫂过年好</div><div class="line"> * @param &#123;string&#125; parent - 你是我的爷</div><div class="line"> * @param &#123;string&#125; child - 我是你的儿</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">happyNewYear</span>(<span class="params">parent, child</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>以下是单文件注释中常用的标签：</p>
 <table>
 <thead>
@@ -138,10 +231,10 @@
 </tbody>
 </table>
 <p>但是在项目中，我们可能拥有一堆又一堆的单个文件都需要添加注释，总不能把这些方法啊变量啊的注释都丢到一个文档页面中吧。不用担心，JSDoc 提供了一种模块化注释的方式帮我们解决这一问题。</p>
-<h2 id="模块化注释">模块化注释</h2><p>JSDoc 中对模块的表示共有三种方法，分别为<strong>类（<code>@class</code>）</strong>、<strong>模块（<code>@module</code>）</strong>和<strong>命名空间（<code>@namespace</code>）</strong>。使用上面三个标签进行标注的话，其从属的属性都可以使用长名进行引用。<code>@module</code> 顾名思义是用来标注一个 JS 模块的，一般用这个模块再被 <code>require</code> 的时候的写法作为名字标注。比如这样一个模块：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 表单校验模块</span><br><span class="line"> * @module lib/validator</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/** 校验通过方法 */</span></span><br><span class="line">exports.valid = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"><span class="comment">/** 校验失败方法 */</span></span><br><span class="line">exports.inValid = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 另一个文件在使用时需要这样用</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'lib/validator'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="模块化注释"><a href="#模块化注释" class="headerlink" title="模块化注释"></a>模块化注释</h3><p>JSDoc 中对模块的表示共有三种方法，分别为<strong>类（<code>@class</code>）</strong>、<strong>模块（<code>@module</code>）</strong>和<strong>命名空间（<code>@namespace</code>）</strong>。使用上面三个标签进行标注的话，其从属的属性都可以使用长名进行引用。<code>@module</code> 顾名思义是用来标注一个 JS 模块的，一般用这个模块再被 <code>require</code> 的时候的写法作为名字标注。比如这样一个模块：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 表单校验模块</div><div class="line"> * @module lib/validator</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="comment">/** 校验通过方法 */</span></div><div class="line">exports.valid = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"><span class="comment">/** 校验失败方法 */</span></div><div class="line">exports.inValid = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 另一个文件在使用时需要这样用</span></div><div class="line"><span class="built_in">require</span>(<span class="string">'lib/validator'</span>);</div></pre></td></tr></table></figure>
 <p>正如上文所写，对于一个模块需要 <code>exports</code> 的方法可以直接写双星注释，会被 JSDoc 所自动识别。但有些情况下为了我们可能会先给一个本地对象挂一堆方法然后把这个对象直接 <code>exports</code>。为了标明它们的从属关系，我们就可以用到 <code>@alias</code> 别名标签。如下例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 表单校验模块</span><br><span class="line"> * @module lib/validator</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * @alias module:lib/validator.valid</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">var</span> valid = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line">exports.valid = valid;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 表单校验模块</div><div class="line"> * @module lib/validator</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @alias module:lib/validator.valid</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> valid = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line">exports.valid = valid;</div></pre></td></tr></table></figure>
 <p>注意到上文中别名标签的值，这里用到一个叫做<strong>命名路径（namepaths）</strong>的概念。这个概念表示使用 <code>#</code> <code>.</code> <code>~</code> 三种符号表示两个模块之间的从属关系，其分别为：</p>
 <ul>
 <li><code>#</code> 实例属性，表示实例对象能够继承的属性；</li>
@@ -149,9 +242,9 @@
 <li><code>~</code> 内部属性，在函数对象内部作用域定义的属性。</li>
 </ul>
 <p>下面这个例子分别解释了上面三种属性：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** @constructor */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.instanceSay = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"我是实例属性"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">innerSay</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"我是内部属性"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Person.staticSay = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"我是静态属性"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在注释中我们就可以使用这样的方式来表示上面三种属性</span></span><br><span class="line"><span class="comment">// Person#instanceSay</span></span><br><span class="line"><span class="comment">// Person.staticSay</span></span><br><span class="line"><span class="comment">// Person~innerSay</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/** @constructor */</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.instanceSay = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"我是实例属性"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">innerSay</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"我是内部属性"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">Person.staticSay = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"我是静态属性"</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 在注释中我们就可以使用这样的方式来表示上面三种属性</span></div><div class="line"><span class="comment">// Person#instanceSay</span></div><div class="line"><span class="comment">// Person.staticSay</span></div><div class="line"><span class="comment">// Person~innerSay</span></div></pre></td></tr></table></figure>
 <p>上面用命名路径生成的诸如 <code>Person#instanceSay.hello~hi</code> 这样的引用名称就叫做<strong>长名（longname）</strong>。其中如果是 <code>@module</code> 模块的话，需要添加 <code>module:</code> 前缀，用于与命名空间相区分。而命名空间的作用就是给其子属性开启一个可以被挂载的空间，可以在文档中被单独标记。子属性可以使用 <code>@memberof</code> 对父属性进行挂载。比如我们挂载到全局变量上的属性，并不遵循模块化的风格，对其进行标记就可以使用命名空间的方式，如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 某个文件中的祖先空间</span><br><span class="line"> * @namespace ancestor</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">var</span> ancestor = &#123;&#125;;</span><br><span class="line"><span class="built_in">window</span>.ancestor = ancestor;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 某个文件中的父亲空间，挂载到祖先之下</span><br><span class="line"> * @namespace parent</span><br><span class="line"> * @memberof ancestor</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">var</span> parent = &#123;&#125;;</span><br><span class="line"><span class="built_in">window</span>.ancestor.parent = parent;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 某个文件中的孩子空间，挂载到父亲之下，需要用长名</span><br><span class="line"> * @namespace child</span><br><span class="line"> * @memberof ancestor.parent</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">var</span> child = &#123;&#125;;</span><br><span class="line"><span class="built_in">window</span>.ancestor.parent.child = child;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 某个文件中的祖先空间</div><div class="line"> * @namespace ancestor</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> ancestor = &#123;&#125;;</div><div class="line"><span class="built_in">window</span>.ancestor = ancestor;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 某个文件中的父亲空间，挂载到祖先之下</div><div class="line"> * @namespace parent</div><div class="line"> * @memberof ancestor</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> parent = &#123;&#125;;</div><div class="line"><span class="built_in">window</span>.ancestor.parent = parent;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 某个文件中的孩子空间，挂载到父亲之下，需要用长名</div><div class="line"> * @namespace child</div><div class="line"> * @memberof ancestor.parent</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> child = &#123;&#125;;</div><div class="line"><span class="built_in">window</span>.ancestor.parent.child = child;</div></pre></td></tr></table></figure>
 <p>需要注意的是，这种模块化的标签似乎 JSDoc 都会对其进行作用域的识别，因此在注释的时候一定要注意作用域的问题。比如对一个文件整个注释为 <code>@module</code>，其内部的 <code>@namespace</code> 可能就会失效，无法在文档上良好的反应。以下是模块化注释的常用标签：</p>
 <table>
 <thead>
@@ -196,4 +289,85 @@
 <li><a href="https://github.com/jsdoc3/jsdoc" target="_blank" rel="external">jsdoc - Github</a>： jsdoc npm module 的 Github 地址</li>
 <li><a href="http://usejsdoc.org/index.html" target="_blank" rel="external">jsdoc 官网</a> ：jsdoc 官方文档</li>
 </ul>
-</div></article></div></section><footer><div class="paginator"><a href="/2015/06/12/Promises-A-Plus/" class="prev">上一篇</a><a href="/2015/04/19/Avalon-Event-Bus/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2016 <a href="http://malcolmyu.github.io">malcolm yu</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
+        <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
+
+        gitalk.render('gitalk-container')
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>
