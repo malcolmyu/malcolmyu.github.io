@@ -1,15 +1,18 @@
-language: node_js
-
-node_js:
-  - "stable"
-
 sudo: false
-
-install:
-  - npm install
-
-after_script:
-  - git config user.name malcolmyu
-  - git config user.email minghao_yu@163.com
-  - sed -i "s/GH_TOKEN/${GH_TOKEN}/g" ./_config.yml
-  - hexo d
+language: node_js
+node_js:
+  - 10 # use nodejs v10 LTS
+cache: npm
+branches:
+  only:
+    - master # build master branch only
+script:
+  - hexo generate # generate static files
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_TOKEN
+  keep-history: true
+  on:
+    branch: master
+  local-dir: public

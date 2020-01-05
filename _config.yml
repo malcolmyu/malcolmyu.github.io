@@ -94,7 +94,7 @@ gitalk:
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://GH_TOKEN@github.com:malcolmyu/malcolmyu.github.io.git
+  repository: git@github.com:malcolmyu/malcolmyu.github.io.git
   branch: master
 
 # deploy:
