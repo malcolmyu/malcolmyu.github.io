@@ -33,7 +33,9 @@ pre {
     background: transparent;
     background-size: auto 4em;
     background-origin: content-box;
-    background-image: linear-gradient($bg 50%, transparent 0);
+    // background-image: linear-gradient($bg 50%, transparent 0);
+    background-color: #f6f8fa;
+
     .comment {
         color: lighten($theme, 30%);
     }
