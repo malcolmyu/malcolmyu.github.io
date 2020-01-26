@@ -131,10 +131,15 @@ p {
     color: lighten($para, 10%);
 }
 
+.post ul li:before {
+    content: '·';
+    margin-right: .4em;
+}
 
 ul li,
 .toc li {
-    list-style-type: disc;
+    list-style-type: none;
+    list-style: none;
 }
 
 ul {
