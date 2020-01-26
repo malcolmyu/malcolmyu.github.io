@@ -23,6 +23,12 @@ $a: #555;
     padding-bottom: 30px;
 }
 
+figcaption {
+    color: rgb(157, 170, 182);
+    font-size: 16px;
+    text-align: center;
+}
+
 @media screen and (max-width:782px) {
     .index-title {
         width: 80%;
