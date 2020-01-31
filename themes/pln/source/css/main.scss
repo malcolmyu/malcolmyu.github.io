@@ -41,6 +41,15 @@ h1 {
     font-size: $big;
 }
 
+h3 {
+    font-size: $mid - 4px;
+}
+
+h4 {
+    font-size: $mid - 6px;
+    margin: 1em 0;
+}
+
 @import url(https://fonts.loli.net/css?family=Open+Sans|Open+Sans+Condensed:300,700|Pacifico);
 
 .index-title,
@@ -225,9 +234,9 @@ blockquote {
     padding-left: 3rem;
     border: 0;
     border-left: 4px solid lighten($lighter, 10%);
-    color: #777;
+    color: #ACACAB;
     p {
-        color: #777;
+        color: #ACACAB;
         text-indent: 0;
     }
 }

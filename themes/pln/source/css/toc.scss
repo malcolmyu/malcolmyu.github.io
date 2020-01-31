@@ -23,12 +23,19 @@
 .toc-level-3 .toc-text,
 .toc-level-4 .toc-text,
 .toc-level-5 .toc-text,
-.toc-level-6 .toc-text, {
+.toc-level-6 .toc-text {
   font-weight: 300;
+}
+
+.toc-level-4 .toc-text,
+.toc-level-5 .toc-text,
+.toc-level-6 .toc-text {
+  font-size: 16px;
 }
 
 .toc:hover .toc-text {
   color: #2570a1;
+  text-decoration: none;
 }
 
 .toc ol, ul {
