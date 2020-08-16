@@ -4,7 +4,7 @@
   <url>
     <loc>http://malcolmyu.github.io/2020/07/19/Step-into-Chaos/</loc>
     
-    <lastmod>2020-08-16T17:07:22.785Z</lastmod>
+    <lastmod>2020-08-16T17:20:22.020Z</lastmod>
     
   </url>
   
@@ -51,20 +51,6 @@
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2015/06/12/Promises-A-Plus/</loc>
-    
-    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://malcolmyu.github.io/2016/04/02/Reaction-to-Soulstealers/</loc>
-    
-    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://malcolmyu.github.io/2016/01/12/Reaction-to-A-Brief-History-of-Humankind/</loc>
     
     <lastmod>2019-08-18T12:24:41.784Z</lastmod>
@@ -86,6 +72,20 @@
   </url>
   
   <url>
+    <loc>http://malcolmyu.github.io/2016/04/02/Reaction-to-Soulstealers/</loc>
+    
+    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://malcolmyu.github.io/2015/06/12/Promises-A-Plus/</loc>
+    
+    <lastmod>2019-08-18T12:24:41.784Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://malcolmyu.github.io/2015/04/25/Introduction-of-Jsdoc/</loc>
     
     <lastmod>2019-08-18T12:24:41.783Z</lastmod>
@@ -100,6 +100,13 @@
   </url>
   
   <url>
+    <loc>http://malcolmyu.github.io/2017/02/26/Dive-into-Charles-HTTPS-Proxying/</loc>
+    
+    <lastmod>2019-08-18T12:24:41.782Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://malcolmyu.github.io/2015/11/18/Coroutine-and-Event-Loop/</loc>
     
     <lastmod>2019-08-18T12:24:41.782Z</lastmod>
@@ -108,13 +115,6 @@
   
   <url>
     <loc>http://malcolmyu.github.io/2016/10/24/Create-React-Universal-App/</loc>
-    
-    <lastmod>2019-08-18T12:24:41.782Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://malcolmyu.github.io/2017/02/26/Dive-into-Charles-HTTPS-Proxying/</loc>
     
     <lastmod>2019-08-18T12:24:41.782Z</lastmod>
     
@@ -135,14 +135,14 @@
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2016/12/03/Chat-about-Redux-1/</loc>
+    <loc>http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/</loc>
     
     <lastmod>2019-08-18T12:24:41.778Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://malcolmyu.github.io/2015/04/19/Avalon-Event-Bus/</loc>
+    <loc>http://malcolmyu.github.io/2016/12/03/Chat-about-Redux-1/</loc>
     
     <lastmod>2019-08-18T12:24:41.778Z</lastmod>
     
