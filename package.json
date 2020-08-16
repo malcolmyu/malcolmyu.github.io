@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "sass": "node-sass themes/pln/source/css/main.scss --output-style compressed > themes/pln/source/css/m.min.css && hexo g",
-    "build": "hexo g && hexo d"
+    "build": "hexo g && hexo d",
+    "test": "echo test"
   },
   "hexo": {
     "version": "3.2.2"
