@@ -32,7 +32,7 @@
         </svg>
       </a>
       <div class="description">
-        &nbsp;膜法师学徒
+        &nbsp;日拱一卒，守正出奇
       </div>
     </div>
     <div class="main-ctnr">
@@ -103,7 +103,7 @@
 <p>这个例子就是一个最基础的 MobX 功能，它明显的分为三个步骤：</p>
 <ol>
 <li><p><strong>封装可观测值</strong>，对其他 MVVM 框架有了解的同学们应该能理解这个过程，这一步的操作的目的是：把一个单纯对象，封装成一个巨复杂的对象。（如上例中的 <code>{ a: 1 }</code> 就变成了下图的样子）</p>
-<p><img src="https://ww1.sinaimg.cn/large/7921624bly1fv3l54n33tj21bs06cabh.jpg" alt="面目全非的 Plain Object"></p>
+<p><img src="observable.jpg" alt="面目全非的 Plain Object"></p>
 <p>这个巨复杂的对象它的学名叫做<strong>可观测值（Observable）</strong>，是 MobX 里第一个重要的概念。</p>
 </li>
 <li><p><strong>依赖收集</strong>，第二步使用 autorun 包裹一个回调的操作，学名叫做依赖收集。这里这个打印 a 的回调，MobX 叫它<strong>衍生（Derivation）</strong>，这是 MobX 里第二个重要的概念。但实际上，这里在运行时还暗含了一个步骤，就是<strong>封装衍生</strong>，衍生本身也是一个巨复杂的对象，在运行 <code>autorun</code> 的时候，会构造出这个对象。</p>
@@ -121,8 +121,7 @@
 <p>是的，就是 <code>Object.definePorperty</code>（或者 Proxy），具体参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="external">这里</a>。因此我们可以简单的理解 MobX 在运行过程中，进行了这样的操作：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(store, <span class="string">'a'</span>, &#123;</span><br><span class="line">  <span class="keyword">set</span>: function() &#123;</span><br><span class="line">    em.emit(<span class="string">'event'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 执行 set 方法，触发 event-a</span></span><br></pre></td></tr></table></figure>
 <p>好了，推导的手段有了，那么如何确定在 emit 的时候应该触发哪个方法呢？或者说 MobX 的回调是什么时候注册的呢？其实核心就在这个 <code>autorun</code> 方法之中。</p>
-<h2 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h2><p>我们看一下 <code>autorun</code> 的功能，它实际上是要把回调中运行的所有可观测值收集起来，等到其中一个值发生变动时，重新运行该回调。有心的同学可能会发现，上面的例子中在第二步有输出结果，也就是<strong>在运行 <code>autorun</code> 方法的时候，内部的回调是会执行的</strong>。如图：</p>
-<p><img src="https://ww1.sinaimg.cn/large/7921624bly1fvjlw2yjqfj215y09ejt3.jpg" alt="autorun 的自动执行"></p>
+<h2 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h2><p>我们看一下 <code>autorun</code> 的功能，它实际上是要把回调中运行的所有可观测值收集起来，等到其中一个值发生变动时，重新运行该回调。有心的同学可能会发现，上面的例子中在第二步有输出结果，也就是<strong>在运行 <code>autorun</code> 方法的时候，内部的回调是会执行的</strong>。</p>
 <p>这里的执行实际上就是关键：我们上文中提到，MobX 在赋值时，通过 <code>set</code> 成功的做了触发回调的行为，那么与 <code>set</code> 相对应的就是 <code>get</code> 方法。在代码执行的时候，涉及到取值操作，就会导致  <code>get</code> 方法的触发，MobX 就是在这里进行了依赖收集，或者叫回调注册的的操作。</p>
 <p>我们把上面的代码再扩展一下：</p>
 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(store, <span class="string">'a'</span>, &#123;</span><br><span class="line">  <span class="keyword">get</span>: function() &#123;</span><br><span class="line">    em.on(<span class="string">'event'</span>, <span class="comment">/* 这里的回调怎么写呢？ */</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span>: function() &#123;</span><br><span class="line">    em.emit(<span class="string">'event'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 执行 set 方法，触发 event-a</span></span><br></pre></td></tr></table></figure>
@@ -172,22 +171,22 @@
 
 
     
-        <div id="disqus_thread"></div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
         <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
 
-        var disqus_config = function () {
-        this.page.url = 'http://malcolmyu.github.io/2018/09/09/Core-Concepts-of-Mobx/index.html';
-        this.page.identifier = undefined;
-        };
-
-        (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-
-        s.src = '//malcolmyu.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-        })();
+        gitalk.render('gitalk-container')
         </script>
     
 
@@ -221,15 +220,6 @@
 <script type="text/javascript">
 
 // disqus scripts
-
-var disqus_shortname = 'malcolmyu';
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('body')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 
 
 // dropdown scripts

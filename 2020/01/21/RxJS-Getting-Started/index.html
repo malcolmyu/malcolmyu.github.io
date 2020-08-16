@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="google-site-verification" content="" />
+  
+  <title>RxJS 光速入门</title>
+  <meta name="author" content="malcolm yu">
+  <meta name="description" content="前端技术分享 读书笔记">
+  
+  
+  <meta property="og:title" content="RxJS 光速入门"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:site_name" content="malcolm-blog"/>
+  <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
+  <link rel="alternate" href="/atom.xml" title="malcolm-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/m.min.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <a id="top"></a>
+  <div id="main">
+    <div class="behind">
+      <a href="/" class="back black-color">
+        <svg class="i-close" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M2 30 L30 2 M30 30 L2 2"></path>
+        </svg>
+      </a>
+      <div class="description">
+        &nbsp;日拱一卒，守正出奇
+      </div>
+    </div>
+    <div class="main-ctnr">
+      
+
+  <article class="standard post">
+    <div class="title">
+      
+  
+    <h1 class="page-title center">
+        RxJS 光速入门
+    </h1>
+  
+
+
+    </div>
+    <div class="meta center">
+      
+<time datetime="2020-01-20T16:00:00.000Z">
+<svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
+  </svg>
+  &nbsp;
+  2020-01-21
+</time>
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/categories/技术研究/">技术研究</a>
+
+
+
+
+    
+    &nbsp;
+    <svg class="i-tag" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <circle cx="24" cy="8" r="2"></circle>
+      <path d="M2 18 L18 2 30 2 30 14 14 30 Z"></path>
+    </svg>
+    &nbsp;
+    <a href="/tags/Reactive/">Reactive</a>·<a href="/tags/RxJS/">RxJS</a>·<a href="/tags/Observable/">Observable</a>
+
+
+    </div>
+    <hr>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#看个例子"><span class="toc-text">看个例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么解决问题"><span class="toc-text">怎么解决问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Observable"><span class="toc-text">Observable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作符"><span class="toc-text">操作符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TLDR"><span class="toc-text">TLDR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+    
+    <div class="picture-container">
+      
+    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2020/01/21/RxJS-Getting-Started/title.gif" alt="title" title="title">
+<p>众所周知，RxJS 的学习曲线十分陡峭。尽管网上已经存在诸多入门科普文章，但当年我作为一个新人，最直接的感受还是：一看文章天花乱坠，一写代码啥也不会。在经历了一个请求重试写了一整天的噩梦后，我决定把我的心路历程记录下来，给在 RxJS 门槛前望之兴叹的同学们一点帮助。</p>
+<a id="more"></a>
+<h2 id="看个例子"><a href="#看个例子" class="headerlink" title="看个例子"></a>看个例子</h2><p>我们先看一个前端语境下非常常见的例子<del>（也可能是一个较为常见的面试题，反正我经常问）</del>：</p>
+<p>假设页面上有几个垂类 Tab，每次切换都会发送请求更新下发的数据来源。那么如何才能保证用户在快速切换 Tab 时下发数据来源不错乱？</p>
+<p><img src="./tab.gif" alt="Tab 切换"></p>
+<p>大家的思路一般分为两种：</p>
+<ol>
+<li>从确保顺序入手：请求携带标识，请求返回后根据标识判断是否渲染；</li>
+<li>从降低频率入手：切换行为使用 debounce 消抖，尽量确保请求的有序；</li>
+</ol>
+<p>我们先不管这两种方法是否能完美工作，先尝试把它们用代码撸一遍：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">tabChange = <span class="function">(<span class="params">tabId</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.tabId = tabId;</span><br><span class="line">  fetch(<span class="string">`/api?id=<span class="subst">$&#123;tabId&#125;</span>`</span>).then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.tabId === data.tabId) &#123;</span><br><span class="line">      render();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">onTabChange = debounce(<span class="keyword">this</span>.tabChange, <span class="number">300</span>);</span><br></pre></td></tr></table></figure>
+<p>相信对有些追求极致的同学，看到这段代码本身可能就会眉头一皱：它有一些坏味道，但有说不清楚坏在哪里。</p>
+<p><img src="./not-easy.png" alt="事情并不简单"></p>
+<p>如果细细的品味一下，会发现它坏味道体现在以下两点：</p>
+<ol>
+<li><strong>竞态危害</strong>：第二行的 <code>tabId</code> 可能跟相隔两行的第 4 行的 <code>tabId</code> 的值并不相同，这一不确定性对于传统的同步代码一把梭的前端开发来说是非常令人头疼的。这个问题在多线程的语境下被称作“<a href="https://zh.wikipedia.org/wiki/競爭危害" target="_blank" rel="external">竞态危害（Race Hazard）</a>”，指一段代码的执行结果依赖两个异步逻辑的彼此的执行顺序。</li>
+<li>为解决上一问题所带来的<strong>模式混用</strong>：例如回调与 Promise 的混用、全局变量与局部变量的混用。代码如果几经流转，可能就会变成无尽 callback+Promise 地狱。</li>
+</ol>
+<p>为什么不试试神奇的 RxJS 呢？代码如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> tabSwitch$ = fromEvent(tab, <span class="string">'click'</span>);</span><br><span class="line"></span><br><span class="line">tabSwitch$.pipe(</span><br><span class="line">    debounceTime(<span class="number">300</span>),</span><br><span class="line">    switchMap(<span class="function">(<span class="params">curTab</span>) =&gt;</span> <span class="keyword">from</span>(fetch(<span class="string">`/api/<span class="subst">$&#123;curTab&#125;</span>`</span>))),</span><br><span class="line">    tap(render),</span><br><span class="line">).subscribe();</span><br></pre></td></tr></table></figure>
+<p>可以看到，虽然一下子变成了天书，但至少它模式统一、行数减少，非常的 exciting！</p>
+<p><img src="./tongxiao.jpeg" alt="通宵就完事了"></p>
+ <figcaption>异步代码有害身心，我建议你直接 RxJS</figcaption>
+
+
+<h2 id="怎么解决问题"><a href="#怎么解决问题" class="headerlink" title="怎么解决问题"></a>怎么解决问题</h2><p>先翻开这一篇天书，我们来看看 RxJS 是通过什么样的方式来解决模式混用和竞态危害两个问题的？</p>
+<h3 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h3><p>这一点其实也是 RxJS 最难理解的一点：它建立了一层高 Level 的抽象，创造了 <strong>Observable</strong> 的概念。</p>
+<p>有的文章在这里会引入“流（stream）”的概念，数据流跟 Observable 还是有一些区别，简单理解来说：<strong>流仅仅是随着时间维度而增加值的数组，它是 Observable 生产的数据类型</strong>。</p>
+<p><img src="./stream.gif" alt></p>
+<p><figcaption>每次鼠标点击位置 x 轴坐标产生的数据流</figcaption></p>
+
+<p>而 Observable 本身的概念要复杂的多。它的诞生在 Andre 的<a href="https://staltz.com/javascript-getter-setter-pyramid.html" target="_blank" rel="external">这篇文章</a>里有详尽的叙述，和 Promise 类似，是一个由<strong>生产者决定消费者何时消费数据</strong>的模型。</p>
+<p>一个典型的 Observable 如下所示：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> ob$ = Observable.create(<span class="function"><span class="params">observer</span> =&gt;</span> &#123; <span class="comment">// 生产者</span></span><br><span class="line">  observer.next(<span class="number">1</span>); <span class="comment">// 触发权柄控制在数据生产者这里</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    observer.next(<span class="number">2</span>);</span><br><span class="line">    observer.complete();</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observer = &#123;  <span class="comment">// 消费者</span></span><br><span class="line">  next: <span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'result: '</span>, result),</span><br><span class="line">  error: <span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.error(<span class="string">'something wrong occurred: '</span> + err),</span><br><span class="line">  complete: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'done'</span>),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ob$.subscribe(observer); <span class="comment">// 生产者调用消费者</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出结果：</span></span><br><span class="line"><span class="comment">// result: 1</span></span><br><span class="line"><span class="comment">// result: 2</span></span><br><span class="line"><span class="comment">// done</span></span><br></pre></td></tr></table></figure>
+<p>这里我们只需要记住 Observable 对象的两个特点：</p>
+<ol>
+<li>它跟 Promise 很类似，区别在于它可以提供多值传递，因此共有 <code>next</code>、<code>error</code>、<code>complete</code> 三种状态；</li>
+<li>它通过 <code>subscribe</code> 方法关联生产者与消费者，<code>subscribe</code> 像一条生产线的开关，只有它启动了生产者的生产才会开始；</li>
+</ol>
+<p>由于各种异步行为本身就是一个在时间维度上生产数据的过程，因此他们都可以通过 RxJS 的创建类操作符转换为 Observable 对象。例如上述代码中的 <code>fromEvent</code>，就是将 tab 的点击事件转换为一个 Observable 对象：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> tabSwitch$ = fromEvent(tab, <span class="string">'click'</span>);</span><br></pre></td></tr></table></figure>
+<p>RxJS 有大量的创建类操作符，可以把你能想象的所有同步异步事件进行统一转换，例如请求、DOM 事件、websocket 消息、定时器等。</p>
+<p><img src="./create.png" alt="创建类操作符"></p>
+ <p><figcaption>创建类操作符</figcaption></p>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 使用创建类操作符对异步事件输入的统一 */</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">from</span>, fromEvent, <span class="keyword">of</span>, interval, merge &#125; <span class="keyword">from</span> <span class="string">'rxjs'</span>; </span><br><span class="line"><span class="keyword">const</span> ajax = <span class="function"><span class="params">()</span> =&gt;</span> fetch(url).then(<span class="function"><span class="params">v</span> =&gt;</span> v.json())</span><br><span class="line"></span><br><span class="line">merge(</span><br><span class="line">  <span class="keyword">from</span>([<span class="number">1</span> ,<span class="number">2</span>, <span class="number">3</span>]), <span class="comment">// 从数组多值创建</span></span><br><span class="line">  interval(<span class="number">3000</span>),  <span class="comment">// 定时器轮训创建</span></span><br><span class="line">  fromEvent(<span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>), <span class="string">'click'</span>), <span class="comment">// 按钮点击事件</span></span><br><span class="line">  <span class="keyword">of</span>(&#123; <span class="attr">hello</span>: <span class="string">'world'</span> &#125;), <span class="comment">// 单值创建</span></span><br><span class="line">  <span class="keyword">from</span>(ajax()),    <span class="comment">// 从接口请求创建</span></span><br><span class="line">).subscribe()</span><br></pre></td></tr></table></figure>
+<p>有了 Observable 对象，等于说 RxJS 给异步代码提供了统一的范式，那么它是具体怎么解决竞态危害的呢？</p>
+<h3 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h3><p>其实上面已经提到了创建类操作符，RxJS 还提供种类繁多的大量操作符，专门用于解决竞态危害：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> tabSwitch$ = fromEvent(tab, <span class="string">'click'</span>);</span><br><span class="line"></span><br><span class="line">tabSwitch$.pipe(</span><br><span class="line">    debounceTime(<span class="number">300</span>), <span class="comment">// 300ms 没有变动触发一次</span></span><br><span class="line">    switchMap(<span class="function">(<span class="params">curTab</span>) =&gt;</span> <span class="keyword">from</span>(fetch(<span class="string">`/api/<span class="subst">$&#123;curTab&#125;</span>`</span>))), <span class="comment">// 转换为新的请求流</span></span><br><span class="line">    tap(render),</span><br><span class="line">).subscribe();</span><br></pre></td></tr></table></figure>
+<p>例如上面提到的 <code>switchMap</code>、<code>debounceTime</code> 操作符，就是专门处理高阶 Observable 的顺序问题。</p>
+<p><img src="./operators.png" alt="操作符一览"></p>
+<p><figcaption>操作符整体概览</figcaption></p>
+
+<p>我们在这里先不深入探究每一种操作符的用途，只需要知道操作符是专门对数据流进行处理的工具即可。有了操作符就可以确保这一点：尽管数据在获取时纷繁芜杂，但操作符可以保证我们在处理数据时有条不紊。</p>
+<p>如果要用现实中的物体来做比喻，RxJS 就像个传送带：</p>
+<p><img src="./stream.png" alt="整体观感"></p>
+<ul>
+<li>传送带的头部有一个转换器，它能够把输入的各种各样的原料都捏成一个叫做 Observable 的物体；</li>
+<li>传送带的中段是一条生成线，生产线上有各种各样叫做操作符的机械臂，每个机械臂承担单一而确定的职责：有的机械臂会处理原料、有的会丢弃一些不需要的原料、有的会把原料聚合到一定个数才放到传送带上；</li>
+<li>传送带的尾部有一个叫做 <code>subscribe</code> 的工具人，只有它开动了按钮整条传送带才会运转，杜绝浪费。</li>
+</ul>
+<h2 id="TLDR"><a href="#TLDR" class="headerlink" title="TLDR"></a>TLDR</h2><p>作为一篇光速入门文章，不能说的太多，我们在这里尝试总结一下：</p>
+<ol>
+<li>RxJS 通过了Observable 和操作符，解决了异步编程的模式统一和时序问题，让你的异步代码规范而简洁；</li>
+<li>什么场景下应该使用 RxJS？根据上文所述，RxJS 是用于解决竞态危害问题的。如果你的业务场景中有大量的异步行为，而且它们的执行顺序错乱会导致输出的不正确，这时候就应该考虑引入 RxJS 来规范你的代码了。</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.youtube.com/watch?v=sTSQlYX5DU0" target="_blank" rel="external">What does it mean to be Reactive?</a>，核心思想。虽然口音很重，演讲风格也很浮夸😂</li>
+<li><a href="https://staltz.com/javascript-getter-setter-pyramid.html" target="_blank" rel="external">javascript-getter-setter-pyramid</a>，为什么要有 Observable，编程方式的底层解构。这里是英文原版，可以看这一篇<a href="https://zhuanlan.zhihu.com/p/98745778" target="_blank" rel="external">中文解析</a>；</li>
+<li><a href="https://medium.com/javascript-in-plain-english/promise-vs-observable-vs-stream-165a310e886f" target="_blank" rel="external">What are the differences between Promises, Observables, and Streams?</a></li>
+<li><a href="https://www.bilibili.com/video/av60370503" target="_blank" rel="external">RxJS - 封裝程式的藝術</a>，有些观点的中文视频讲解；</li>
+<li><a href="https://rxviz.com/" target="_blank" rel="external">RXViz，RxJS 代码图形化工具</a>；</li>
+</ul>
+
+
+  </article>
+  </script>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div class="busuanzi center">
+    页阅读量:&nbsp;<span id="busuanzi_value_page_pv"></span>&nbsp;・&nbsp;
+    站访问量:&nbsp;<span id="busuanzi_value_site_pv"></span>&nbsp;・&nbsp;
+    站访客数:&nbsp;<span id="busuanzi_value_site_uv"></span>
+  </div>
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
+        <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
+
+        gitalk.render('gitalk-container')
+        </script>
+    
+
+
+
+
+    </div>
+  </div>
+  <footer class="page-footer"><div class="clearfix">
+</div>
+<div class="right-foot">
+    <div class="firstrow">
+        <a href="#top" target="_self">
+        <svg class="i-caret-right" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+            <path d="M10 30 L26 16 10 2 Z"></path>
+        </svg>
+        </a>
+        © Malcolm 2014-2018
+    </div>
+    <div class="secondrow">
+        <a href="https://github.com/gaoryrt/hexo-theme-pln">
+        Theme Pln
+        </a>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+</footer>
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="/js/search.min.js"></script>
+<script type="text/javascript">
+
+// disqus scripts
+
+
+// dropdown scripts
+$(".dropdown").click(function(event) {
+  var current = $(this);
+  event.stopPropagation();
+  $(current).children(".dropdown-content")[($(current).children(".dropdown-content").hasClass("open"))?'removeClass':'addClass']("open")
+});
+$(document).click(function(){
+    $(".dropdown-content").removeClass("open");
+})
+
+var path = "/search.xml";
+searchFunc(path, 'local-search-input', 'local-search-result');
+
+</script>
+
+</body>
+</html>

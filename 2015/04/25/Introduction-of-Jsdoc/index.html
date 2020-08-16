@@ -32,7 +32,7 @@
         </svg>
       </a>
       <div class="description">
-        &nbsp;膜法师学徒
+        &nbsp;日拱一卒，守正出奇
       </div>
     </div>
     <div class="main-ctnr">
@@ -305,22 +305,22 @@
 
 
     
-        <div id="disqus_thread"></div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
         <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
 
-        var disqus_config = function () {
-        this.page.url = 'http://malcolmyu.github.io/2015/04/25/Introduction-of-Jsdoc/index.html';
-        this.page.identifier = undefined;
-        };
-
-        (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-
-        s.src = '//malcolmyu.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-        })();
+        gitalk.render('gitalk-container')
         </script>
     
 
@@ -354,15 +354,6 @@
 <script type="text/javascript">
 
 // disqus scripts
-
-var disqus_shortname = 'malcolmyu';
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('body')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 
 
 // dropdown scripts

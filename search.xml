@@ -4,6 +4,277 @@
   
     
     <entry>
+      <title><![CDATA[两个不是——程序员读俞军《产品方法论》]]></title>
+      <url>http://malcolmyu.github.io/2020/07/19/Step-into-Chaos/</url>
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2020/07/19/Step-into-Chaos/title.jpg" alt="title" title="title">
+<p>读了两遍俞军老师的《产品方法论》，我总结了两个不是，建议俞军老师写在腰封上：</p>
+<p><strong>用户不是人，产品不是科学。</strong></p>
+<a id="more"></a>
+<h2 id="用户不是人"><a href="#用户不是人" class="headerlink" title="用户不是人"></a>用户不是人</h2><blockquote>
+<p>从产品经理的视角来看，用户不是自然人，而是需求的集合。</p>
+<p>—— 2.2 如何理解用户</p>
+</blockquote>
+<p>这大概是这本书最经典的名言，相信各位读者掩卷之后，脑海中都能回响起这句话<del>配上一首江南皮革厂的 BGM</del>。在书里，俞军举了微信的例子：如果去掉扫一扫、朋友圈和微信钱包，相信微信仍然是 10 亿日活，但恐怕就并非千亿市值。</p>
+<p>对我个人而言，这里有两个点还是值得思考的：</p>
+<ol>
+<li>对于日活很高的产品而言，在增长之外依旧有满足用户需求的能力；</li>
+<li>始终要理解用户不是冰冷的 DAU 数字，而是一个又一个的诉求；</li>
+</ol>
+<p>在用户这一章，俞军进行了很多用户本质的思考，也列举了很多公式，这里就不一一列举。能板正我一个码农对用户的理解，我觉得已经是善莫大焉。举一个开发过程中遇到的实际例子：</p>
+<p>近期有一个诉求是提升用户的分享次数。面对这个目标，一般的产品会选择增加分享弹窗的出现频率、或者给分享按钮加上花里胡哨的动画，这种举动往往收效甚微，而且容易引起用户的反感；高阶的产品则会思考：<strong>分享满足了用户的什么需求</strong>？实际数据显示，超过三成用户主动进行分享，是为了满足自己展示作品给他人，求得关注、涨粉的诉求。因此主动提示用户分享自己的作品，反而起到了不错的效果。</p>
+<p>因此俞军反复在书里强调：<strong>同理心</strong>是高阶产品经理的准入门槛。同情与同理不同：前者是能理解用户的感受，后者是能感受用户的感受。能够切身处地站在用户的视角思考问题，体会到用户的痛苦<del>一袋米要扛几楼</del>，才能够真正做出契合用户诉求的产品。</p>
+<h2 id="产品不是科学"><a href="#产品不是科学" class="headerlink" title="产品不是科学"></a>产品不是科学</h2><blockquote>
+<p>产品工作更接近于社会科学……所有研究人类社会的学科都不是严格意义上的科学，因为它不能真正重复验证，也就无法从真正意义上证伪，而可证伪是科学的最根本特征。</p>
+<p>—— 1.3 产品经理做什么</p>
+</blockquote>
+<p>俞军在回答产品经理是什么这个问题上，花了许多篇幅说产品并非严格意义上的科学这一话题。我个人理解，这是由于应届生涌入产品这一行列之后，俞军老师不由自主地进行了对做题家的批判（大 佐 狂 喜）。</p>
+<p>书里讲到：自然科学与社会科学最大的不同，便是自然科学有研究标的物的属性稳定一致，结论可以跨时间、跨空间重复验证——即有”正确答案“；而社会科学往往研究标的物完全不重复，导致结论也无法普适——即没有正确答案，只有一定场景下的最优解，而且下次也不一定好使。</p>
+<p>有趣的是，这样的两相对立，恰如程序员与产品的思维对立：程序员面对的是可预测系统，需要自然科学的锤炼；而产品面临着混沌与未知，因此需要社会科学的洗礼。因此厉害的产品经理与厉害的程序员，在思维方式上会存在着本质的不同——这大抵就是二者相爱相杀的由来了。</p>
+<p>因此俞军在书里讲，产品经理要多读心理学与经济学，心理学是产品的微观，经济学是产品的宏观。我个人理解，经济学、心理学不止产品经理要学习，程序员更需要学习。由于程序员长期被做题思维侵染，在其他领域的学习就显的尤为重要：因为我们面临的大多数问题都是不确定的，用自然科学的思维去对一切问题进行求解，往往会处处碰壁。</p>
+<h2 id="如何继续学习"><a href="#如何继续学习" class="headerlink" title="如何继续学习"></a>如何继续学习</h2><p>在聊这个话题之前，想先说说这本书的最有趣的地方：尽管本书评分不低，但首页却能看到各种差评如潮，高分和低分吵个不停。</p>
+<p>看了几十条差评，低分段的老铁们大致有三大恨：</p>
+<ol>
+<li>一恨本书为合著：我裤子都脱了，您跟我说这不是俞老师亲自开的光？那金庸跟金庸新能一样吗？</li>
+<li>二恨本书乱发散：作为一个外行想学产品，不料却发现本书是一个心理学外行在讲经济，看完以后直呼外行；</li>
+<li>最恨本书太装逼：通篇胡扯一堆形而上学的感念，看的云里雾里。这就是滴滴产品烂的原因吗，悟了悟了。</li>
+</ol>
+<p>高分段的老哥们套路就比较多样了，有单纯慕名点赞的，有认真学习做笔记的，也有<a href="https://book.douban.com/review/12143715/" target="_blank" rel="external">确有感悟的</a>。</p>
+<p>那为什么这本书的评价会产生这样严重的两极分化呢？这样的差异，主要跟读者的阅历不同有关。</p>
+<p>知识的学习是一个系统的过程，个人理解主要分为三个阶段：输入、理解、内化。</p>
+<ul>
+<li>刚开始时需要多输入：这个过程是比较简单的，读书、阅读、看视频都可以助人快速起步——例如看过很多评论说看过王刚老师的视频之后厨艺见长，<del>看过罗翔老师的视频之后熟练地掌握了各种犯罪技巧</del>；</li>
+<li>之后便要多理解：零散知识输入到一定程度之后，大脑就会产生负担：人脑天生不喜死记硬背，偏爱寻找规律。但这偏爱又没有那样强烈（毕竟思考耗能太多），因此多数人在日常工作之中没有保持思考的习惯。我愿称之为学习中”<strong>惊险的一跃</strong>“：只有你亲自杀死脑细胞们，构建出思维模型，才能度过这一阶段。例如在当你学习了王刚老师的各种课后总结，突然发现<a href="https://www.zhihu.com/question/21696230/answer/388151836" target="_blank" rel="external">做饭是一门科学</a>，之后厨艺大增。</li>
+<li>最后便是内化：第二步构建的模型并非普适的，甚至并非正确的，只有在之后的学习中不断对其进行补充和修正，才会对知识有体系化的理解。达到纵使千头万绪，也能剥茧抽丝的境界。当然，如果能度过第二阶段，这一阶段压力会小很多：因为在模型成功建立之后，学习有了导向性，而且会更加高效。查理·芒格曾提到他进行分析决策时，会用到一套”多元思维模型“，这些思维模型其实就是已经内化的各学科领域的知识。</li>
+</ul>
+<p>不幸的是这个过程不能反其道而行之：一个人在没有输入的前提下，甚至没有理解的前提下，直接快进到内化是完全不行的。长辈的谆谆教诲，我们嗤之以鼻；名流的只言片语，我们趋之若鹜——他们讲的都是有用的道理，然而我们听或者不听，都没什么用。这也就是所谓”听过许多道理，却也过不好一生“。</p>
+<p>因此我们也可以理解两种人对本书的不同态度：产品新人期望能通过一些实际案例来做输入，但书里都是模型而非输入，让人读了头大；有一定经验的产品老狗反而击节赞叹，因为这本书可以帮助迷惘者理解、理解者内化，因此读之大有裨益。</p>
+<p>不过，好评老哥和差评老铁们唯一都赞同的一点是，这本书第五章提供的书单不错，分别列举了一些心理学、经济学和批判性思维相关的书籍。因此我整理了一个<a href="https://www.douban.com/doulist/130680664/" target="_blank" rel="external">豆列</a>，就装作自己已经完成了这惊险一跃吧。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 读书笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 读书笔记 </tag>
+            
+            <tag> 思考 </tag>
+            
+            <tag> 产品方法论 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[参加 14 届 D2 是什么体验？]]></title>
+      <url>http://malcolmyu.github.io/2020/01/29/Thinking-of-14th-D2/</url>
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2020/01/29/Thinking-of-14th-D2/d2.png" alt="title" title="title">
+<p>于上月初参与了阿里在杭州举办的第 14 届 D2 创心，这次的专场基本是微前端+ServerLess，当时听完只是对 微前端的实践手段有所感悟，没有形成系统的总结。恰好最近看到阿里云栖社区将 <a href="https://developer.aliyun.com/article/740585" target="_blank" rel="external">D2 大部分议题资料</a>上传，趁着春节假期，将关心的话题重温了一遍，挑选一些有用的信息点分享给大家。</p>
+<a id="more"></a>
+<h2 id="微前端部分"><a href="#微前端部分" class="headerlink" title="微前端部分"></a>微前端部分</h2><h3 id="巨石应用的危害"><a href="#巨石应用的危害" class="headerlink" title="巨石应用的危害"></a>巨石应用的危害</h3><p>假设你刚刚入职，leader 对你的要求是维护一个开发了 3 年的巨型 B 端项目。看到项目工程目录的那一刻你就大呼不妙，这个项目通过几代已经离职同学的不懈努力，已经变成了一座蔚为壮观的屎山：</p>
+<p>公共组件里光 ajax 的封装就有三种形式，Components 里将近 100 个不明所以的业务组件；实际业务代码更是惨不忍睹，一个文件两千行代码没有注释，各种回调反复横跳，看得人眼花缭乱。你的 leader 告诉你说，我们的项目是个大中台项目，有一部分代码是其他业务线的同学贡献，甚至还有后端同学。你看着后端同学生生写出的两千行 JS，一时不知是该鄙视还是该敬佩。</p>
+<p><img src="./fullstack.jpg" alt="战术后仰"></p>
+ <figcaption>什么叫全栈工程师啊</figcaption>
+
+<p>不过这一切都难不到你，你最擅长的操作就是屎上雕花，而且第一个需求不过是个无关紧要的小需求。当需求做完时你还是崩溃了，你惊讶的发现项目一次打包需要 10 分钟，每次发布都让你痛不欲生。上线的当晚由于发布回滚，你的王者农药都输了 3 局才成功发布。</p>
+<p>但倒霉的事情仍未结束，第二天一大早，你的 leader 突然通知你昨天的改动不小心影响了一个全局公共组件，被迫再次回滚，希望你能好好准备一下故障 review。</p>
+<p>尽管努力克制心里的一万遍 MMP，但在故障 review 上还是没能保持体面。你吐槽了一下项目代码一坨屎的现状，希望大佬们有计划地展开重构。你的 leader 面露难色，但还是做了个宽慰的手势，表示下次一定。</p>
+<p><img src="./nexttime.png" alt></p>
+<p>上面这个故事其实描述了巨石（Frontend Monolith）应用面临的实际业务难题：</p>
+<ol>
+<li><strong>技术债务</strong>：技术栈陈旧不堪、债务积累过多，其腐化速度边际递增、越来越快；</li>
+<li><strong>打包缓慢</strong>：这一点搞过的同学应该都深有体会。到了项目后期，怎么优化都不如进行项目拆分；</li>
+<li><strong>耦合性高</strong>：巨石项目后期一定会有多团队同学介入开发，如果不进行应用隔离可能会导致每次改动对全局造成影响。</li>
+</ol>
+<h3 id="微前端"><a href="#微前端" class="headerlink" title="微前端"></a>微前端</h3><p>而微前端就是专为解决巨石应用带来的问题而生。它的核心思想就是<strong>按照业务维度划分独立的子应用</strong>，然后由主应用做统一的子应用加载、移除等生命周期管理。由于无法控制每个微应用的开发者，且考虑到前端技术迭代的速度很快，因此微应用最好可以实现能够将不同技术栈的应用组合成一个大型应用，也就是技术无关</p>
+<p>通过子应用隔离的方式，可以比较完美地解决上面描述的问题：</p>
+<ol>
+<li>技术债务：由于子应用技术无关，因此可以在新应用随意启用新的技术栈进行开发；</li>
+<li>打包缓慢：子应用只需要发布上线自己的部分，子应用的改动不会导致其他应用和主应用重新发布上线；</li>
+<li>耦合性高：由于两个应用完全无关，只跟主应用有单向的通信，因此耦合性大大降低。</li>
+</ol>
+<p>听到这里你可能会觉得，这听起来就是一堆子项目集成到一个大项目里啊，这题我会，直接 iframe 呗。这一点竞对艾石光老哥讲的<a href="https://developer.aliyun.com/live/1852" target="_blank" rel="external">沙盒体系</a>中做了一个很好的比喻：他把微前端比作 Docker，iframe 比作虚拟机。这两种方案各有优劣，但微前端能够弥补 iframe 一些无法绕开的坑点，例如：DeepLinking、身份验证、加载资源优化与一些兼容问题。</p>
+<p><img src="./iframe.png" alt></p>
+ <figcaption>艾石光，沙盒体系，iframe 的危害</figcaption>
+
+<p>除去沙盒体系，微前端技术层面的其他技术难点可以参考有知的<a href="https://developer.aliyun.com/live/1849" target="_blank" rel="external">微前端蚂蚁落地实践</a>。有知详细介绍了微应用技术层面上的几个坑点：如何实现技术无关，如何处理路由和应用载入，如何做沙盒机制以及如何处理应用间通信。</p>
+<p><img src="./getall.png" alt></p>
+ <figcaption>有知，微前端蚂蚁落地实践</figcaption>
+
+<p>几个印象比较深刻的点有：</p>
+<ol>
+<li>实现技术无关要求子应用按照规范自行暴露一些生命周期；</li>
+<li>通过 HTML Entry 来载入子应用；</li>
+<li>通过动态卸载样式表实现样式隔离；</li>
+<li>通过实时分析依赖（semver in runtime）来解决子应用依赖重复的问题。</li>
+</ol>
+<p>而第一场克军大佬<a href="https://github.com/d2forum/14th/blob/master/PPT/%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E4%BD%93%E7%B3%BB--%E5%85%8B%E5%86%9B.pdf" target="_blank" rel="external">微前端架构体系</a>，则是从宏观层面思考微前端，总结下来其实就一句话：<strong>微前端不是框架/工具，而是架构体系</strong>。在细节逐步完善的过程中就提出微前端的架（hua）构（da）体（bing）系，是大佬的风格。</p>
+<p>克军给出了许多教科书式的定义，例如什么工程价值业务价值和十大问题，这里我们不是上课就不一一列举。这里更值得关注的是克军在架构微前端时的思路，主要是两个方面：</p>
+<ol>
+<li>注重云时代的开发展望：克军认为微前端+ServerLess 构建成的<strong>微应用</strong>是未来云时代开发的基石，这一点算是一个大局观；</li>
+<li>注重微前端的运维能力：作为一个架构体系，需要提供一套便于操作的运维能力，包括<strong>配置系统</strong>和<strong>观察工具</strong>。翻译成大白话就是不关要提供 SDK，还要提供平台。</li>
+</ol>
+<p>个人理解，克军的这一场分享对于成熟微前端团队来说没必要深究，因为目前还在技术攻坚阶段；但是当技术工具完成之后，需要回过头来探究思考一下架构体系，这一场分享可能会充当一个指明灯的作用。</p>
+<h2 id="垂直领域"><a href="#垂直领域" class="headerlink" title="垂直领域"></a>垂直领域</h2><p>由于目前的业务中没有涉及到云服务相关，因此对下半场 ServerLess 的部分听得走马观花。不过除去微前端和 ServerLess 之外，在一些 2B 的垂直领域也有一些不错的分享，比如 IDE 和协同编辑。</p>
+<h3 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h3><p>IDE 部分听到一个有意思的点是，在设计 IDE 插件时，出于隔离考虑，需要确保插件代码不能运行在主进程中；但采用 worker 的机制时 JS 代码无法访问 DOM。支付宝小程序 IDE 团队从小程序的设计中获得灵感<del>（禁止套娃）</del>，采用视图进程、逻辑进程分离进程的模型，从视图到逻辑提供简陋的注入组件功能，反过来只能通过 setData 来修改。</p>
+<p><img src="./smallapp.png" alt></p>
+ <figcaption>从小程序获取灵感解决 IDE 插件机制</figcaption>
+
+<h3 id="协同编辑"><a href="#协同编辑" class="headerlink" title="协同编辑"></a>协同编辑</h3><p>沙洲在<a href="https://developer.aliyun.com/live/1851" target="_blank" rel="external">协同编辑原理与实践</a>中简要讲明了协同编辑的基础实现原理，其中核心思想有二：</p>
+<ol>
+<li><strong>操作变换（Operation Transformation）算法</strong>：类似于 Git Merge 功能，当两个用户的操作相互冲突时根据其中一个用户操作后的结果对另一个用户的操作进行变换，是两者操作后得到的结果一致；</li>
+<li><strong>协同调度协议</strong>：指客户端与服务端通信的基本格式，主要包含版本和操作，即每次通信都在告知“我在版本上 x 进行了操作 o1、o2、o3 到达版本 y”</li>
+</ol>
+<p>目前最好的方式是采用 COT，即不打回操作，服务端每次接受到操作时都进行操作变换，告知客户端最新的变换结果。</p>
+<p><img src="./cot.png" alt></p>
+<p>但这样带来的问题是时间复杂度的增加，目前 Google Docs 采用的办法是在端侧使用类似 Git Diff 的语法压缩操作，将用户多次操作产生的结果尽量合并；钉钉文档还使用冲突域拆分的方式，将文档拆分为多个域，每个域内部的 OT 算法可以复用。例如一个脑图的操作，可以抽象为两种：</p>
+<ol>
+<li>树解构操作：增加节点、移动节点，这里对应四种 OT：客户端增加/移动、服务端增加/移动 2*2；</li>
+<li>映射表操作：删除节点（虚拟删除）、设置文字、字体、颜色、字形，这里只对应一种 OT：客户端设置 vs 服务端设置；</li>
+</ol>
+<p><img src="./area.png" alt></p>
+<p>抽象之后就只有五个 OT 操作，整个复杂度大大降低。</p>
+<h2 id="开场宣讲"><a href="#开场宣讲" class="headerlink" title="开场宣讲"></a>开场宣讲</h2><p>最后我们再来看一下圆心开场的宣讲，开场是最早听到，印象也最为深刻。个人认为圆心的宣讲是大公司内部未来前端发展方向的展望，对个人的发展规划也能起到一定的指导作用，所以放在最后总结一下。</p>
+<h3 id="从-PC-到端"><a href="#从-PC-到端" class="headerlink" title="从 PC 到端"></a>从 PC 到端</h3><p>与过去受制于浏览器的发展不同，现在前端的触角延伸到对端测<strong>渲染能力的重塑</strong>，由此衍生出的技术有 RN、Flutter、小程序等。</p>
+<p>个人认为这里对前端端侧技术的掌握提出了一定的要求，如果传统的 Web 前端不能掌握一定的 Native 解决方案，势必在此技术侧难以深入，最典型的场景就是使用这些技术在渲染上遇到性能瓶颈时。</p>
+<h3 id="从-2C-到-2B"><a href="#从-2C-到-2B" class="headerlink" title="从 2C 到 2B"></a>从 2C 到 2B</h3><p>这两年从 2C 到 2B 是个整体趋势，这里的主要原因是各个公司开始重视中台建设，大量中后台业务成为前端主战场。圆心认为这里有三个方向的突破点：</p>
+<h4 id="微前端-1"><a href="#微前端-1" class="headerlink" title="微前端"></a>微前端</h4><p>微前端主要目的有二，被动一点的目的是解决当前巨石应用带来的困境（打包发布解耦、技术栈更新等），主动一些的目的是给复杂团队协同运作提供解决方案，给大型应用提供标准架构、设计的解决方案。</p>
+<h4 id="垂直领域-1"><a href="#垂直领域-1" class="headerlink" title="垂直领域"></a>垂直领域</h4><p>有一些针对 B 端场景的可以深入挖掘的垂直领域，例如 IDE、数据可视化、在线 Excel 等；</p>
+<p>IDE 是阿里号称未来四大方向之一，个人感觉是因为当前技术有场景、未来业务可展望。翻译成人话就是在现有技术难题下，IDE 是一个绕不开的坎，例如 Serverless 的在线代码编辑、小程序的 IDE 工具等，因此有业务动力去攻克难题；而展望一下未来，在发布构件流程云化、模块解耦微前端化之后，写代码实际上是一个即开即用的场景，在线 IDE 是一个可见未来的必需品，也有投入精力的必要。</p>
+<p>数据可视化这一点也有一定的感触。最近在使用 AntV，AntV 实际上就是一场对数据可视化领域的范式重塑，之前玉伯在<a href="https://www.yuque.com/yubo/morning/grow-up-at-alibaba#iTooh" target="_blank" rel="external">我的前端成长之路</a>中也说过：</p>
+<blockquote>
+<p>2014 年开始做 AntV 数据可视化的时候，我当时跟萧庆两个人就是被《The Grammar of Graphics》这本书感染了，是一本英文电子书。看完之后我发现这个东西如果真的实现的话，会让整个数据图表发生很多改变，可以成为 AI 时代的数据图形表达语法，能完全改变掉 ECharts 等传统图表类库的使用方式。</p>
+</blockquote>
+<p>也是深（da）挖（li）出奇迹的典型代表。</p>
+<h4 id="领域模型"><a href="#领域模型" class="headerlink" title="领域模型"></a>领域模型</h4><p>当许多前置的难题被攻克之后，前端就会面临如何与后端领域模型结合的问题。这一点我的理解还不够成熟系统，但是之前有听后端架构师讲 DDD（Domain-Driven Design，领域驱动架构）。个人理解，<strong>DDD 领域建模就是现实世界的心智模型在代码层面的数字模型映射</strong>。</p>
+<p>当前端远离业务的时候，确实不需要考虑代码层面如何进行领域建模；但当前一大发展趋势就是把脱离业务的部分尽量抽象统一，让开发更加贴近业务，思考针对业务的建模。到了这一步实际上对前端开发者提出了更高层级的要求。</p>
+<h3 id="从传统模式到云加端"><a href="#从传统模式到云加端" class="headerlink" title="从传统模式到云加端"></a>从传统模式到云加端</h3><p>这里讲的是经由 ServerLess 技术，前端工作的重心逐渐由切图一把梭转向业务开发本身，这里与上述的领域模型的挑战类似；</p>
+<h3 id="智能化、语言底层"><a href="#智能化、语言底层" class="headerlink" title="智能化、语言底层"></a>智能化、语言底层</h3><p>前端智能化，这点需要算法同学的鼎力相助，也需要前端从疯狂切图转型到对业务进行架构、抽象；语言底层指 TypeScript 以及 WebAssembly 等方向，探究较少，本次也不详述。</p>
+<h2 id="TLDR"><a href="#TLDR" class="headerlink" title="TLDR"></a>TLDR</h2><p>其实每次 D2 的主要作用就是寻找灵感，打打鸡血。本次参会最主要的收获还是微前端体系在业内已经有成熟解决方案，这个事情又离业务非常近（哪里还没个巨石应用呢），只要动手就有收获；其次就是圆心对发展方向的展望，现状已然变成不会写 Node 的 Native 不是好前端了😂，2020 还需要更加努力啊！</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术思索 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> D2 </tag>
+            
+            <tag> Serverless </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[RxJS 光速入门]]></title>
+      <url>http://malcolmyu.github.io/2020/01/21/RxJS-Getting-Started/</url>
+      <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2020/01/21/RxJS-Getting-Started/title.gif" alt="title" title="title">
+<p>众所周知，RxJS 的学习曲线十分陡峭。尽管网上已经存在诸多入门科普文章，但当年我作为一个新人，最直接的感受还是：一看文章天花乱坠，一写代码啥也不会。在经历了一个请求重试写了一整天的噩梦后，我决定把我的心路历程记录下来，给在 RxJS 门槛前望之兴叹的同学们一点帮助。</p>
+<a id="more"></a>
+<h2 id="看个例子"><a href="#看个例子" class="headerlink" title="看个例子"></a>看个例子</h2><p>我们先看一个前端语境下非常常见的例子<del>（也可能是一个较为常见的面试题，反正我经常问）</del>：</p>
+<p>假设页面上有几个垂类 Tab，每次切换都会发送请求更新下发的数据来源。那么如何才能保证用户在快速切换 Tab 时下发数据来源不错乱？</p>
+<p><img src="./tab.gif" alt="Tab 切换"></p>
+<p>大家的思路一般分为两种：</p>
+<ol>
+<li>从确保顺序入手：请求携带标识，请求返回后根据标识判断是否渲染；</li>
+<li>从降低频率入手：切换行为使用 debounce 消抖，尽量确保请求的有序；</li>
+</ol>
+<p>我们先不管这两种方法是否能完美工作，先尝试把它们用代码撸一遍：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">tabChange = <span class="function">(<span class="params">tabId</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.tabId = tabId;</span><br><span class="line">  fetch(<span class="string">`/api?id=<span class="subst">$&#123;tabId&#125;</span>`</span>).then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.tabId === data.tabId) &#123;</span><br><span class="line">      render();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">onTabChange = debounce(<span class="keyword">this</span>.tabChange, <span class="number">300</span>);</span><br></pre></td></tr></table></figure>
+<p>相信对有些追求极致的同学，看到这段代码本身可能就会眉头一皱：它有一些坏味道，但有说不清楚坏在哪里。</p>
+<p><img src="./not-easy.png" alt="事情并不简单"></p>
+<p>如果细细的品味一下，会发现它坏味道体现在以下两点：</p>
+<ol>
+<li><strong>竞态危害</strong>：第二行的 <code>tabId</code> 可能跟相隔两行的第 4 行的 <code>tabId</code> 的值并不相同，这一不确定性对于传统的同步代码一把梭的前端开发来说是非常令人头疼的。这个问题在多线程的语境下被称作“<a href="https://zh.wikipedia.org/wiki/競爭危害" target="_blank" rel="external">竞态危害（Race Hazard）</a>”，指一段代码的执行结果依赖两个异步逻辑的彼此的执行顺序。</li>
+<li>为解决上一问题所带来的<strong>模式混用</strong>：例如回调与 Promise 的混用、全局变量与局部变量的混用。代码如果几经流转，可能就会变成无尽 callback+Promise 地狱。</li>
+</ol>
+<p>为什么不试试神奇的 RxJS 呢？代码如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> tabSwitch$ = fromEvent(tab, <span class="string">'click'</span>);</span><br><span class="line"></span><br><span class="line">tabSwitch$.pipe(</span><br><span class="line">    debounceTime(<span class="number">300</span>),</span><br><span class="line">    switchMap(<span class="function">(<span class="params">curTab</span>) =&gt;</span> <span class="keyword">from</span>(fetch(<span class="string">`/api/<span class="subst">$&#123;curTab&#125;</span>`</span>))),</span><br><span class="line">    tap(render),</span><br><span class="line">).subscribe();</span><br></pre></td></tr></table></figure>
+<p>可以看到，虽然一下子变成了天书，但至少它模式统一、行数减少，非常的 exciting！</p>
+<p><img src="./tongxiao.jpeg" alt="通宵就完事了"></p>
+ <figcaption>异步代码有害身心，我建议你直接 RxJS</figcaption>
+
+
+<h2 id="怎么解决问题"><a href="#怎么解决问题" class="headerlink" title="怎么解决问题"></a>怎么解决问题</h2><p>先翻开这一篇天书，我们来看看 RxJS 是通过什么样的方式来解决模式混用和竞态危害两个问题的？</p>
+<h3 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h3><p>这一点其实也是 RxJS 最难理解的一点：它建立了一层高 Level 的抽象，创造了 <strong>Observable</strong> 的概念。</p>
+<p>有的文章在这里会引入“流（stream）”的概念，数据流跟 Observable 还是有一些区别，简单理解来说：<strong>流仅仅是随着时间维度而增加值的数组，它是 Observable 生产的数据类型</strong>。</p>
+<p><img src="./stream.gif" alt></p>
+<p><figcaption>每次鼠标点击位置 x 轴坐标产生的数据流</figcaption></p>
+
+<p>而 Observable 本身的概念要复杂的多。它的诞生在 Andre 的<a href="https://staltz.com/javascript-getter-setter-pyramid.html" target="_blank" rel="external">这篇文章</a>里有详尽的叙述，和 Promise 类似，是一个由<strong>生产者决定消费者何时消费数据</strong>的模型。</p>
+<p>一个典型的 Observable 如下所示：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> ob$ = Observable.create(<span class="function"><span class="params">observer</span> =&gt;</span> &#123; <span class="comment">// 生产者</span></span><br><span class="line">  observer.next(<span class="number">1</span>); <span class="comment">// 触发权柄控制在数据生产者这里</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    observer.next(<span class="number">2</span>);</span><br><span class="line">    observer.complete();</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observer = &#123;  <span class="comment">// 消费者</span></span><br><span class="line">  next: <span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'result: '</span>, result),</span><br><span class="line">  error: <span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.error(<span class="string">'something wrong occurred: '</span> + err),</span><br><span class="line">  complete: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'done'</span>),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ob$.subscribe(observer); <span class="comment">// 生产者调用消费者</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出结果：</span></span><br><span class="line"><span class="comment">// result: 1</span></span><br><span class="line"><span class="comment">// result: 2</span></span><br><span class="line"><span class="comment">// done</span></span><br></pre></td></tr></table></figure>
+<p>这里我们只需要记住 Observable 对象的两个特点：</p>
+<ol>
+<li>它跟 Promise 很类似，区别在于它可以提供多值传递，因此共有 <code>next</code>、<code>error</code>、<code>complete</code> 三种状态；</li>
+<li>它通过 <code>subscribe</code> 方法关联生产者与消费者，<code>subscribe</code> 像一条生产线的开关，只有它启动了生产者的生产才会开始；</li>
+</ol>
+<p>由于各种异步行为本身就是一个在时间维度上生产数据的过程，因此他们都可以通过 RxJS 的创建类操作符转换为 Observable 对象。例如上述代码中的 <code>fromEvent</code>，就是将 tab 的点击事件转换为一个 Observable 对象：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> tabSwitch$ = fromEvent(tab, <span class="string">'click'</span>);</span><br></pre></td></tr></table></figure>
+<p>RxJS 有大量的创建类操作符，可以把你能想象的所有同步异步事件进行统一转换，例如请求、DOM 事件、websocket 消息、定时器等。</p>
+<p><img src="./create.png" alt="创建类操作符"></p>
+ <p><figcaption>创建类操作符</figcaption></p>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 使用创建类操作符对异步事件输入的统一 */</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">from</span>, fromEvent, <span class="keyword">of</span>, interval, merge &#125; <span class="keyword">from</span> <span class="string">'rxjs'</span>; </span><br><span class="line"><span class="keyword">const</span> ajax = <span class="function"><span class="params">()</span> =&gt;</span> fetch(url).then(<span class="function"><span class="params">v</span> =&gt;</span> v.json())</span><br><span class="line"></span><br><span class="line">merge(</span><br><span class="line">  <span class="keyword">from</span>([<span class="number">1</span> ,<span class="number">2</span>, <span class="number">3</span>]), <span class="comment">// 从数组多值创建</span></span><br><span class="line">  interval(<span class="number">3000</span>),  <span class="comment">// 定时器轮训创建</span></span><br><span class="line">  fromEvent(<span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>), <span class="string">'click'</span>), <span class="comment">// 按钮点击事件</span></span><br><span class="line">  <span class="keyword">of</span>(&#123; <span class="attr">hello</span>: <span class="string">'world'</span> &#125;), <span class="comment">// 单值创建</span></span><br><span class="line">  <span class="keyword">from</span>(ajax()),    <span class="comment">// 从接口请求创建</span></span><br><span class="line">).subscribe()</span><br></pre></td></tr></table></figure>
+<p>有了 Observable 对象，等于说 RxJS 给异步代码提供了统一的范式，那么它是具体怎么解决竞态危害的呢？</p>
+<h3 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h3><p>其实上面已经提到了创建类操作符，RxJS 还提供种类繁多的大量操作符，专门用于解决竞态危害：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> tabSwitch$ = fromEvent(tab, <span class="string">'click'</span>);</span><br><span class="line"></span><br><span class="line">tabSwitch$.pipe(</span><br><span class="line">    debounceTime(<span class="number">300</span>), <span class="comment">// 300ms 没有变动触发一次</span></span><br><span class="line">    switchMap(<span class="function">(<span class="params">curTab</span>) =&gt;</span> <span class="keyword">from</span>(fetch(<span class="string">`/api/<span class="subst">$&#123;curTab&#125;</span>`</span>))), <span class="comment">// 转换为新的请求流</span></span><br><span class="line">    tap(render),</span><br><span class="line">).subscribe();</span><br></pre></td></tr></table></figure>
+<p>例如上面提到的 <code>switchMap</code>、<code>debounceTime</code> 操作符，就是专门处理高阶 Observable 的顺序问题。</p>
+<p><img src="./operators.png" alt="操作符一览"></p>
+<p><figcaption>操作符整体概览</figcaption></p>
+
+<p>我们在这里先不深入探究每一种操作符的用途，只需要知道操作符是专门对数据流进行处理的工具即可。有了操作符就可以确保这一点：尽管数据在获取时纷繁芜杂，但操作符可以保证我们在处理数据时有条不紊。</p>
+<p>如果要用现实中的物体来做比喻，RxJS 就像个传送带：</p>
+<p><img src="./stream.png" alt="整体观感"></p>
+<ul>
+<li>传送带的头部有一个转换器，它能够把输入的各种各样的原料都捏成一个叫做 Observable 的物体；</li>
+<li>传送带的中段是一条生成线，生产线上有各种各样叫做操作符的机械臂，每个机械臂承担单一而确定的职责：有的机械臂会处理原料、有的会丢弃一些不需要的原料、有的会把原料聚合到一定个数才放到传送带上；</li>
+<li>传送带的尾部有一个叫做 <code>subscribe</code> 的工具人，只有它开动了按钮整条传送带才会运转，杜绝浪费。</li>
+</ul>
+<h2 id="TLDR"><a href="#TLDR" class="headerlink" title="TLDR"></a>TLDR</h2><p>作为一篇光速入门文章，不能说的太多，我们在这里尝试总结一下：</p>
+<ol>
+<li>RxJS 通过了Observable 和操作符，解决了异步编程的模式统一和时序问题，让你的异步代码规范而简洁；</li>
+<li>什么场景下应该使用 RxJS？根据上文所述，RxJS 是用于解决竞态危害问题的。如果你的业务场景中有大量的异步行为，而且它们的执行顺序错乱会导致输出的不正确，这时候就应该考虑引入 RxJS 来规范你的代码了。</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.youtube.com/watch?v=sTSQlYX5DU0" target="_blank" rel="external">What does it mean to be Reactive?</a>，核心思想。虽然口音很重，演讲风格也很浮夸😂</li>
+<li><a href="https://staltz.com/javascript-getter-setter-pyramid.html" target="_blank" rel="external">javascript-getter-setter-pyramid</a>，为什么要有 Observable，编程方式的底层解构。这里是英文原版，可以看这一篇<a href="https://zhuanlan.zhihu.com/p/98745778" target="_blank" rel="external">中文解析</a>；</li>
+<li><a href="https://medium.com/javascript-in-plain-english/promise-vs-observable-vs-stream-165a310e886f" target="_blank" rel="external">What are the differences between Promises, Observables, and Streams?</a></li>
+<li><a href="https://www.bilibili.com/video/av60370503" target="_blank" rel="external">RxJS - 封裝程式的藝術</a>，有些观点的中文视频讲解；</li>
+<li><a href="https://rxviz.com/" target="_blank" rel="external">RXViz，RxJS 代码图形化工具</a>；</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术研究 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Reactive </tag>
+            
+            <tag> RxJS </tag>
+            
+            <tag> Observable </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[《智能商业》读书杂感]]></title>
       <url>http://malcolmyu.github.io/2019/07/24/Notes-of-Business-Intelligence/</url>
       <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><img src="/2019/07/24/Notes-of-Business-Intelligence/title.png" alt="redux" title="redux">
@@ -163,7 +434,7 @@
 <p>这个例子就是一个最基础的 MobX 功能，它明显的分为三个步骤：</p>
 <ol>
 <li><p><strong>封装可观测值</strong>，对其他 MVVM 框架有了解的同学们应该能理解这个过程，这一步的操作的目的是：把一个单纯对象，封装成一个巨复杂的对象。（如上例中的 <code>{ a: 1 }</code> 就变成了下图的样子）</p>
-<p><img src="https://ww1.sinaimg.cn/large/7921624bly1fv3l54n33tj21bs06cabh.jpg" alt="面目全非的 Plain Object"></p>
+<p><img src="observable.jpg" alt="面目全非的 Plain Object"></p>
 <p>这个巨复杂的对象它的学名叫做<strong>可观测值（Observable）</strong>，是 MobX 里第一个重要的概念。</p>
 </li>
 <li><p><strong>依赖收集</strong>，第二步使用 autorun 包裹一个回调的操作，学名叫做依赖收集。这里这个打印 a 的回调，MobX 叫它<strong>衍生（Derivation）</strong>，这是 MobX 里第二个重要的概念。但实际上，这里在运行时还暗含了一个步骤，就是<strong>封装衍生</strong>，衍生本身也是一个巨复杂的对象，在运行 <code>autorun</code> 的时候，会构造出这个对象。</p>
@@ -181,8 +452,7 @@
 <p>是的，就是 <code>Object.definePorperty</code>（或者 Proxy），具体参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="external">这里</a>。因此我们可以简单的理解 MobX 在运行过程中，进行了这样的操作：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(store, <span class="string">'a'</span>, &#123;</span><br><span class="line">  <span class="keyword">set</span>: function() &#123;</span><br><span class="line">    em.emit(<span class="string">'event'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 执行 set 方法，触发 event-a</span></span><br></pre></td></tr></table></figure>
 <p>好了，推导的手段有了，那么如何确定在 emit 的时候应该触发哪个方法呢？或者说 MobX 的回调是什么时候注册的呢？其实核心就在这个 <code>autorun</code> 方法之中。</p>
-<h2 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h2><p>我们看一下 <code>autorun</code> 的功能，它实际上是要把回调中运行的所有可观测值收集起来，等到其中一个值发生变动时，重新运行该回调。有心的同学可能会发现，上面的例子中在第二步有输出结果，也就是<strong>在运行 <code>autorun</code> 方法的时候，内部的回调是会执行的</strong>。如图：</p>
-<p><img src="https://ww1.sinaimg.cn/large/7921624bly1fvjlw2yjqfj215y09ejt3.jpg" alt="autorun 的自动执行"></p>
+<h2 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h2><p>我们看一下 <code>autorun</code> 的功能，它实际上是要把回调中运行的所有可观测值收集起来，等到其中一个值发生变动时，重新运行该回调。有心的同学可能会发现，上面的例子中在第二步有输出结果，也就是<strong>在运行 <code>autorun</code> 方法的时候，内部的回调是会执行的</strong>。</p>
 <p>这里的执行实际上就是关键：我们上文中提到，MobX 在赋值时，通过 <code>set</code> 成功的做了触发回调的行为，那么与 <code>set</code> 相对应的就是 <code>get</code> 方法。在代码执行的时候，涉及到取值操作，就会导致  <code>get</code> 方法的触发，MobX 就是在这里进行了依赖收集，或者叫回调注册的的操作。</p>
 <p>我们把上面的代码再扩展一下：</p>
 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> em = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(store, <span class="string">'a'</span>, &#123;</span><br><span class="line">  <span class="keyword">get</span>: function() &#123;</span><br><span class="line">    em.on(<span class="string">'event'</span>, <span class="comment">/* 这里的回调怎么写呢？ */</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span>: function() &#123;</span><br><span class="line">    em.emit(<span class="string">'event'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">store.a = <span class="number">2</span>; <span class="comment">// 执行 set 方法，触发 event-a</span></span><br></pre></td></tr></table></figure>
@@ -268,7 +538,7 @@
   <figcaption>图 2：在用户拥有 nickname 时 ProfileView 组件依赖树。与图 1 相反，fullName 现在处于惰性模式（lazy mode）且不观测 firstName 和 lastName</figcaption>
 
 <p>MobX 将始终尝试减少产生一致状态所需要的计算数。在本文的余下内容，我将介绍几个用于实现这一目标的几个策略。但在深入了解计算值和响应与状态保持同步的黑魔法之前，让我们先描述下 MobX 背后的原理：</p>
-<h3 id="对状态改变做出响应，总是比直接处理状态改变要好"><a href="#对状态改变做出响应，总是比直接处理状态改变要好" class="headerlink" title="对状态改变做出响应，总是比直接处理状态改变要好"></a>对状态改变做出响应，总是比直接处理状态改变要好</h3><blockquote>
+<h2 id="对状态改变做出响应，总是比直接处理状态改变要好"><a href="#对状态改变做出响应，总是比直接处理状态改变要好" class="headerlink" title="对状态改变做出响应，总是比直接处理状态改变要好"></a>对状态改变做出响应，总是比直接处理状态改变要好</h2><blockquote>
 <p>自动更新应用的状态是一个反模式，数据应该被衍生。</p>
 </blockquote>
 <p>应用程序触发的用来响应状态变化的任何命令式行为通常都会创建或改变某些值。换句话说，大多数行为都会管理一个<a href="https://medium.com/@mweststrate/pure-rendering-in-the-light-of-time-and-state-4b537d8d40b1" target="_blank" rel="external">本地缓存</a>。触发用户界面的更新？更新级联的值？通知后端？这些通常被认为是潜在的缓存失效。为了确保这些缓存同步，你需要订阅（subscribe）将来的状态更改，这会导致行为再次被触发。</p>
@@ -287,14 +557,14 @@
 </blockquote>
 <p>MobX 背后的第二个重要思想就是，对于任何复杂度超过 TodoMVC 的应用，我们通常都需要一个<strong>数据图表</strong>用来存储状态，而非标准化的树，这也是一种比较费脑子但是高效的方式。图允许引用的一致性、避免数据复制，因此可以保证衍生的数据永不过时。</p>
 <hr>
-<h3 id="MobX-是如何保证所有的衍生有效且一致"><a href="#MobX-是如何保证所有的衍生有效且一致" class="headerlink" title="MobX 是如何保证所有的衍生有效且一致"></a>MobX 是如何保证所有的衍生有效且一致</h3><p>解决方案就是：不缓存，只衍生。大家可能会问：这样搞不是代价很大么？不不不，事实上这样搞效率很高！原因其实上面已经解释过：MobX 并不运行所有的衍生，但能保证仅在一些响应中设计的计算值保持与可观测状态的同步。这种衍生被称作 reactive。再用电子表格的类比解释下：只有那些当前可见的公式或者一个间接使用的可见公式，在某个被观察的数据单元格发生数值变化时才需要重新计算。</p>
-<h4 id="惰性求值还是响应式求值"><a href="#惰性求值还是响应式求值" class="headerlink" title="惰性求值还是响应式求值"></a>惰性求值还是响应式求值</h4><p>那么不是使用直接或间接的响应来计算呢？你仍然可以随时检查计算值（如 fullName）的值。解决方案很简单：只要计算值不是可响应的，它就会惰性求值，正如普通的 getter 函数一样。不进行任何观察的惰性衍生可以在超出范围时简单的进行垃圾回收。还记得计算值应该始终是可观察应用状态的纯函数这一说法吗？原因就是：对于纯函数无所谓惰性还是非惰性求值；对于同样的可观测状态纯函数的求值总会得出相同的结果。</p>
-<h4 id="运行计算"><a href="#运行计算" class="headerlink" title="运行计算"></a>运行计算</h4><p>响应与计算值都被 MobX 用同样的方式运行。当重新计算触发时，回调函数会被推入<strong>衍生栈</strong>（当前正在运行衍生的函数栈）。只要重计算运行中，所有被访问的可观察对象将会把自己注册为衍生栈最顶部函数的依赖。如果计算值的值被衍生函数需要，且计算值已处在响应状态，那么这个值可以简单的被当做是最后一个值。否则它将把自身推入衍生栈，切换到响应模式并也开始计算。</p>
+<h2 id="MobX-是如何保证所有的衍生有效且一致"><a href="#MobX-是如何保证所有的衍生有效且一致" class="headerlink" title="MobX 是如何保证所有的衍生有效且一致"></a>MobX 是如何保证所有的衍生有效且一致</h2><p>解决方案就是：不缓存，只衍生。大家可能会问：这样搞不是代价很大么？不不不，事实上这样搞效率很高！原因其实上面已经解释过：MobX 并不运行所有的衍生，但能保证仅在一些响应中设计的计算值保持与可观测状态的同步。这种衍生被称作 reactive。再用电子表格的类比解释下：只有那些当前可见的公式或者一个间接使用的可见公式，在某个被观察的数据单元格发生数值变化时才需要重新计算。</p>
+<h3 id="惰性求值还是响应式求值"><a href="#惰性求值还是响应式求值" class="headerlink" title="惰性求值还是响应式求值"></a>惰性求值还是响应式求值</h3><p>那么不是使用直接或间接的响应来计算呢？你仍然可以随时检查计算值（如 fullName）的值。解决方案很简单：只要计算值不是可响应的，它就会惰性求值，正如普通的 getter 函数一样。不进行任何观察的惰性衍生可以在超出范围时简单的进行垃圾回收。还记得计算值应该始终是可观察应用状态的纯函数这一说法吗？原因就是：对于纯函数无所谓惰性还是非惰性求值；对于同样的可观测状态纯函数的求值总会得出相同的结果。</p>
+<h3 id="运行计算"><a href="#运行计算" class="headerlink" title="运行计算"></a>运行计算</h3><p>响应与计算值都被 MobX 用同样的方式运行。当重新计算触发时，回调函数会被推入<strong>衍生栈</strong>（当前正在运行衍生的函数栈）。只要重计算运行中，所有被访问的可观察对象将会把自己注册为衍生栈最顶部函数的依赖。如果计算值的值被衍生函数需要，且计算值已处在响应状态，那么这个值可以简单的被当做是最后一个值。否则它将把自身推入衍生栈，切换到响应模式并也开始计算。</p>
 <p><img src="figure4.png" alt="图 4"></p>
   <figcaption>图 4：在执行 ProfileView 的响应期间，一些可观查状态和计算值正在被观察。计算值可能会重新计算，这形成了图 1 中展示的依赖树。</figcaption>
 
 <p>计算完成后，我们会获得执行时访问的可观察列表。在 ProfileView 的例子里，这个列表仅包含 nickName 属性，或 nickName 和 fullName 属性。这一列表将会与前一个可观察列表进行比对。任何被移除的项将会被取消观察（计算值在这时候可能会从响应状态回退到惰性模式），任何添加的可观察这将会被观察知道下一次计算。例如 firstName 在将来发生改变，MobX 会知道 fullName 需要重新计算。这反过来将导致 ProfileView 被重新计算。下一个图标详细说明了这一过程。</p>
-<h4 id="传播（Propagating）状态变化"><a href="#传播（Propagating）状态变化" class="headerlink" title="传播（Propagating）状态变化"></a>传播（Propagating）状态变化</h4><p><img src="figure5.png" alt="图 5"></p>
+<h3 id="传播（Propagating）状态变化"><a href="#传播（Propagating）状态变化" class="headerlink" title="传播（Propagating）状态变化"></a>传播（Propagating）状态变化</h3><p><img src="figure5.png" alt="图 5"></p>
   <figcaption>图 5：在依赖树中修改值 1 产生的影响。虚线边框表示观察者将被标记为过时（stale）。数字表示计算的顺序。</figcaption>
 
 <p>衍生将对状态变化自动做出响应。所有的响应都<strong>同步发生</strong>，且更重要的是<strong>十分稳定</strong>（glitch-free）。当可观察值被修改时，执行如下算法：</p>
@@ -306,13 +576,13 @@
 </ol>
 <hr>
 <p>上面两段总结了可观察值和衍生之间在运行时的依赖关系，以及值的变化是如何在衍生之间传播的。现在你应该明白了一个<strong>响应</strong>基本上就是一个总是处在<strong>响应状态</strong>下的<strong>计算值</strong>。重要的是要意识到这种算法可以不用闭包，只需要用一堆指针数组便可有效实现。此外，MobX 还应用了一些本文没有讲述的其他的优化方式。</p>
-<h4 id="同步执行"><a href="#同步执行" class="headerlink" title="同步执行"></a>同步执行</h4><p>大家经常对 MobX 的同步运行感到吃惊（这一点像 RxJs 而不像 knockout）。这样有两个很大的优点：首先这样一直观察过期的衍生变得基本不可能，因此一个衍生值在影响他的值发生变化时可以被立即使用；其次折让堆栈追从和调试变得更容易，因为它避免了 Promise/async 库中常见的的无效堆栈。</p>
+<h3 id="同步执行"><a href="#同步执行" class="headerlink" title="同步执行"></a>同步执行</h3><p>大家经常对 MobX 的同步运行感到吃惊（这一点像 RxJs 而不像 knockout）。这样有两个很大的优点：首先这样一直观察过期的衍生变得基本不可能，因此一个衍生值在影响他的值发生变化时可以被立即使用；其次折让堆栈追从和调试变得更容易，因为它避免了 Promise/async 库中常见的的无效堆栈。</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">transaction(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  michel.firstName = <span class="string">"Mich"</span>;</span><br><span class="line">  michel.lastName = <span class="string">"W."</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <figcaption>代码 2：一个事务的例子，这确保了没人可以直接观察类似 “Mich Weststate” 的值（见代码 1）</figcaption>
 
 <p>然而，同步执行也引入了对事务的需要。如果立即连续应用一些变化，更好的做法是在所有改变被应用之后对所有衍生重新求值。将所有行为包裹在<strong>事务</strong>（transcation）中可以实现这一点。事务简单的退出所有就绪通知知道事务块完成。注意事务仍然同步的运行和更新。</p>
 <p>本文总结了 MobX 大多数基本的实现细节。我们还没有涵盖所有的东西，但这也便于你去理解，例如组合计算值。通过组合可响应的计算，甚至可以将一个数据图表自动转化为另一个数据图表，并利用最小数量的补丁（patches）将衍生值保持一致。也可以轻松实现例如 map-reduce、使用不可变数据进行状态追踪、横向数据加载等复杂模式。更多的内容请听下回分解。</p>
-<h3 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h3><ol>
+<h2 id="太长不看"><a href="#太长不看" class="headerlink" title="太长不看"></a>太长不看</h2><ol>
 <li>复杂应用程序的状态最好使用<strong>图形</strong>来表示，以实现引用一致性，并保持最接近问题本身的抽象模型。</li>
 <li>不应该使用手动定义的订阅或游标来对状态的变化才去命令式的反应。这将不可避免的导致问题最终导致失效或超额订阅。</li>
 <li>使用<strong>运行时分析</strong>来决定观察者 → 可观察对象之间关系的<strong>最小可能集合</strong>。这导致了计算模型可以在没有观察到过期值的情况下确保最少量的衍生。</li>

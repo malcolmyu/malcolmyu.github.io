@@ -32,7 +32,7 @@
         </svg>
       </a>
       <div class="description">
-        &nbsp;膜法师学徒
+        &nbsp;日拱一卒，守正出奇
       </div>
     </div>
     <div class="main-ctnr">
@@ -86,7 +86,7 @@
     </div>
     <hr>
     
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#对状态改变做出响应，总是比直接处理状态改变要好"><span class="toc-text">对状态改变做出响应，总是比直接处理状态改变要好</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MobX-是如何保证所有的衍生有效且一致"><span class="toc-text">MobX 是如何保证所有的衍生有效且一致</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#惰性求值还是响应式求值"><span class="toc-text">惰性求值还是响应式求值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行计算"><span class="toc-text">运行计算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传播（Propagating）状态变化"><span class="toc-text">传播（Propagating）状态变化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同步执行"><span class="toc-text">同步执行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TL-DR"><span class="toc-text">TL;DR</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#对状态改变做出响应，总是比直接处理状态改变要好"><span class="toc-text">对状态改变做出响应，总是比直接处理状态改变要好</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MobX-是如何保证所有的衍生有效且一致"><span class="toc-text">MobX 是如何保证所有的衍生有效且一致</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#惰性求值还是响应式求值"><span class="toc-text">惰性求值还是响应式求值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行计算"><span class="toc-text">运行计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传播（Propagating）状态变化"><span class="toc-text">传播（Propagating）状态变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同步执行"><span class="toc-text">同步执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#太长不看"><span class="toc-text">太长不看</span></a></li></ol>
     
     <div class="picture-container">
       
@@ -119,7 +119,7 @@
   <figcaption>图 2：在用户拥有 nickname 时 ProfileView 组件依赖树。与图 1 相反，fullName 现在处于惰性模式（lazy mode）且不观测 firstName 和 lastName</figcaption>
 
 <p>MobX 将始终尝试减少产生一致状态所需要的计算数。在本文的余下内容，我将介绍几个用于实现这一目标的几个策略。但在深入了解计算值和响应与状态保持同步的黑魔法之前，让我们先描述下 MobX 背后的原理：</p>
-<h3 id="对状态改变做出响应，总是比直接处理状态改变要好"><a href="#对状态改变做出响应，总是比直接处理状态改变要好" class="headerlink" title="对状态改变做出响应，总是比直接处理状态改变要好"></a>对状态改变做出响应，总是比直接处理状态改变要好</h3><blockquote>
+<h2 id="对状态改变做出响应，总是比直接处理状态改变要好"><a href="#对状态改变做出响应，总是比直接处理状态改变要好" class="headerlink" title="对状态改变做出响应，总是比直接处理状态改变要好"></a>对状态改变做出响应，总是比直接处理状态改变要好</h2><blockquote>
 <p>自动更新应用的状态是一个反模式，数据应该被衍生。</p>
 </blockquote>
 <p>应用程序触发的用来响应状态变化的任何命令式行为通常都会创建或改变某些值。换句话说，大多数行为都会管理一个<a href="https://medium.com/@mweststrate/pure-rendering-in-the-light-of-time-and-state-4b537d8d40b1" target="_blank" rel="external">本地缓存</a>。触发用户界面的更新？更新级联的值？通知后端？这些通常被认为是潜在的缓存失效。为了确保这些缓存同步，你需要订阅（subscribe）将来的状态更改，这会导致行为再次被触发。</p>
@@ -138,14 +138,14 @@
 </blockquote>
 <p>MobX 背后的第二个重要思想就是，对于任何复杂度超过 TodoMVC 的应用，我们通常都需要一个<strong>数据图表</strong>用来存储状态，而非标准化的树，这也是一种比较费脑子但是高效的方式。图允许引用的一致性、避免数据复制，因此可以保证衍生的数据永不过时。</p>
 <hr>
-<h3 id="MobX-是如何保证所有的衍生有效且一致"><a href="#MobX-是如何保证所有的衍生有效且一致" class="headerlink" title="MobX 是如何保证所有的衍生有效且一致"></a>MobX 是如何保证所有的衍生有效且一致</h3><p>解决方案就是：不缓存，只衍生。大家可能会问：这样搞不是代价很大么？不不不，事实上这样搞效率很高！原因其实上面已经解释过：MobX 并不运行所有的衍生，但能保证仅在一些响应中设计的计算值保持与可观测状态的同步。这种衍生被称作 reactive。再用电子表格的类比解释下：只有那些当前可见的公式或者一个间接使用的可见公式，在某个被观察的数据单元格发生数值变化时才需要重新计算。</p>
-<h4 id="惰性求值还是响应式求值"><a href="#惰性求值还是响应式求值" class="headerlink" title="惰性求值还是响应式求值"></a>惰性求值还是响应式求值</h4><p>那么不是使用直接或间接的响应来计算呢？你仍然可以随时检查计算值（如 fullName）的值。解决方案很简单：只要计算值不是可响应的，它就会惰性求值，正如普通的 getter 函数一样。不进行任何观察的惰性衍生可以在超出范围时简单的进行垃圾回收。还记得计算值应该始终是可观察应用状态的纯函数这一说法吗？原因就是：对于纯函数无所谓惰性还是非惰性求值；对于同样的可观测状态纯函数的求值总会得出相同的结果。</p>
-<h4 id="运行计算"><a href="#运行计算" class="headerlink" title="运行计算"></a>运行计算</h4><p>响应与计算值都被 MobX 用同样的方式运行。当重新计算触发时，回调函数会被推入<strong>衍生栈</strong>（当前正在运行衍生的函数栈）。只要重计算运行中，所有被访问的可观察对象将会把自己注册为衍生栈最顶部函数的依赖。如果计算值的值被衍生函数需要，且计算值已处在响应状态，那么这个值可以简单的被当做是最后一个值。否则它将把自身推入衍生栈，切换到响应模式并也开始计算。</p>
+<h2 id="MobX-是如何保证所有的衍生有效且一致"><a href="#MobX-是如何保证所有的衍生有效且一致" class="headerlink" title="MobX 是如何保证所有的衍生有效且一致"></a>MobX 是如何保证所有的衍生有效且一致</h2><p>解决方案就是：不缓存，只衍生。大家可能会问：这样搞不是代价很大么？不不不，事实上这样搞效率很高！原因其实上面已经解释过：MobX 并不运行所有的衍生，但能保证仅在一些响应中设计的计算值保持与可观测状态的同步。这种衍生被称作 reactive。再用电子表格的类比解释下：只有那些当前可见的公式或者一个间接使用的可见公式，在某个被观察的数据单元格发生数值变化时才需要重新计算。</p>
+<h3 id="惰性求值还是响应式求值"><a href="#惰性求值还是响应式求值" class="headerlink" title="惰性求值还是响应式求值"></a>惰性求值还是响应式求值</h3><p>那么不是使用直接或间接的响应来计算呢？你仍然可以随时检查计算值（如 fullName）的值。解决方案很简单：只要计算值不是可响应的，它就会惰性求值，正如普通的 getter 函数一样。不进行任何观察的惰性衍生可以在超出范围时简单的进行垃圾回收。还记得计算值应该始终是可观察应用状态的纯函数这一说法吗？原因就是：对于纯函数无所谓惰性还是非惰性求值；对于同样的可观测状态纯函数的求值总会得出相同的结果。</p>
+<h3 id="运行计算"><a href="#运行计算" class="headerlink" title="运行计算"></a>运行计算</h3><p>响应与计算值都被 MobX 用同样的方式运行。当重新计算触发时，回调函数会被推入<strong>衍生栈</strong>（当前正在运行衍生的函数栈）。只要重计算运行中，所有被访问的可观察对象将会把自己注册为衍生栈最顶部函数的依赖。如果计算值的值被衍生函数需要，且计算值已处在响应状态，那么这个值可以简单的被当做是最后一个值。否则它将把自身推入衍生栈，切换到响应模式并也开始计算。</p>
 <p><img src="figure4.png" alt="图 4"></p>
   <figcaption>图 4：在执行 ProfileView 的响应期间，一些可观查状态和计算值正在被观察。计算值可能会重新计算，这形成了图 1 中展示的依赖树。</figcaption>
 
 <p>计算完成后，我们会获得执行时访问的可观察列表。在 ProfileView 的例子里，这个列表仅包含 nickName 属性，或 nickName 和 fullName 属性。这一列表将会与前一个可观察列表进行比对。任何被移除的项将会被取消观察（计算值在这时候可能会从响应状态回退到惰性模式），任何添加的可观察这将会被观察知道下一次计算。例如 firstName 在将来发生改变，MobX 会知道 fullName 需要重新计算。这反过来将导致 ProfileView 被重新计算。下一个图标详细说明了这一过程。</p>
-<h4 id="传播（Propagating）状态变化"><a href="#传播（Propagating）状态变化" class="headerlink" title="传播（Propagating）状态变化"></a>传播（Propagating）状态变化</h4><p><img src="figure5.png" alt="图 5"></p>
+<h3 id="传播（Propagating）状态变化"><a href="#传播（Propagating）状态变化" class="headerlink" title="传播（Propagating）状态变化"></a>传播（Propagating）状态变化</h3><p><img src="figure5.png" alt="图 5"></p>
   <figcaption>图 5：在依赖树中修改值 1 产生的影响。虚线边框表示观察者将被标记为过时（stale）。数字表示计算的顺序。</figcaption>
 
 <p>衍生将对状态变化自动做出响应。所有的响应都<strong>同步发生</strong>，且更重要的是<strong>十分稳定</strong>（glitch-free）。当可观察值被修改时，执行如下算法：</p>
@@ -157,13 +157,13 @@
 </ol>
 <hr>
 <p>上面两段总结了可观察值和衍生之间在运行时的依赖关系，以及值的变化是如何在衍生之间传播的。现在你应该明白了一个<strong>响应</strong>基本上就是一个总是处在<strong>响应状态</strong>下的<strong>计算值</strong>。重要的是要意识到这种算法可以不用闭包，只需要用一堆指针数组便可有效实现。此外，MobX 还应用了一些本文没有讲述的其他的优化方式。</p>
-<h4 id="同步执行"><a href="#同步执行" class="headerlink" title="同步执行"></a>同步执行</h4><p>大家经常对 MobX 的同步运行感到吃惊（这一点像 RxJs 而不像 knockout）。这样有两个很大的优点：首先这样一直观察过期的衍生变得基本不可能，因此一个衍生值在影响他的值发生变化时可以被立即使用；其次折让堆栈追从和调试变得更容易，因为它避免了 Promise/async 库中常见的的无效堆栈。</p>
+<h3 id="同步执行"><a href="#同步执行" class="headerlink" title="同步执行"></a>同步执行</h3><p>大家经常对 MobX 的同步运行感到吃惊（这一点像 RxJs 而不像 knockout）。这样有两个很大的优点：首先这样一直观察过期的衍生变得基本不可能，因此一个衍生值在影响他的值发生变化时可以被立即使用；其次折让堆栈追从和调试变得更容易，因为它避免了 Promise/async 库中常见的的无效堆栈。</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">transaction(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  michel.firstName = <span class="string">"Mich"</span>;</span><br><span class="line">  michel.lastName = <span class="string">"W."</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <figcaption>代码 2：一个事务的例子，这确保了没人可以直接观察类似 “Mich Weststate” 的值（见代码 1）</figcaption>
 
 <p>然而，同步执行也引入了对事务的需要。如果立即连续应用一些变化，更好的做法是在所有改变被应用之后对所有衍生重新求值。将所有行为包裹在<strong>事务</strong>（transcation）中可以实现这一点。事务简单的退出所有就绪通知知道事务块完成。注意事务仍然同步的运行和更新。</p>
 <p>本文总结了 MobX 大多数基本的实现细节。我们还没有涵盖所有的东西，但这也便于你去理解，例如组合计算值。通过组合可响应的计算，甚至可以将一个数据图表自动转化为另一个数据图表，并利用最小数量的补丁（patches）将衍生值保持一致。也可以轻松实现例如 map-reduce、使用不可变数据进行状态追踪、横向数据加载等复杂模式。更多的内容请听下回分解。</p>
-<h3 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h3><ol>
+<h2 id="太长不看"><a href="#太长不看" class="headerlink" title="太长不看"></a>太长不看</h2><ol>
 <li>复杂应用程序的状态最好使用<strong>图形</strong>来表示，以实现引用一致性，并保持最接近问题本身的抽象模型。</li>
 <li>不应该使用手动定义的订阅或游标来对状态的变化才去命令式的反应。这将不可避免的导致问题最终导致失效或超额订阅。</li>
 <li>使用<strong>运行时分析</strong>来决定观察者 → 可观察对象之间关系的<strong>最小可能集合</strong>。这导致了计算模型可以在没有观察到过期值的情况下确保最少量的衍生。</li>
@@ -183,22 +183,22 @@
 
 
     
-        <div id="disqus_thread"></div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+        <div id="gitalk-container"></div>
         <script>
+        var gitalk = new Gitalk({
+            clientID: 'eae2bf62b3d29b61db92',
+            clientSecret: '2a40b5b62cf2b58c31db81fc0f36ac6094d4a876',
+            repo: 'malcolmyu.github.io',
+            owner: 'malcolmyu',
+            admin: ['malcolmyu'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false,  // Facebook-like distraction free mode
+            createIssueManually: false,
+        })
 
-        var disqus_config = function () {
-        this.page.url = 'http://malcolmyu.github.io/2017/10/14/An-in-Depth-Explanation-of-MobX/index.html';
-        this.page.identifier = undefined;
-        };
-
-        (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-
-        s.src = '//malcolmyu.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-        })();
+        gitalk.render('gitalk-container')
         </script>
     
 
@@ -232,15 +232,6 @@
 <script type="text/javascript">
 
 // disqus scripts
-
-var disqus_shortname = 'malcolmyu';
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('body')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
 
 
 // dropdown scripts
